@@ -60,7 +60,7 @@
           <div class="collapse navbar-collapse" id="navbarCollapsed">
             <ul class="nav navbar-nav">
               <li><a href="trainersLanding.php">Home</a></li>
-              <li class="active"><a href="superUserAthletes.php">Users</a></li>
+              <li class="active"><a href="trainersAthletes.php">Users</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Manage
                 <span class="caret"></span></a>

@@ -141,7 +141,7 @@
           <div class="tab-pane" id="addExercises">
             <!--Add Exercise to workout tab-->
             <div class="row">
-              <div class="col-md-8">
+              <div class="col-md-12">
                 <div class="panel panel-primary">
                   <div class="panel-heading">
                     <h3 class="panel-title">Add Exercises</h3>
@@ -1691,6 +1691,7 @@
                   </div>
                 </div>
               </div>
+            </form>
             </div>
           </div>
           <!--End of add exercise to workout tab-->

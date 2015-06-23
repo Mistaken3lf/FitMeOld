@@ -48,7 +48,7 @@
         </ul>
         <br id="removeBr">
         <?php
-          include '../lib/connect.php';
+          include 'connect.php';
 
           #Get the username currently logged in
            $curUser = $_GET["myAthlete"];
@@ -5364,7 +5364,7 @@
                         			$biography    = $row['biography'];
                         }
                         ?>
-                    <form role="form" method="POST" id="profileForm" name="profileForm" action="updateProfile.php" >
+                    <form role="form" method="POST" id="profileForm" name="profileForm" action="updateAthletesProfile.php?myAthlete=tyler@tyler,knipfer">
                       <div class="errorDiv">
                         <?php
                           if (isset($_SESSION["profileErrors"]) && isset($_SESSION["profileAttempt"])) {
@@ -5378,18 +5378,23 @@
                              ?>
                       </div>
                       <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" style="background-color:#FFFFFF"
+                          name="username" value="<?= $username ?>">
+                      </div>
+                      <div class="form-group">
                         <label for="firstName">First Name:</label>
-                        <input type="text" required class="form-control" id="firstName" style="background-color:#FFFFFF"
+                        <input type="text" class="form-control" id="firstName" style="background-color:#FFFFFF"
                           name="firstName" value="<?= $firstName ?>">
                       </div>
                       <div class="form-group">
                         <label for="lastName">Last Name:</label>
-                        <input type="text" required class="form-control" id="lastName" style="background-color:#FFFFFF"
+                        <input type="text" class="form-control" id="lastName" style="background-color:#FFFFFF"
                           name="lastName" value="<?= $lastName ?>">
                       </div>
                       <div class="form-group">
                         <label for="DOB">Date of Birth:</label>
-                        <input type="text" required class="form-control" id="DOB" style="background-color:#FFFFFF"
+                        <input type="text" class="form-control" id="DOB" style="background-color:#FFFFFF"
                           name="DOB" value="<?= $DOB ?>" placeholder="YYYY/MM/DD">
                       </div>
                       <div class="form-group">
@@ -5413,7 +5418,7 @@
                       </div>
                       <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" required class="form-control" id="email" style="background-color:#FFFFFF"
+                        <input type="email" class="form-control" id="email" style="background-color:#FFFFFF"
                           name="email" value="<?= $email ?>" placeholder="email@address.com">
                       </div>
                       <div class="form-group">
@@ -5426,6 +5431,7 @@
                         <input type="text" class="form-control" id="biography" style="background-color:#FFFFFF"
                           name="biography" value="<?= $biography ?>" placeholder="Tell Us About Yourself.">
                       </div>
+                      <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                   </div>
                 </div>

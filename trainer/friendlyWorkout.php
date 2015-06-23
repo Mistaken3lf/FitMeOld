@@ -22,7 +22,7 @@
     <div class="container-fluid">
     <img class="center-block img-responsive" id="printHeader2" src="../img/headers/fitMeWorkoutManagement2.png" width="550" height="350">
     <?php
-      include("connect.php");
+      include("../lib/connect.php");
 
       session_start();
 

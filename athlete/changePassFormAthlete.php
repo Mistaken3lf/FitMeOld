@@ -14,7 +14,7 @@
     <meta http-equiv="PRAGMA" content="NO-CACHE">
     <!-- Latest compiled and minified CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="../css/stylesheet.css">
   </head>
   <body>
     <header>
@@ -38,10 +38,10 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <?php
-                  echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
-                  $_SESSION['myUsername'];
-                  ?>
+                  <?php
+                    echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
+                    $_SESSION["myFirstName"]. ' ' .$_SESSION["myLastName"];
+                    ?>
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="athleteProfile.php">My Profile</a></li>
@@ -57,11 +57,11 @@
     </header>
     <section>
       <div class="container-fluid">
-        <img class="center-block img-responsive" src="../img/headers/fitMeChangePassword.png" width="500" height="300">
+        <img class="center-block img-responsive" src="../img/headers/fitMeChangePassword2.png" width="500" height="300">
         <hr>
         <div class="row">
           <div class="col-md-5">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">Change Password</h3>
               </div>

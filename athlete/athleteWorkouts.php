@@ -39,10 +39,10 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <?php
-                  echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
-                  $_SESSION['myUsername'];
-                  ?>
+                  <?php
+                    echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
+                    $_SESSION["myFirstName"]. ' ' .$_SESSION["myLastName"];
+                    ?>
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="athleteProfile.php">My Profile</a></li>
@@ -59,7 +59,7 @@
     </header>
     <section>
       <div class="container-fluid">
-        <img class="center-block img-responsive" id="printHeader" src="../img/headers/fitMeTrainingCycle.png" width="500" height="300">
+        <img class="center-block img-responsive" id="printHeader" src="../img/headers/fitMeTrainingCycle2.png" width="500" height="300">
         <hr id="removeHr">
         <?php
           include '../lib/connect.php';
@@ -98,15 +98,17 @@
 
                   $result = mysqli_query($connection, $sql);
 
-                   while ($row = mysqli_fetch_array($result)) {
-                       $currentWorkoutOne = $row['currentWorkoutOne'];
-                       $currentWorkoutTwo = $row['currentWorkoutTwo'];
-                       $currentWorkoutThree = $row['currentWorkoutThree'];
-                       $currentWorkoutFour = $row['currentWorkoutFour'];
-                       $currentWorkoutFive = $row['currentWorkoutFive'];
-                       $currentWorkoutSix = $row['currentWorkoutSix'];
-                       $currentWorkoutSeven = $row['currentWorkoutSeven'];
-                   }
+
+                   while($row = mysqli_fetch_array($result))
+                       {
+                         $currentWorkoutOne = $row['currentWorkoutOne'];
+                         $currentWorkoutTwo = $row['currentWorkoutTwo'];
+                         $currentWorkoutThree = $row['currentWorkoutThree'];
+                         $currentWorkoutFour = $row['currentWorkoutFour'];
+                         $currentWorkoutFive = $row['currentWorkoutFive'];
+                         $currentWorkoutSix = $row['currentWorkoutSix'];
+                         $currentWorkoutSeven = $row['currentWorkoutSeven'];
+                       }
 
                   $tempOne = strstr($currentWorkoutOne, '-', true);
                   $tempTwo = strstr($currentWorkoutTwo, '-', true);
@@ -116,3334 +118,5218 @@
                   $tempSix = strstr($currentWorkoutSix, '-', true);
                   $tempSeven = strstr($currentWorkoutSeven, '-', true);
 
+
                   #Gets the entire workout to be printed in a table
-                  $sql = 'SELECT * FROM `'.$currentWorkoutOne."` where athlete='$name' ORDER BY exerciseOrder";
+                  $sql = "SELECT * FROM `" . $currentWorkoutOne . "` where athlete='$name' ORDER BY exerciseOrder";
 
                   $result = mysqli_query($connection, $sql);
 
-                  print '<h4><b><u> DAY ONE </u></b></h4>';
+                  print "<h4><b><u> DAY ONE </u></b></h4>";
+
+                  print "<h3> $tempOne </h3>";
 
                   #Creates the table Header
                   print "<div class='table-responsive'>
                                        <div class=\"col-md-10\">
-                                       	<table class='table table-striped table-bordered table-condensed'>
-                                       		<thead>
-                                       		</thead>";
-                  print '<tbody>';
+                                         <table class='table table-striped table-bordered table-condensed'>
+                                           <thead>
+                                           </thead>";
+                  print "<tbody>";
+
 
                   #Prints out the exercises
-                  while ($row = mysqli_fetch_array($result)) {
-                  $numOfSets = $row['sets'];
-                  $tempOne = strtoupper($tempOne);
+                  while($row = mysqli_fetch_array($result))
+                  {
 
-                  print '<thead>';
-                  print '<tr>';
-                  print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 1</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 2</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 3</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 4</b></td>';
+                     $tempOne = strtoupper($tempOne);
 
-                  print '</tr>';
-                  print '</thead>';
+                  print "<thead>";
+                     print "<tr>";
+                        print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 4</b></td>";
 
-                  print '<thead>';
-                  print '<tr>';
-                  print '<th>Exercise Order</th>';
-                  print '<td align=center>'.$row['exerciseOrder'].'</td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Exercise Name</th>';
-                  $tempExercise = strstr($row['exerciseName'], '-', true);
-                  print '<td align=center>'.$tempExercise.'</td>';
-                  if ($row['setsW1'] >= 1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W1'].'</td>';
-                  if ($row['intensity1W1'] == 0 || $row['intensity1W1'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W1'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  if ($row['setsW2'] >= 1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W2'].'</td>';
-                  if ($row['intensity1W2'] == 0 || $row['intensity1W2'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W2'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W3'].'</td>';
-                  if ($row['intensity1W3'] == 0 || $row['intensity1W3'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W3'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  if ($row['setsW4'] >= 1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W4'].'</td>';
-                  if ($row['intensity1W4'] == 0 || $row['intensity1W4'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W4'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
+                     print "</tr>";
+                     print "</thead>";
 
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 2 && $row['setsW2'] < 2 && $row['setsW3'] < 2 && $row['setsW4'] < 2) {
-                  } else {
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($row['setsW1'] >= 2) {
-                     print '<td align=center><b>2</b></td>';
-                     print '<td align=center>'.$row['reps2W1'].'</td>';
-                     if ($row['intensity2W1'] == 0 || $row['intensity2W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight2W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity2W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
+                     print "<thead>";
+                     print "<tr>";
+                        print "<th>Exercise Order</th>";
+                        print "<td align=center>".$row['exerciseOrder']."</td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                     print "</tr>";
+                     print "<tr>";
+                        print "<th>Exercise Name</th>";
+                        $temp = strstr($row["exerciseName"], '-', true);
+                        print "<td align=center>".$temp."</td>";
+                        if ($row['setsW1'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W1']."</td>";
+                        print "<td align=center>".$row['intensity1W1']." | ".$row['calcWeight1W1']."</td>";
+                        print "<td align=center>".$row['percentage1W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W2']."</td>";
+                        print "<td align=center>".$row['intensity1W2']."|".$row['calcWeight1W2']."</td>";
+                        print "<td align=center>".$row['percentage1W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W3']."</td>";
+                        print "<td align=center>".$row['intensity1W3']."|".$row['calcWeight1W3']."</td>";
+                        print "<td align=center>".$row['percentage1W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W4']."</td>";
+                        print "<td align=center>".$row['intensity1W4']."|".$row['calcWeight1W4']."</td>";
+                        print "<td align=center>".$row['percentage1W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 2 && $row['setsW2'] < 2 && $row['setsW3'] < 2 && $row['setsW4'] < 2)
+                  {
                   }
-                  if ($row['setsW2'] >= 2) {
-                     print '<td align=center><b>2</b></td>';
-                     print '<td align=center>'.$row['reps2W2'].'</td>';
-                     if ($row['intensity2W2'] == 0 || $row['intensity2W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight2W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity2W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W1']."</td>";
+                        print "<td align=center>".$row['intensity2W1']."|".$row['calcWeight2W1']."</td>";
+                        print "<td align=center>".$row['percentage2W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W2']."</td>";
+                        print "<td align=center>".$row['intensity2W2']."|".$row['calcWeight2W2']."</td>";
+                        print "<td align=center>".$row['percentage2W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W3']."</td>";
+                        print "<td align=center>".$row['intensity2W3']."|".$row['calcWeight2W3']."</td>";
+                        print "<td align=center>".$row['percentage2W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W4']."</td>";
+                        print "<td align=center>".$row['intensity2W4']."|".$row['calcWeight2W4']."</td>";
+                        print "<td align=center>".$row['percentage2W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 3 && $row['setsW2'] < 3 && $row['setsW3'] < 3 && $row['setsW4'] < 3)
+                  {
                   }
-                  if ($row['setsW3'] >= 2) {
-                     print '<td align=center><b>2</b></td>';
-                     print '<td align=center>'.$row['reps2W3'].'</td>';
-                     if ($row['intensity2W3'] == 0 || $row['intensity2W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight2W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity2W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W1']."</td>";
+                        print "<td align=center>".$row['intensity3W1']."|".$row['calcWeight3W1']."</td>";
+                        print "<td align=center>".$row['percentage3W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W2']."</td>";
+                        print "<td align=center>".$row['intensity3W2']."|".$row['calcWeight3W2']."</td>";
+                        print "<td align=center>".$row['percentage3W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W3']."</td>";
+                        print "<td align=center>".$row['intensity3W3']."|".$row['calcWeight3W3']."</td>";
+                        print "<td align=center>".$row['percentage3W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W4']."</td>";
+                        print "<td align=center>".$row['intensity3W4']."|".$row['calcWeight3W4']."</td>";
+                        print "<td align=center>".$row['percentage3W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 4 && $row['setsW2'] < 4 && $row['setsW3'] < 4 && $row['setsW4'] < 4)
+                  {
                   }
-                  if ($row['setsW4'] >= 2) {
-                     print '<td align=center><b>2</b></td>';
-                     print '<td align=center>'.$row['reps2W4'].'</td>';
-                     if ($row['intensity2W4'] == 0 || $row['intensity2W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight2W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity2W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W1']."</td>";
+                        print "<td align=center>".$row['intensity4W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage4W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W2']."</td>";
+                        print "<td align=center>".$row['intensity4W2']."|".$row['calcWeight4W2']."</td>";
+                        print "<td align=center>".$row['percentage4W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W3']."</td>";
+                        print "<td align=center>".$row['intensity4W3']."|".$row['calcWeight4W3']."</td>";
+                        print "<td align=center>".$row['percentage4W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W4']."</td>";
+                        print "<td align=center>".$row['intensity4W4']."|".$row['calcWeight4W4']."</td>";
+                        print "<td align=center>".$row['percentage4W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 5 && $row['setsW2'] < 5 && $row['setsW3'] < 5 && $row['setsW4'] < 5)
+                  {
                   }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W1']."</td>";
+                        print "<td align=center>".$row['intensity5W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage5W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W2']."</td>";
+                        print "<td align=center>".$row['intensity5W2']."|".$row['calcWeight5W2']."</td>";
+                        print "<td align=center>".$row['percentage5W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W3']."</td>";
+                        print "<td align=center>".$row['intensity5W3']."|".$row['calcWeight5W3']."</td>";
+                        print "<td align=center>".$row['percentage5W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W4']."</td>";
+                        print "<td align=center>".$row['intensity5W4']."|".$row['calcWeight5W4']."</td>";
+                        print "<td align=center>".$row['percentage5W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 6 && $row['setsW2'] < 6 && $row['setsW3'] < 6 && $row['setsW4'] < 6)
+                  {
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 3 && $row['setsW2'] < 3 && $row['setsW3'] < 3 && $row['setsW4'] < 3) {
-                  } else {
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($row['setsW1'] >= 3) {
-                     print '<td align=center><b>3</b></td>';
-                     print '<td align=center>'.$row['reps3W1'].'</td>';
-                     if ($row['intensity3W1'] == 0 || $row['intensity3W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight3W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity3W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W1']."</td>";
+                        print "<td align=center>".$row['intensity6W1']."|".$row['calcWeight6W1']."</td>";
+                        print "<td align=center>".$row['percentage6W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W2']."</td>";
+                        print "<td align=center>".$row['intensity6W2']."|".$row['calcWeight6W2']."</td>";
+                        print "<td align=center>".$row['percentage6W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W3']."</td>";
+                        print "<td align=center>".$row['intensity6W3']."|".$row['calcWeight6W3']."</td>";
+                        print "<td align=center>".$row['percentage6W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W4']."</td>";
+                        print "<td align=center>".$row['intensity6W4']."|".$row['calcWeight6W4']."</td>";
+                        print "<td align=center>".$row['percentage6W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 7 && $row['setsW2'] < 7 && $row['setsW3'] < 7 && $row['setsW4'] < 7)
+                  {
                   }
-                  if ($row['setsW2'] >= 3) {
-                     print '<td align=center><b>3</b></td>';
-                     print '<td align=center>'.$row['reps3W2'].'</td>';
-                     if ($row['intensity3W2'] == 0 || $row['intensity3W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight3W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity3W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W1']."</td>";
+                        print "<td align=center>".$row['intensity7W1']."|".$row['calcWeight7W1']."</td>";
+                        print "<td align=center>".$row['percentage7W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W2']."</td>";
+                        print "<td align=center>".$row['intensity7W2']."|".$row['calcWeight7W2']."</td>";
+                        print "<td align=center>".$row['percentage7W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W3']."</td>";
+                        print "<td align=center>".$row['intensity7W3']."|".$row['calcWeight7W3']."</td>";
+                        print "<td align=center>".$row['percentage7W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W4']."</td>";
+                        print "<td align=center>".$row['intensity7W4']."|".$row['calcWeight7W4']."</td>";
+                        print "<td align=center>".$row['percentage7W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 8 && $row['setsW2'] < 8 && $row['setsW3'] < 8 && $row['setsW4'] < 8)
+                  {
                   }
-                  if ($row['setsW3'] >= 3) {
-                     print '<td align=center><b>3</b></td>';
-                     print '<td align=center>'.$row['reps3W3'].'</td>';
-                     if ($row['intensity3W3'] == 0 || $row['intensity3W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight3W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity3W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W1']."</td>";
+                        print "<td align=center>".$row['intensity8W1']."|".$row['calcWeight8W1']."</td>";
+                        print "<td align=center>".$row['percentage8W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W2']."</td>";
+                        print "<td align=center>".$row['intensity8W2']."|".$row['calcWeight8W2']."</td>";
+                        print "<td align=center>".$row['percentage8W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W3']."</td>";
+                        print "<td align=center>".$row['intensity8W3']."|".$row['calcWeight8W3']."</td>";
+                        print "<td align=center>".$row['percentage8W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W4']."</td>";
+                        print "<td align=center>".$row['intensity8W4']."|".$row['calcWeight8W4']."</td>";
+                        print "<td align=center>".$row['percentage8W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 9 && $row['setsW2'] < 9 && $row['setsW3'] < 9 && $row['setsW4'] < 9)
+                  {
                   }
-                  if ($row['setsW4'] >= 3) {
-                     print '<td align=center><b>3</b></td>';
-                     print '<td align=center>'.$row['reps3W4'].'</td>';
-                     if ($row['intensity3W4'] == 0 || $row['intensity3W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight3W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity3W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W1']."</td>";
+                        print "<td align=center>".$row['intensity9W1']."|".$row['calcWeight9W1']."</td>";
+                        print "<td align=center>".$row['percentage9W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W2']."</td>";
+                        print "<td align=center>".$row['intensity9W2']."|".$row['calcWeight9W2']."</td>";
+                        print "<td align=center>".$row['percentage9W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W3']."</td>";
+                        print "<td align=center>".$row['intensity9W3']."|".$row['calcWeight9W3']."</td>";
+                        print "<td align=center>".$row['percentage9W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W4']."</td>";
+                        print "<td align=center>".$row['intensity9W4']."|".$row['calcWeight9W4']."</td>";
+                        print "<td align=center>".$row['percentage9W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 10 && $row['setsW2'] < 10 && $row['setsW3'] < 10 && $row['setsW4'] < 10)
+                  {
                   }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W1']."</td>";
+                        print "<td align=center>".$row['intensity10W1']."|".$row['calcWeight10W1']."</td>";
+                        print "<td align=center>".$row['percentage10W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W2']."</td>";
+                        print "<td align=center>".$row['intensity10W2']."|".$row['calcWeight10W2']."</td>";
+                        print "<td align=center>".$row['percentage10W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W3']."</td>";
+                        print "<td align=center>".$row['intensity10W3']."|".$row['calcWeight10W3']."</td>";
+                        print "<td align=center>".$row['percentage10W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W4']."</td>";
+                        print "<td align=center>".$row['intensity10W4']."|".$row['calcWeight10W4']."</td>";
+                        print "<td align=center>".$row['percentage10W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                  print "<th>Tempo</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['tempoW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW4']."</td>";
+                  print "</tr>";
+                     print "<tr>";
+                  print "<th>Rest</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['restW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW4']."</td>";
+                  print "</tr>";
+                  print "<tr>";
+                  print "<th>Comments</th>";
+                        print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                  print "</tr>";
+                     print "<tr>";
+                     print "<td colspan=18 bgcolor=#000000></td>";
+                     print "</tr>";
+                     print "</thead>";
+
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 4 && $row['setsW2'] < 4 && $row['setsW3'] < 4 && $row['setsW4'] < 4) {
-                  } else {
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($row['setsW1'] >= 4) {
-                     print '<td align=center><b>4</b></td>';
-                     print '<td align=center>'.$row['reps4W1'].'</td>';
-                     if ($row['intensity4W1'] == 0 || $row['intensity4W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight4W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity4W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW2'] >= 4) {
-                     print '<td align=center><b>4</b></td>';
-                     print '<td align=center>'.$row['reps4W2'].'</td>';
-                     if ($row['intensity4W2'] == 0 || $row['intensity4W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight4W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity4W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 4) {
-                     print '<td align=center><b>4</b></td>';
-                     print '<td align=center>'.$row['reps4W3'].'</td>';
-                     if ($row['intensity4W3'] == 0 || $row['intensity4W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight4W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity4W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW4'] >= 4) {
-                     print '<td align=center><b>4</b></td>';
-                     print '<td align=center>'.$row['reps4W4'].'</td>';
-                     if ($row['intensity4W4'] == 0 || $row['intensity4W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight4W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity4W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 5 && $row['setsW2'] < 5 && $row['setsW3'] < 5 && $row['setsW4'] < 5) {
-                  } else {
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($row['setsW1'] >= 5) {
-                     print '<td align=center><b>5</b></td>';
-                     print '<td align=center>'.$row['reps5W1'].'</td>';
-                     print '<td align=center><b>5</b></td>';
-                     print '<td align=center>'.$row['reps5W1'].'</td>';
-                     if ($row['intensity5W1'] == 0 || $row['intensity5W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight5W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity5W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW2'] >= 5) {
-                     print '<td align=center><b>5</b></td>';
-                     print '<td align=center>'.$row['reps5W2'].'</td>';
-                     if ($row['intensity5W2'] == 0 || $row['intensity5W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight5W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity5W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 5) {
-                     print '<td align=center><b>5</b></td>';
-                     print '<td align=center>'.$row['reps5W3'].'</td>';
-                     if ($row['intensity5W3'] == 0 || $row['intensity5W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight5W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity5W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW4'] >= 5) {
-                     print '<td align=center><b>5</b></td>';
-                     print '<td align=center>'.$row['reps5W4'].'</td>';
-                     if ($row['intensity5W4'] == 0 || $row['intensity5W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight5W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity5W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 6 && $row['setsW2'] < 6 && $row['setsW3'] < 6 && $row['setsW4'] < 6) {
-                  } else {
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($row['setsW1'] >= 6) {
-                     print '<td align=center><b>6</b></td>';
-                     print '<td align=center>'.$row['reps6W1'].'</td>';
-                     if ($row['intensity6W1'] == 0 || $row['intensity6W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight6W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity6W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW2'] >= 6) {
-                     print '<td align=center><b>6</b></td>';
-                     print '<td align=center>'.$row['reps6W2'].'</td>';
-                     if ($row['intensity6W2'] == 0 || $row['intensity6W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight6W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity6W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 6) {
-                     print '<td align=center><b>6</b></td>';
-                     print '<td align=center>'.$row['reps6W3'].'</td>';
-                     if ($row['intensity6W3'] == 0 || $row['intensity6W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight6W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity6W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW4'] >= 6) {
-                     print '<td align=center><b>6</b></td>';
-                     print '<td align=center>'.$row['reps6W4'].'</td>';
-                     if ($row['intensity6W4'] == 0 || $row['intensity6W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight6W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity6W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 7 && $row['setsW2'] < 7 && $row['setsW3'] < 7 && $row['setsW4'] < 7) {
-                  } else {
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($row['setsW1'] >= 7) {
-                     print '<td align=center><b>7</b></td>';
-                     print '<td align=center>'.$row['reps7W1'].'</td>';
-                     if ($row['intensity7W1'] == 0 || $row['intensity7W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight7W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity7W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW2'] >= 7) {
-                     print '<td align=center><b>7</b></td>';
-                     print '<td align=center>'.$row['reps7W2'].'</td>';
-                     if ($row['intensity7W2'] == 0 || $row['intensity7W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight7W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity7W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 7) {
-                     print '<td align=center><b>7</b></td>';
-                     print '<td align=center>'.$row['reps7W3'].'</td>';
-                     if ($row['intensity7W3'] == 0 || $row['intensity7W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight7W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity7W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW4'] >= 7) {
-                     print '<td align=center><b>7</b></td>';
-                     print '<td align=center>'.$row['reps7W4'].'</td>';
-                     if ($row['intensity7W4'] == 0 || $row['intensity7W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight7W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity7W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 8 && $row['setsW2'] < 8 && $row['setsW3'] < 8 && $row['setsW4'] < 8) {
-                  } else {
-                  if ($row['setsW1'] >= 8) {
-                     print '<th></th>';
-                     print '<td align=center></td>';
-                     print '<td align=center><b>8</b></td>';
-                     print '<td align=center>'.$row['reps8W1'].'</td>';
-                     if ($row['intensity8W1'] == 0 || $row['intensity8W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight8W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity8W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW2'] >= 8) {
-                     print '<td align=center><b>8</b></td>';
-                     print '<td align=center>'.$row['reps8W2'].'</td>';
-                     if ($row['intensity8W2'] == 0 || $row['intensity8W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight8W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity8W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 8) {
-                     print '<td align=center><b>8</b></td>';
-                     print '<td align=center>'.$row['reps8W3'].'</td>';
-                     if ($row['intensity8W3'] == 0 || $row['intensity8W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight8W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity8W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW4'] >= 8) {
-                     print '<td align=center><b>8</b></td>';
-                     print '<td align=center>'.$row['reps8W4'].'</td>';
-                     if ($row['intensity8W4'] == 0 || $row['intensity8W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight8W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity8W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 9 && $row['setsW2'] < 9 && $row['setsW3'] < 9 && $row['setsW4'] < 9) {
-                  } else {
-                  if ($row['setsW1'] >= 9) {
-                     print '<th></th>';
-                     print '<td align=center></td>';
-                     print '<td align=center><b>9</b></td>';
-                     print '<td align=center>'.$row['reps9W1'].'</td>';
-                     if ($row['intensity9W1'] == 0 || $row['intensity9W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight9W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity9W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW2'] >= 9) {
-                     print '<td align=center><b>9</b></td>';
-                     print '<td align=center>'.$row['reps9W2'].'</td>';
-                     if ($row['intensity9W2'] == 0 || $row['intensity9W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight9W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity9W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 9) {
-                     print '<td align=center><b>9</b></td>';
-                     print '<td align=center>'.$row['reps9W3'].'</td>';
-                     if ($row['intensity9W3'] == 0 || $row['intensity9W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight9W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity9W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW4'] >= 9) {
-                     print '<td align=center><b>9</b></td>';
-                     print '<td align=center>'.$row['reps9W4'].'</td>';
-                     if ($row['intensity9W4'] == 0 || $row['intensity9W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight9W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity9W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($row['setsW1'] < 10 && $row['setsW2'] < 10 && $row['setsW3'] < 10 && $row['setsW4'] < 10) {
-                  } else {
-                  if ($row['setsW1'] >= 10) {
-                     print '<th></th>';
-                     print '<td align=center></td>';
-                     print '<td align=center><b>10</b></td>';
-                     print '<td align=center>'.$row['reps10W1'].'</td>';
-                     if ($row['intensity10W1'] == 0 || $row['intensity10W1'] === 0) {
-                         print '<td align=center>'.$row['calcWeight10W1'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity10W1'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW2'] >= 10) {
-                     print '<td align=center><b>10</b></td>';
-                     print '<td align=center>'.$row['reps10W2'].'</td>';
-                     if ($row['intensity10W2'] == 0 || $row['intensity10W2'] === 0) {
-                         print '<td align=center>'.$row['calcWeight10W2'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity10W2'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 10) {
-                     print '<td align=center><b>10</b></td>';
-                     print '<td align=center>'.$row['reps10W3'].'</td>';
-                     if ($row['intensity10W3'] == 0 || $row['intensity10W3'] === 0) {
-                         print '<td align=center>'.$row['calcWeight10W3'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity10W3'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  if ($row['setsW3'] >= 10) {
-                     print '<td align=center><b>10</b></td>';
-                     print '<td align=center>'.$row['reps10W4'].'</td>';
-                     if ($row['intensity10W4'] == 0 || $row['intensity10W4'] === 0) {
-                         print '<td align=center>'.$row['calcWeight10W4'].'</td>';
-                     } else {
-                         print '<td align=center>'.$row['intensity10W4'].'</td>';
-                     }
-                  } else {
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                     print '<td align=center></td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Tempo</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Rest</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['restW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Comments</th>';
-                  print '<td colspan=13>This is a test comment.  What do you think?</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<td colspan=14 bgcolor=#000000>';
-                  print '</td>';
-                  print '</tr>';
-                  print '</thead>';
-                  }
-                  print '</tbody>';
-                  print '</table>';
-                  print '</div>';
-                  print '</div>';
+                  print "</tbody>";
+                  print "</table>";
+                  print "</div>";
+                  print "</div>";
                   echo '<p class="pageBreak"></p>';
                   print "<hr id='removeHr'>";
+                  print "<br>";
 
-                  $sql = 'SELECT * FROM `'.$currentWorkoutTwo."` where athlete='$name' ORDER BY exerciseOrder";
+                  $sql = "SELECT * FROM `" . $currentWorkoutTwo . "` where athlete='$name' ORDER BY exerciseOrder";
 
                   $result = mysqli_query($connection, $sql);
 
-                  print '<h4><b><u> DAY TWO </u></b></h4>';
+                  print "<h4><b><u> DAY TWO </u></b></h4>";
+
+                  print "<h3> $tempTwo </h3>";
 
                   #Creates the table Header
                   print "<div class='table-responsive'>
                                        <div class=\"col-md-10\">
-                                       	<table class='table table-striped table-bordered table-condensed'>
-                                       		<thead>
-                                       		</thead>";
-                  print '<tbody>';
+                                         <table class='table table-striped table-bordered table-condensed'>
+                                           <thead>
+                                           </thead>";
+                  print "<tbody>";
+
 
                   #Prints out the exercises
-                  while ($row = mysqli_fetch_array($result)) {
-                  $numOfSets = $row['sets'];
-                  $tempTwo = strtoupper($tempTwo);
+                  while($row = mysqli_fetch_array($result))
+                  {
 
-                  print '<thead>';
-                  print '<tr>';
-                  print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempTwo</b></u></font></center></h4></th>";
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 1</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 2</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 3</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 4</b></td>';
+                     $tempOne = strtoupper($tempOne);
 
-                  print '</tr>';
-                  print '</thead>';
+                  print "<thead>";
+                     print "<tr>";
+                        print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 4</b></td>";
 
-                  print '<thead>';
-                  print '<tr>';
-                  print '<th>Exercise Order</th>';
-                  print '<td align=center>'.$row['exerciseOrder'].'</td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Exercise Name</th>';
-                  $tempExercise = strstr($row['exerciseName'], '-', true);
-                  print '<td align=center>'.$tempExercise.'</td>';
-                  if ($numOfSets <= $sets1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W1'].'</td>';
-                  if ($row['intensity1W1'] == 0 || $row['intensity1W1'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W1'].'</td>';
+                     print "</tr>";
+                     print "</thead>";
+
+                     print "<thead>";
+                     print "<tr>";
+                        print "<th>Exercise Order</th>";
+                        print "<td align=center>".$row['exerciseOrder']."</td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                     print "</tr>";
+                     print "<tr>";
+                        print "<th>Exercise Name</th>";
+                        $temp = strstr($row["exerciseName"], '-', true);
+                        print "<td align=center>".$temp."</td>";
+                        if ($row['setsW1'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W1']."</td>";
+                        print "<td align=center>".$row['intensity1W1']." | ".$row['calcWeight1W1']."</td>";
+                        print "<td align=center>".$row['percentage1W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W2']."</td>";
+                        print "<td align=center>".$row['intensity1W2']."|".$row['calcWeight1W2']."</td>";
+                        print "<td align=center>".$row['percentage1W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W3']."</td>";
+                        print "<td align=center>".$row['intensity1W3']."|".$row['calcWeight1W3']."</td>";
+                        print "<td align=center>".$row['percentage1W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W4']."</td>";
+                        print "<td align=center>".$row['intensity1W4']."|".$row['calcWeight1W4']."</td>";
+                        print "<td align=center>".$row['percentage1W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 2 && $row['setsW2'] < 2 && $row['setsW3'] < 2 && $row['setsW4'] < 2)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W2'].'</td>';
-                  if ($row['intensity1W2'] == 0 || $row['intensity1W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W1']."</td>";
+                        print "<td align=center>".$row['intensity2W1']."|".$row['calcWeight2W1']."</td>";
+                        print "<td align=center>".$row['percentage2W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W2']."</td>";
+                        print "<td align=center>".$row['intensity2W2']."|".$row['calcWeight2W2']."</td>";
+                        print "<td align=center>".$row['percentage2W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W3']."</td>";
+                        print "<td align=center>".$row['intensity2W3']."|".$row['calcWeight2W3']."</td>";
+                        print "<td align=center>".$row['percentage2W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W4']."</td>";
+                        print "<td align=center>".$row['intensity2W4']."|".$row['calcWeight2W4']."</td>";
+                        print "<td align=center>".$row['percentage2W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 3 && $row['setsW2'] < 3 && $row['setsW3'] < 3 && $row['setsW4'] < 3)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W3'].'</td>';
-                  if ($row['intensity1W3'] == 0 || $row['intensity1W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W1']."</td>";
+                        print "<td align=center>".$row['intensity3W1']."|".$row['calcWeight3W1']."</td>";
+                        print "<td align=center>".$row['percentage3W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W2']."</td>";
+                        print "<td align=center>".$row['intensity3W2']."|".$row['calcWeight3W2']."</td>";
+                        print "<td align=center>".$row['percentage3W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W3']."</td>";
+                        print "<td align=center>".$row['intensity3W3']."|".$row['calcWeight3W3']."</td>";
+                        print "<td align=center>".$row['percentage3W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W4']."</td>";
+                        print "<td align=center>".$row['intensity3W4']."|".$row['calcWeight3W4']."</td>";
+                        print "<td align=center>".$row['percentage3W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 4 && $row['setsW2'] < 4 && $row['setsW3'] < 4 && $row['setsW4'] < 4)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W4'].'</td>';
-                  if ($row['intensity1W4'] == 0 || $row['intensity1W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W1']."</td>";
+                        print "<td align=center>".$row['intensity4W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage4W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W2']."</td>";
+                        print "<td align=center>".$row['intensity4W2']."|".$row['calcWeight4W2']."</td>";
+                        print "<td align=center>".$row['percentage4W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W3']."</td>";
+                        print "<td align=center>".$row['intensity4W3']."|".$row['calcWeight4W3']."</td>";
+                        print "<td align=center>".$row['percentage4W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W4']."</td>";
+                        print "<td align=center>".$row['intensity4W4']."|".$row['calcWeight4W4']."</td>";
+                        print "<td align=center>".$row['percentage4W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 5 && $row['setsW2'] < 5 && $row['setsW3'] < 5 && $row['setsW4'] < 5)
+                  {
                   }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W1']."</td>";
+                        print "<td align=center>".$row['intensity5W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage5W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W2']."</td>";
+                        print "<td align=center>".$row['intensity5W2']."|".$row['calcWeight5W2']."</td>";
+                        print "<td align=center>".$row['percentage5W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W3']."</td>";
+                        print "<td align=center>".$row['intensity5W3']."|".$row['calcWeight5W3']."</td>";
+                        print "<td align=center>".$row['percentage5W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W4']."</td>";
+                        print "<td align=center>".$row['intensity5W4']."|".$row['calcWeight5W4']."</td>";
+                        print "<td align=center>".$row['percentage5W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 6 && $row['setsW2'] < 6 && $row['setsW3'] < 6 && $row['setsW4'] < 6)
+                  {
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 2) {
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W1'].'</td>';
-                  if ($row['intensity2W1'] == 0 || $row['intensity2W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W1'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W1']."</td>";
+                        print "<td align=center>".$row['intensity6W1']."|".$row['calcWeight6W1']."</td>";
+                        print "<td align=center>".$row['percentage6W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W2']."</td>";
+                        print "<td align=center>".$row['intensity6W2']."|".$row['calcWeight6W2']."</td>";
+                        print "<td align=center>".$row['percentage6W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W3']."</td>";
+                        print "<td align=center>".$row['intensity6W3']."|".$row['calcWeight6W3']."</td>";
+                        print "<td align=center>".$row['percentage6W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W4']."</td>";
+                        print "<td align=center>".$row['intensity6W4']."|".$row['calcWeight6W4']."</td>";
+                        print "<td align=center>".$row['percentage6W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 7 && $row['setsW2'] < 7 && $row['setsW3'] < 7 && $row['setsW4'] < 7)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W2'].'</td>';
-                  if ($row['intensity2W2'] == 0 || $row['intensity2W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W1']."</td>";
+                        print "<td align=center>".$row['intensity7W1']."|".$row['calcWeight7W1']."</td>";
+                        print "<td align=center>".$row['percentage7W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W2']."</td>";
+                        print "<td align=center>".$row['intensity7W2']."|".$row['calcWeight7W2']."</td>";
+                        print "<td align=center>".$row['percentage7W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W3']."</td>";
+                        print "<td align=center>".$row['intensity7W3']."|".$row['calcWeight7W3']."</td>";
+                        print "<td align=center>".$row['percentage7W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W4']."</td>";
+                        print "<td align=center>".$row['intensity7W4']."|".$row['calcWeight7W4']."</td>";
+                        print "<td align=center>".$row['percentage7W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 8 && $row['setsW2'] < 8 && $row['setsW3'] < 8 && $row['setsW4'] < 8)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W3'].'</td>';
-                  if ($row['intensity2W3'] == 0 || $row['intensity2W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W1']."</td>";
+                        print "<td align=center>".$row['intensity8W1']."|".$row['calcWeight8W1']."</td>";
+                        print "<td align=center>".$row['percentage8W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W2']."</td>";
+                        print "<td align=center>".$row['intensity8W2']."|".$row['calcWeight8W2']."</td>";
+                        print "<td align=center>".$row['percentage8W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W3']."</td>";
+                        print "<td align=center>".$row['intensity8W3']."|".$row['calcWeight8W3']."</td>";
+                        print "<td align=center>".$row['percentage8W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W4']."</td>";
+                        print "<td align=center>".$row['intensity8W4']."|".$row['calcWeight8W4']."</td>";
+                        print "<td align=center>".$row['percentage8W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 9 && $row['setsW2'] < 9 && $row['setsW3'] < 9 && $row['setsW4'] < 9)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W4'].'</td>';
-                  if ($row['intensity2W4'] == 0 || $row['intensity2W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W1']."</td>";
+                        print "<td align=center>".$row['intensity9W1']."|".$row['calcWeight9W1']."</td>";
+                        print "<td align=center>".$row['percentage9W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W2']."</td>";
+                        print "<td align=center>".$row['intensity9W2']."|".$row['calcWeight9W2']."</td>";
+                        print "<td align=center>".$row['percentage9W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W3']."</td>";
+                        print "<td align=center>".$row['intensity9W3']."|".$row['calcWeight9W3']."</td>";
+                        print "<td align=center>".$row['percentage9W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W4']."</td>";
+                        print "<td align=center>".$row['intensity9W4']."|".$row['calcWeight9W4']."</td>";
+                        print "<td align=center>".$row['percentage9W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 10 && $row['setsW2'] < 10 && $row['setsW3'] < 10 && $row['setsW4'] < 10)
+                  {
                   }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W1']."</td>";
+                        print "<td align=center>".$row['intensity10W1']."|".$row['calcWeight10W1']."</td>";
+                        print "<td align=center>".$row['percentage10W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W2']."</td>";
+                        print "<td align=center>".$row['intensity10W2']."|".$row['calcWeight10W2']."</td>";
+                        print "<td align=center>".$row['percentage10W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W3']."</td>";
+                        print "<td align=center>".$row['intensity10W3']."|".$row['calcWeight10W3']."</td>";
+                        print "<td align=center>".$row['percentage10W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W4']."</td>";
+                        print "<td align=center>".$row['intensity10W4']."|".$row['calcWeight10W4']."</td>";
+                        print "<td align=center>".$row['percentage10W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                  print "<th>Tempo</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['tempoW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW4']."</td>";
+                  print "</tr>";
+                     print "<tr>";
+                  print "<th>Rest</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['restW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW4']."</td>";
+                  print "</tr>";
+                  print "<tr>";
+                  print "<th>Comments</th>";
+                        print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                  print "</tr>";
+                     print "<tr>";
+                     print "<td colspan=18 bgcolor=#000000></td>";
+                     print "</tr>";
+                     print "</thead>";
+
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 3) {
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W1'].'</td>';
-                  if ($row['intensity3W1'] == 0 || $row['intensity3W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W1'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W2'].'</td>';
-                  if ($row['intensity3W2'] == 0 || $row['intensity3W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W2'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W3'].'</td>';
-                  if ($row['intensity3W3'] == 0 || $row['intensity3W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W3'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W4'].'</td>';
-                  if ($row['intensity3W4'] == 0 || $row['intensity3W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W4'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 4) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W1'].'</td>';
-                  if ($row['intensity4W1'] == 0 || $row['intensity4W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W1'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W2'].'</td>';
-                  if ($row['intensity4W2'] == 0 || $row['intensity4W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W2'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W3'].'</td>';
-                  if ($row['intensity4W3'] == 0 || $row['intensity4W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W3'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W4'].'</td>';
-                  if ($row['intensity4W4'] == 0 || $row['intensity4W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 5) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W1'].'</td>';
-                  if ($row['intensity5W1'] == 0 || $row['intensity5W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W1'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W2'].'</td>';
-                  if ($row['intensity5W2'] == 0 || $row['intensity5W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W2'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W3'].'</td>';
-                  if ($row['intensity5W3'] == 0 || $row['intensity5W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W3'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W4'].'</td>';
-                  if ($row['intensity5W4'] == 0 || $row['intensity5W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 6) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W1'].'</td>';
-                  if ($row['intensity6W1'] == 0 || $row['intensity6W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W1'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W2'].'</td>';
-                  if ($row['intensity6W2'] == 0 || $row['intensity6W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W2'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W3'].'</td>';
-                  if ($row['intensity6W3'] == 0 || $row['intensity6W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W3'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W4'].'</td>';
-                  if ($row['intensity6W4'] == 0 || $row['intensity6W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 7) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W1'].'</td>';
-                  if ($row['intensity7W1'] == 0 || $row['intensity7W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W1'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W2'].'</td>';
-                  if ($row['intensity7W2'] == 0 || $row['intensity7W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W2'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W3'].'</td>';
-                  if ($row['intensity7W3'] == 0 || $row['intensity7W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W3'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W4'].'</td>';
-                  if ($row['intensity7W4'] == 0 || $row['intensity7W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 8) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W1'].'</td>';
-                  if ($row['intensity8W1'] == 0 || $row['intensity8W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W1'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W2'].'</td>';
-                  if ($row['intensity8W2'] == 0 || $row['intensity8W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W2'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W3'].'</td>';
-                  if ($row['intensity8W3'] == 0 || $row['intensity8W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W3'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W4'].'</td>';
-                  if ($row['intensity8W4'] == 0 || $row['intensity8W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 9) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W1'].'</td>';
-                  if ($row['intensity9W1'] == 0 || $row['intensity9W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W1'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W2'].'</td>';
-                  if ($row['intensity9W2'] == 0 || $row['intensity9W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W2'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W3'].'</td>';
-                  if ($row['intensity9W3'] == 0 || $row['intensity9W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W3'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W4'].'</td>';
-                  if ($row['intensity9W4'] == 0 || $row['intensity9W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 10) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W1'].'</td>';
-                  if ($row['intensity10W1'] == 0 || $row['intensity10W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W1'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W2'].'</td>';
-                  if ($row['intensity10W2'] == 0 || $row['intensity10W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W2'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W3'].'</td>';
-                  if ($row['intensity10W3'] == 0 || $row['intensity10W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W3'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W4'].'</td>';
-                  if ($row['intensity10W4'] == 0 || $row['intensity10W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Tempo</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Rest</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['restW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<td colspan=14 bgcolor=#000000>';
-                  print '</td>';
-                  print '</tr>';
-                  print '</thead>';
-                  }
-                  print '</tbody>';
-                  print '</table>';
-                  print '</div>';
-                  print '</div>';
+                  print "</tbody>";
+                  print "</table>";
+                  print "</div>";
+                  print "</div>";
                   echo '<p class="pageBreak"></p>';
                   print "<hr id='removeHr'>";
+                  print "<br>";
 
-                  $sql = 'SELECT * FROM `'.$currentWorkoutThree."` where athlete='$name' ORDER BY exerciseOrder";
+
+
+                  $sql = "SELECT * FROM `" . $currentWorkoutThree . "` where athlete='$name' ORDER BY exerciseOrder";
 
                   $result = mysqli_query($connection, $sql);
 
-                  print '<h4><b><u> DAY THREE </u></b></h4>';
+                  print "<h4><b><u> DAY THREE </u></b></h4>";
+
+                  print "<h3> $tempThree </h3>";
 
                   #Creates the table Header
                   print "<div class='table-responsive'>
                                        <div class=\"col-md-10\">
-                                       	<table class='table table-striped table-bordered table-condensed'>
-                                       		<thead>
-                                       		</thead>";
-                  print '<tbody>';
+                                         <table class='table table-striped table-bordered table-condensed'>
+                                           <thead>
+                                           </thead>";
+                  print "<tbody>";
+
 
                   #Prints out the exercises
-                  while ($row = mysqli_fetch_array($result)) {
-                  $numOfSets = $row['sets'];
-                  $tempThree = strtoupper($tempThree);
+                  while($row = mysqli_fetch_array($result))
+                  {
 
-                  print '<thead>';
-                  print '<tr>';
-                  print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempThree</b></u></font></center></h4></th>";
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 1</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 2</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 3</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 4</b></td>';
+                     $tempOne = strtoupper($tempOne);
 
-                  print '</tr>';
-                  print '</thead>';
+                  print "<thead>";
+                     print "<tr>";
+                        print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 4</b></td>";
 
-                  print '<thead>';
-                  print '<tr>';
-                  print '<th>Exercise Order</th>';
-                  print '<td align=center>'.$row['exerciseOrder'].'</td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Exercise Name</th>';
-                  $tempExercise = strstr($row['exerciseName'], '-', true);
-                  print '<td align=center>'.$tempExercise.'</td>';
-                  if ($numOfSets <= $sets1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W1'].'</td>';
-                  if ($row['intensity1W1'] == 0 || $row['intensity1W1'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W1'].'</td>';
+                     print "</tr>";
+                     print "</thead>";
+
+                     print "<thead>";
+                     print "<tr>";
+                        print "<th>Exercise Order</th>";
+                        print "<td align=center>".$row['exerciseOrder']."</td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                     print "</tr>";
+                     print "<tr>";
+                        print "<th>Exercise Name</th>";
+                        $temp = strstr($row["exerciseName"], '-', true);
+                        print "<td align=center>".$temp."</td>";
+                        if ($row['setsW1'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W1']."</td>";
+                        print "<td align=center>".$row['intensity1W1']." | ".$row['calcWeight1W1']."</td>";
+                        print "<td align=center>".$row['percentage1W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W2']."</td>";
+                        print "<td align=center>".$row['intensity1W2']."|".$row['calcWeight1W2']."</td>";
+                        print "<td align=center>".$row['percentage1W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W3']."</td>";
+                        print "<td align=center>".$row['intensity1W3']."|".$row['calcWeight1W3']."</td>";
+                        print "<td align=center>".$row['percentage1W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W4']."</td>";
+                        print "<td align=center>".$row['intensity1W4']."|".$row['calcWeight1W4']."</td>";
+                        print "<td align=center>".$row['percentage1W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 2 && $row['setsW2'] < 2 && $row['setsW3'] < 2 && $row['setsW4'] < 2)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W2'].'</td>';
-                  if ($row['intensity1W2'] == 0 || $row['intensity1W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W1']."</td>";
+                        print "<td align=center>".$row['intensity2W1']."|".$row['calcWeight2W1']."</td>";
+                        print "<td align=center>".$row['percentage2W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W2']."</td>";
+                        print "<td align=center>".$row['intensity2W2']."|".$row['calcWeight2W2']."</td>";
+                        print "<td align=center>".$row['percentage2W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W3']."</td>";
+                        print "<td align=center>".$row['intensity2W3']."|".$row['calcWeight2W3']."</td>";
+                        print "<td align=center>".$row['percentage2W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W4']."</td>";
+                        print "<td align=center>".$row['intensity2W4']."|".$row['calcWeight2W4']."</td>";
+                        print "<td align=center>".$row['percentage2W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 3 && $row['setsW2'] < 3 && $row['setsW3'] < 3 && $row['setsW4'] < 3)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W3'].'</td>';
-                  if ($row['intensity1W3'] == 0 || $row['intensity1W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W1']."</td>";
+                        print "<td align=center>".$row['intensity3W1']."|".$row['calcWeight3W1']."</td>";
+                        print "<td align=center>".$row['percentage3W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W2']."</td>";
+                        print "<td align=center>".$row['intensity3W2']."|".$row['calcWeight3W2']."</td>";
+                        print "<td align=center>".$row['percentage3W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W3']."</td>";
+                        print "<td align=center>".$row['intensity3W3']."|".$row['calcWeight3W3']."</td>";
+                        print "<td align=center>".$row['percentage3W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W4']."</td>";
+                        print "<td align=center>".$row['intensity3W4']."|".$row['calcWeight3W4']."</td>";
+                        print "<td align=center>".$row['percentage3W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 4 && $row['setsW2'] < 4 && $row['setsW3'] < 4 && $row['setsW4'] < 4)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W4'].'</td>';
-                  if ($row['intensity1W4'] == 0 || $row['intensity1W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W1']."</td>";
+                        print "<td align=center>".$row['intensity4W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage4W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W2']."</td>";
+                        print "<td align=center>".$row['intensity4W2']."|".$row['calcWeight4W2']."</td>";
+                        print "<td align=center>".$row['percentage4W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W3']."</td>";
+                        print "<td align=center>".$row['intensity4W3']."|".$row['calcWeight4W3']."</td>";
+                        print "<td align=center>".$row['percentage4W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W4']."</td>";
+                        print "<td align=center>".$row['intensity4W4']."|".$row['calcWeight4W4']."</td>";
+                        print "<td align=center>".$row['percentage4W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 5 && $row['setsW2'] < 5 && $row['setsW3'] < 5 && $row['setsW4'] < 5)
+                  {
                   }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W1']."</td>";
+                        print "<td align=center>".$row['intensity5W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage5W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W2']."</td>";
+                        print "<td align=center>".$row['intensity5W2']."|".$row['calcWeight5W2']."</td>";
+                        print "<td align=center>".$row['percentage5W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W3']."</td>";
+                        print "<td align=center>".$row['intensity5W3']."|".$row['calcWeight5W3']."</td>";
+                        print "<td align=center>".$row['percentage5W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W4']."</td>";
+                        print "<td align=center>".$row['intensity5W4']."|".$row['calcWeight5W4']."</td>";
+                        print "<td align=center>".$row['percentage5W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 6 && $row['setsW2'] < 6 && $row['setsW3'] < 6 && $row['setsW4'] < 6)
+                  {
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 2) {
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W1'].'</td>';
-                  if ($row['intensity2W1'] == 0 || $row['intensity2W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W1'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W1']."</td>";
+                        print "<td align=center>".$row['intensity6W1']."|".$row['calcWeight6W1']."</td>";
+                        print "<td align=center>".$row['percentage6W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W2']."</td>";
+                        print "<td align=center>".$row['intensity6W2']."|".$row['calcWeight6W2']."</td>";
+                        print "<td align=center>".$row['percentage6W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W3']."</td>";
+                        print "<td align=center>".$row['intensity6W3']."|".$row['calcWeight6W3']."</td>";
+                        print "<td align=center>".$row['percentage6W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W4']."</td>";
+                        print "<td align=center>".$row['intensity6W4']."|".$row['calcWeight6W4']."</td>";
+                        print "<td align=center>".$row['percentage6W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 7 && $row['setsW2'] < 7 && $row['setsW3'] < 7 && $row['setsW4'] < 7)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W2'].'</td>';
-                  if ($row['intensity2W2'] == 0 || $row['intensity2W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W1']."</td>";
+                        print "<td align=center>".$row['intensity7W1']."|".$row['calcWeight7W1']."</td>";
+                        print "<td align=center>".$row['percentage7W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W2']."</td>";
+                        print "<td align=center>".$row['intensity7W2']."|".$row['calcWeight7W2']."</td>";
+                        print "<td align=center>".$row['percentage7W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W3']."</td>";
+                        print "<td align=center>".$row['intensity7W3']."|".$row['calcWeight7W3']."</td>";
+                        print "<td align=center>".$row['percentage7W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W4']."</td>";
+                        print "<td align=center>".$row['intensity7W4']."|".$row['calcWeight7W4']."</td>";
+                        print "<td align=center>".$row['percentage7W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 8 && $row['setsW2'] < 8 && $row['setsW3'] < 8 && $row['setsW4'] < 8)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W3'].'</td>';
-                  if ($row['intensity2W3'] == 0 || $row['intensity2W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W1']."</td>";
+                        print "<td align=center>".$row['intensity8W1']."|".$row['calcWeight8W1']."</td>";
+                        print "<td align=center>".$row['percentage8W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W2']."</td>";
+                        print "<td align=center>".$row['intensity8W2']."|".$row['calcWeight8W2']."</td>";
+                        print "<td align=center>".$row['percentage8W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W3']."</td>";
+                        print "<td align=center>".$row['intensity8W3']."|".$row['calcWeight8W3']."</td>";
+                        print "<td align=center>".$row['percentage8W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W4']."</td>";
+                        print "<td align=center>".$row['intensity8W4']."|".$row['calcWeight8W4']."</td>";
+                        print "<td align=center>".$row['percentage8W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 9 && $row['setsW2'] < 9 && $row['setsW3'] < 9 && $row['setsW4'] < 9)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W4'].'</td>';
-                  if ($row['intensity2W4'] == 0 || $row['intensity2W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W1']."</td>";
+                        print "<td align=center>".$row['intensity9W1']."|".$row['calcWeight9W1']."</td>";
+                        print "<td align=center>".$row['percentage9W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W2']."</td>";
+                        print "<td align=center>".$row['intensity9W2']."|".$row['calcWeight9W2']."</td>";
+                        print "<td align=center>".$row['percentage9W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W3']."</td>";
+                        print "<td align=center>".$row['intensity9W3']."|".$row['calcWeight9W3']."</td>";
+                        print "<td align=center>".$row['percentage9W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W4']."</td>";
+                        print "<td align=center>".$row['intensity9W4']."|".$row['calcWeight9W4']."</td>";
+                        print "<td align=center>".$row['percentage9W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 10 && $row['setsW2'] < 10 && $row['setsW3'] < 10 && $row['setsW4'] < 10)
+                  {
                   }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W1']."</td>";
+                        print "<td align=center>".$row['intensity10W1']."|".$row['calcWeight10W1']."</td>";
+                        print "<td align=center>".$row['percentage10W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W2']."</td>";
+                        print "<td align=center>".$row['intensity10W2']."|".$row['calcWeight10W2']."</td>";
+                        print "<td align=center>".$row['percentage10W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W3']."</td>";
+                        print "<td align=center>".$row['intensity10W3']."|".$row['calcWeight10W3']."</td>";
+                        print "<td align=center>".$row['percentage10W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W4']."</td>";
+                        print "<td align=center>".$row['intensity10W4']."|".$row['calcWeight10W4']."</td>";
+                        print "<td align=center>".$row['percentage10W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                  print "<th>Tempo</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['tempoW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW4']."</td>";
+                  print "</tr>";
+                     print "<tr>";
+                  print "<th>Rest</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['restW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW4']."</td>";
+                  print "</tr>";
+                  print "<tr>";
+                  print "<th>Comments</th>";
+                        print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                  print "</tr>";
+                     print "<tr>";
+                     print "<td colspan=18 bgcolor=#000000></td>";
+                     print "</tr>";
+                     print "</thead>";
+
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 3) {
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W1'].'</td>';
-                  if ($row['intensity3W1'] == 0 || $row['intensity3W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W1'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W2'].'</td>';
-                  if ($row['intensity3W2'] == 0 || $row['intensity3W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W2'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W3'].'</td>';
-                  if ($row['intensity3W3'] == 0 || $row['intensity3W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W3'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W4'].'</td>';
-                  if ($row['intensity3W4'] == 0 || $row['intensity3W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W4'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 4) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W1'].'</td>';
-                  if ($row['intensity4W1'] == 0 || $row['intensity4W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W1'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W2'].'</td>';
-                  if ($row['intensity4W2'] == 0 || $row['intensity4W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W2'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W3'].'</td>';
-                  if ($row['intensity4W3'] == 0 || $row['intensity4W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W3'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W4'].'</td>';
-                  if ($row['intensity4W4'] == 0 || $row['intensity4W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 5) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W1'].'</td>';
-                  if ($row['intensity5W1'] == 0 || $row['intensity5W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W1'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W2'].'</td>';
-                  if ($row['intensity5W2'] == 0 || $row['intensity5W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W2'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W3'].'</td>';
-                  if ($row['intensity5W3'] == 0 || $row['intensity5W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W3'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W4'].'</td>';
-                  if ($row['intensity5W4'] == 0 || $row['intensity5W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 6) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W1'].'</td>';
-                  if ($row['intensity6W1'] == 0 || $row['intensity6W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W1'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W2'].'</td>';
-                  if ($row['intensity6W2'] == 0 || $row['intensity6W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W2'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W3'].'</td>';
-                  if ($row['intensity6W3'] == 0 || $row['intensity6W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W3'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W4'].'</td>';
-                  if ($row['intensity6W4'] == 0 || $row['intensity6W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 7) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W1'].'</td>';
-                  if ($row['intensity7W1'] == 0 || $row['intensity7W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W1'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W2'].'</td>';
-                  if ($row['intensity7W2'] == 0 || $row['intensity7W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W2'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W3'].'</td>';
-                  if ($row['intensity7W3'] == 0 || $row['intensity7W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W3'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W4'].'</td>';
-                  if ($row['intensity7W4'] == 0 || $row['intensity7W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 8) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W1'].'</td>';
-                  if ($row['intensity8W1'] == 0 || $row['intensity8W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W1'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W2'].'</td>';
-                  if ($row['intensity8W2'] == 0 || $row['intensity8W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W2'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W3'].'</td>';
-                  if ($row['intensity8W3'] == 0 || $row['intensity8W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W3'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W4'].'</td>';
-                  if ($row['intensity8W4'] == 0 || $row['intensity8W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 9) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W1'].'</td>';
-                  if ($row['intensity9W1'] == 0 || $row['intensity9W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W1'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W2'].'</td>';
-                  if ($row['intensity9W2'] == 0 || $row['intensity9W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W2'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W3'].'</td>';
-                  if ($row['intensity9W3'] == 0 || $row['intensity9W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W3'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W4'].'</td>';
-                  if ($row['intensity9W4'] == 0 || $row['intensity9W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 10) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W1'].'</td>';
-                  if ($row['intensity10W1'] == 0 || $row['intensity10W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W1'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W2'].'</td>';
-                  if ($row['intensity10W2'] == 0 || $row['intensity10W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W2'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W3'].'</td>';
-                  if ($row['intensity10W3'] == 0 || $row['intensity10W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W3'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W4'].'</td>';
-                  if ($row['intensity10W4'] == 0 || $row['intensity10W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Tempo</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Rest</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['restW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<td colspan=14 bgcolor=#000000>';
-                  print '</td>';
-                  print '</tr>';
-                  print '</thead>';
-                  }
-                  print '</tbody>';
-                  print '</table>';
-                  print '</div>';
-                  print '</div>';
+                  print "</tbody>";
+                  print "</table>";
+                  print "</div>";
+                  print "</div>";
                   echo '<p class="pageBreak"></p>';
                   print "<hr id='removeHr'>";
+                  print "<br>";
 
-                  $sql = 'SELECT * FROM `'.$currentWorkoutFour."` where athlete='$name' ORDER BY exerciseOrder";
+
+                  $sql = "SELECT * FROM `" . $currentWorkoutFour . "` where athlete='$name' ORDER BY exerciseOrder";
 
                   $result = mysqli_query($connection, $sql);
 
-                  print '<h4><b><u> DAY FOUR </u></b></h4>';
+                  print "<h4><b><u> DAY FOUR </u></b></h4>";
+
+                  print "<h3> $tempFour </h3>";
 
                   #Creates the table Header
                   print "<div class='table-responsive'>
                                        <div class=\"col-md-10\">
-                                       	<table class='table table-striped table-bordered table-condensed'>
-                                       		<thead>
-                                       		</thead>";
-                  print '<tbody>';
+                                         <table class='table table-striped table-bordered table-condensed'>
+                                           <thead>
+                                           </thead>";
+                  print "<tbody>";
+
 
                   #Prints out the exercises
-                  while ($row = mysqli_fetch_array($result)) {
-                  $numOfSets = $row['sets'];
-                  $tempFour = strtoupper($tempFour);
+                  while($row = mysqli_fetch_array($result))
+                  {
 
-                  print '<thead>';
-                  print '<tr>';
-                  print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempFour</b></u></font></center></h4></th>";
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 1</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 2</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 3</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 4</b></td>';
+                     $tempOne = strtoupper($tempOne);
 
-                  print '</tr>';
-                  print '</thead>';
+                  print "<thead>";
+                     print "<tr>";
+                        print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 4</b></td>";
 
-                  print '<thead>';
-                  print '<tr>';
-                  print '<th>Exercise Order</th>';
-                  print '<td align=center>'.$row['exerciseOrder'].'</td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Exercise Name</th>';
-                  $tempExercise = strstr($row['exerciseName'], '-', true);
-                  print '<td align=center>'.$tempExercise.'</td>';
-                  if ($numOfSets <= $sets1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W1'].'</td>';
-                  if ($row['intensity1W1'] == 0 || $row['intensity1W1'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W1'].'</td>';
+                     print "</tr>";
+                     print "</thead>";
+
+                     print "<thead>";
+                     print "<tr>";
+                        print "<th>Exercise Order</th>";
+                        print "<td align=center>".$row['exerciseOrder']."</td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                     print "</tr>";
+                     print "<tr>";
+                        print "<th>Exercise Name</th>";
+                        $temp = strstr($row["exerciseName"], '-', true);
+                        print "<td align=center>".$temp."</td>";
+                        if ($row['setsW1'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W1']."</td>";
+                        print "<td align=center>".$row['intensity1W1']." | ".$row['calcWeight1W1']."</td>";
+                        print "<td align=center>".$row['percentage1W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W2']."</td>";
+                        print "<td align=center>".$row['intensity1W2']."|".$row['calcWeight1W2']."</td>";
+                        print "<td align=center>".$row['percentage1W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W3']."</td>";
+                        print "<td align=center>".$row['intensity1W3']."|".$row['calcWeight1W3']."</td>";
+                        print "<td align=center>".$row['percentage1W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W4']."</td>";
+                        print "<td align=center>".$row['intensity1W4']."|".$row['calcWeight1W4']."</td>";
+                        print "<td align=center>".$row['percentage1W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 2 && $row['setsW2'] < 2 && $row['setsW3'] < 2 && $row['setsW4'] < 2)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W2'].'</td>';
-                  if ($row['intensity1W2'] == 0 || $row['intensity1W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W1']."</td>";
+                        print "<td align=center>".$row['intensity2W1']."|".$row['calcWeight2W1']."</td>";
+                        print "<td align=center>".$row['percentage2W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W2']."</td>";
+                        print "<td align=center>".$row['intensity2W2']."|".$row['calcWeight2W2']."</td>";
+                        print "<td align=center>".$row['percentage2W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W3']."</td>";
+                        print "<td align=center>".$row['intensity2W3']."|".$row['calcWeight2W3']."</td>";
+                        print "<td align=center>".$row['percentage2W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W4']."</td>";
+                        print "<td align=center>".$row['intensity2W4']."|".$row['calcWeight2W4']."</td>";
+                        print "<td align=center>".$row['percentage2W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 3 && $row['setsW2'] < 3 && $row['setsW3'] < 3 && $row['setsW4'] < 3)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W3'].'</td>';
-                  if ($row['intensity1W3'] == 0 || $row['intensity1W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W1']."</td>";
+                        print "<td align=center>".$row['intensity3W1']."|".$row['calcWeight3W1']."</td>";
+                        print "<td align=center>".$row['percentage3W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W2']."</td>";
+                        print "<td align=center>".$row['intensity3W2']."|".$row['calcWeight3W2']."</td>";
+                        print "<td align=center>".$row['percentage3W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W3']."</td>";
+                        print "<td align=center>".$row['intensity3W3']."|".$row['calcWeight3W3']."</td>";
+                        print "<td align=center>".$row['percentage3W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W4']."</td>";
+                        print "<td align=center>".$row['intensity3W4']."|".$row['calcWeight3W4']."</td>";
+                        print "<td align=center>".$row['percentage3W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 4 && $row['setsW2'] < 4 && $row['setsW3'] < 4 && $row['setsW4'] < 4)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W4'].'</td>';
-                  if ($row['intensity1W4'] == 0 || $row['intensity1W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W1']."</td>";
+                        print "<td align=center>".$row['intensity4W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage4W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W2']."</td>";
+                        print "<td align=center>".$row['intensity4W2']."|".$row['calcWeight4W2']."</td>";
+                        print "<td align=center>".$row['percentage4W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W3']."</td>";
+                        print "<td align=center>".$row['intensity4W3']."|".$row['calcWeight4W3']."</td>";
+                        print "<td align=center>".$row['percentage4W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W4']."</td>";
+                        print "<td align=center>".$row['intensity4W4']."|".$row['calcWeight4W4']."</td>";
+                        print "<td align=center>".$row['percentage4W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 5 && $row['setsW2'] < 5 && $row['setsW3'] < 5 && $row['setsW4'] < 5)
+                  {
                   }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W1']."</td>";
+                        print "<td align=center>".$row['intensity5W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage5W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W2']."</td>";
+                        print "<td align=center>".$row['intensity5W2']."|".$row['calcWeight5W2']."</td>";
+                        print "<td align=center>".$row['percentage5W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W3']."</td>";
+                        print "<td align=center>".$row['intensity5W3']."|".$row['calcWeight5W3']."</td>";
+                        print "<td align=center>".$row['percentage5W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W4']."</td>";
+                        print "<td align=center>".$row['intensity5W4']."|".$row['calcWeight5W4']."</td>";
+                        print "<td align=center>".$row['percentage5W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 6 && $row['setsW2'] < 6 && $row['setsW3'] < 6 && $row['setsW4'] < 6)
+                  {
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 2) {
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W1'].'</td>';
-                  if ($row['intensity2W1'] == 0 || $row['intensity2W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W1'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W1']."</td>";
+                        print "<td align=center>".$row['intensity6W1']."|".$row['calcWeight6W1']."</td>";
+                        print "<td align=center>".$row['percentage6W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W2']."</td>";
+                        print "<td align=center>".$row['intensity6W2']."|".$row['calcWeight6W2']."</td>";
+                        print "<td align=center>".$row['percentage6W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W3']."</td>";
+                        print "<td align=center>".$row['intensity6W3']."|".$row['calcWeight6W3']."</td>";
+                        print "<td align=center>".$row['percentage6W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W4']."</td>";
+                        print "<td align=center>".$row['intensity6W4']."|".$row['calcWeight6W4']."</td>";
+                        print "<td align=center>".$row['percentage6W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 7 && $row['setsW2'] < 7 && $row['setsW3'] < 7 && $row['setsW4'] < 7)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W2'].'</td>';
-                  if ($row['intensity2W2'] == 0 || $row['intensity2W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W1']."</td>";
+                        print "<td align=center>".$row['intensity7W1']."|".$row['calcWeight7W1']."</td>";
+                        print "<td align=center>".$row['percentage7W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W2']."</td>";
+                        print "<td align=center>".$row['intensity7W2']."|".$row['calcWeight7W2']."</td>";
+                        print "<td align=center>".$row['percentage7W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W3']."</td>";
+                        print "<td align=center>".$row['intensity7W3']."|".$row['calcWeight7W3']."</td>";
+                        print "<td align=center>".$row['percentage7W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W4']."</td>";
+                        print "<td align=center>".$row['intensity7W4']."|".$row['calcWeight7W4']."</td>";
+                        print "<td align=center>".$row['percentage7W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 8 && $row['setsW2'] < 8 && $row['setsW3'] < 8 && $row['setsW4'] < 8)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W3'].'</td>';
-                  if ($row['intensity2W3'] == 0 || $row['intensity2W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W1']."</td>";
+                        print "<td align=center>".$row['intensity8W1']."|".$row['calcWeight8W1']."</td>";
+                        print "<td align=center>".$row['percentage8W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W2']."</td>";
+                        print "<td align=center>".$row['intensity8W2']."|".$row['calcWeight8W2']."</td>";
+                        print "<td align=center>".$row['percentage8W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W3']."</td>";
+                        print "<td align=center>".$row['intensity8W3']."|".$row['calcWeight8W3']."</td>";
+                        print "<td align=center>".$row['percentage8W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W4']."</td>";
+                        print "<td align=center>".$row['intensity8W4']."|".$row['calcWeight8W4']."</td>";
+                        print "<td align=center>".$row['percentage8W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 9 && $row['setsW2'] < 9 && $row['setsW3'] < 9 && $row['setsW4'] < 9)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W4'].'</td>';
-                  if ($row['intensity2W4'] == 0 || $row['intensity2W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W1']."</td>";
+                        print "<td align=center>".$row['intensity9W1']."|".$row['calcWeight9W1']."</td>";
+                        print "<td align=center>".$row['percentage9W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W2']."</td>";
+                        print "<td align=center>".$row['intensity9W2']."|".$row['calcWeight9W2']."</td>";
+                        print "<td align=center>".$row['percentage9W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W3']."</td>";
+                        print "<td align=center>".$row['intensity9W3']."|".$row['calcWeight9W3']."</td>";
+                        print "<td align=center>".$row['percentage9W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W4']."</td>";
+                        print "<td align=center>".$row['intensity9W4']."|".$row['calcWeight9W4']."</td>";
+                        print "<td align=center>".$row['percentage9W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 10 && $row['setsW2'] < 10 && $row['setsW3'] < 10 && $row['setsW4'] < 10)
+                  {
                   }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W1']."</td>";
+                        print "<td align=center>".$row['intensity10W1']."|".$row['calcWeight10W1']."</td>";
+                        print "<td align=center>".$row['percentage10W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W2']."</td>";
+                        print "<td align=center>".$row['intensity10W2']."|".$row['calcWeight10W2']."</td>";
+                        print "<td align=center>".$row['percentage10W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W3']."</td>";
+                        print "<td align=center>".$row['intensity10W3']."|".$row['calcWeight10W3']."</td>";
+                        print "<td align=center>".$row['percentage10W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W4']."</td>";
+                        print "<td align=center>".$row['intensity10W4']."|".$row['calcWeight10W4']."</td>";
+                        print "<td align=center>".$row['percentage10W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                  print "<th>Tempo</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['tempoW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW4']."</td>";
+                  print "</tr>";
+                     print "<tr>";
+                  print "<th>Rest</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['restW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW4']."</td>";
+                  print "</tr>";
+                  print "<tr>";
+                  print "<th>Comments</th>";
+                        print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                  print "</tr>";
+                     print "<tr>";
+                     print "<td colspan=18 bgcolor=#000000></td>";
+                     print "</tr>";
+                     print "</thead>";
+
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 3) {
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W1'].'</td>';
-                  if ($row['intensity3W1'] == 0 || $row['intensity3W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W1'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W2'].'</td>';
-                  if ($row['intensity3W2'] == 0 || $row['intensity3W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W2'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W3'].'</td>';
-                  if ($row['intensity3W3'] == 0 || $row['intensity3W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W3'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W4'].'</td>';
-                  if ($row['intensity3W4'] == 0 || $row['intensity3W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W4'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 4) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W1'].'</td>';
-                  if ($row['intensity4W1'] == 0 || $row['intensity4W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W1'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W2'].'</td>';
-                  if ($row['intensity4W2'] == 0 || $row['intensity4W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W2'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W3'].'</td>';
-                  if ($row['intensity4W3'] == 0 || $row['intensity4W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W3'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W4'].'</td>';
-                  if ($row['intensity4W4'] == 0 || $row['intensity4W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 5) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W1'].'</td>';
-                  if ($row['intensity5W1'] == 0 || $row['intensity5W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W1'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W2'].'</td>';
-                  if ($row['intensity5W2'] == 0 || $row['intensity5W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W2'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W3'].'</td>';
-                  if ($row['intensity5W3'] == 0 || $row['intensity5W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W3'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W4'].'</td>';
-                  if ($row['intensity5W4'] == 0 || $row['intensity5W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 6) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W1'].'</td>';
-                  if ($row['intensity6W1'] == 0 || $row['intensity6W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W1'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W2'].'</td>';
-                  if ($row['intensity6W2'] == 0 || $row['intensity6W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W2'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W3'].'</td>';
-                  if ($row['intensity6W3'] == 0 || $row['intensity6W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W3'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W4'].'</td>';
-                  if ($row['intensity6W4'] == 0 || $row['intensity6W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 7) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W1'].'</td>';
-                  if ($row['intensity7W1'] == 0 || $row['intensity7W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W1'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W2'].'</td>';
-                  if ($row['intensity7W2'] == 0 || $row['intensity7W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W2'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W3'].'</td>';
-                  if ($row['intensity7W3'] == 0 || $row['intensity7W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W3'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W4'].'</td>';
-                  if ($row['intensity7W4'] == 0 || $row['intensity7W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 8) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W1'].'</td>';
-                  if ($row['intensity8W1'] == 0 || $row['intensity8W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W1'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W2'].'</td>';
-                  if ($row['intensity8W2'] == 0 || $row['intensity8W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W2'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W3'].'</td>';
-                  if ($row['intensity8W3'] == 0 || $row['intensity8W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W3'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W4'].'</td>';
-                  if ($row['intensity8W4'] == 0 || $row['intensity8W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 9) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W1'].'</td>';
-                  if ($row['intensity9W1'] == 0 || $row['intensity9W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W1'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W2'].'</td>';
-                  if ($row['intensity9W2'] == 0 || $row['intensity9W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W2'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W3'].'</td>';
-                  if ($row['intensity9W3'] == 0 || $row['intensity9W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W3'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W4'].'</td>';
-                  if ($row['intensity9W4'] == 0 || $row['intensity9W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 10) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W1'].'</td>';
-                  if ($row['intensity10W1'] == 0 || $row['intensity10W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W1'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W2'].'</td>';
-                  if ($row['intensity10W2'] == 0 || $row['intensity10W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W2'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W3'].'</td>';
-                  if ($row['intensity10W3'] == 0 || $row['intensity10W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W3'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W4'].'</td>';
-                  if ($row['intensity10W4'] == 0 || $row['intensity10W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Tempo</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Rest</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['restW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<td colspan=14 bgcolor=#000000>';
-                  print '</td>';
-                  print '</tr>';
-                  print '</thead>';
-                  }
-                  print '</tbody>';
-                  print '</table>';
-                  print '</div>';
-                  print '</div>';
+                  print "</tbody>";
+                  print "</table>";
+                  print "</div>";
+                  print "</div>";
                   echo '<p class="pageBreak"></p>';
                   print "<hr id='removeHr'>";
+                  print "<br>";
 
-                  $sql = 'SELECT * FROM `'.$currentWorkoutFive."` where athlete='$name' ORDER BY exerciseOrder";
+
+                  $sql = "SELECT * FROM `" . $currentWorkoutFive . "` where athlete='$name' ORDER BY exerciseOrder";
 
                   $result = mysqli_query($connection, $sql);
 
-                  print '<h4><b><u> DAY FIVE </u></b></h4>';
+                  print "<h4><b><u> DAY FIVE </u></b></h4>";
+
+                  print "<h3> $tempFive </h3>";
 
                   #Creates the table Header
                   print "<div class='table-responsive'>
                                        <div class=\"col-md-10\">
-                                       	<table class='table table-striped table-bordered table-condensed'>
-                                       		<thead>
-                                       		</thead>";
-                  print '<tbody>';
+                                         <table class='table table-striped table-bordered table-condensed'>
+                                           <thead>
+                                           </thead>";
+                  print "<tbody>";
+
 
                   #Prints out the exercises
-                  while ($row = mysqli_fetch_array($result)) {
-                  $numOfSets = $row['sets'];
-                  $tempFive = strtoupper($tempFive);
+                  while($row = mysqli_fetch_array($result))
+                  {
 
-                  print '<thead>';
-                  print '<tr>';
-                  print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempFive</b></u></font></center></h4></th>";
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 1</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 2</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 3</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 4</b></td>';
+                     $tempOne = strtoupper($tempOne);
 
-                  print '</tr>';
-                  print '</thead>';
+                  print "<thead>";
+                     print "<tr>";
+                        print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 4</b></td>";
 
-                  print '<thead>';
-                  print '<tr>';
-                  print '<th>Exercise Order</th>';
-                  print '<td align=center>'.$row['exerciseOrder'].'</td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Exercise Name</th>';
-                  $tempExercise = strstr($row['exerciseName'], '-', true);
-                  print '<td align=center>'.$tempExercise.'</td>';
-                  if ($numOfSets <= $sets1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W1'].'</td>';
-                  if ($row['intensity1W1'] == 0 || $row['intensity1W1'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W1'].'</td>';
+                     print "</tr>";
+                     print "</thead>";
+
+                     print "<thead>";
+                     print "<tr>";
+                        print "<th>Exercise Order</th>";
+                        print "<td align=center>".$row['exerciseOrder']."</td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                     print "</tr>";
+                     print "<tr>";
+                        print "<th>Exercise Name</th>";
+                        $temp = strstr($row["exerciseName"], '-', true);
+                        print "<td align=center>".$temp."</td>";
+                        if ($row['setsW1'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W1']."</td>";
+                        print "<td align=center>".$row['intensity1W1']." | ".$row['calcWeight1W1']."</td>";
+                        print "<td align=center>".$row['percentage1W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W2']."</td>";
+                        print "<td align=center>".$row['intensity1W2']."|".$row['calcWeight1W2']."</td>";
+                        print "<td align=center>".$row['percentage1W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W3']."</td>";
+                        print "<td align=center>".$row['intensity1W3']."|".$row['calcWeight1W3']."</td>";
+                        print "<td align=center>".$row['percentage1W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W4']."</td>";
+                        print "<td align=center>".$row['intensity1W4']."|".$row['calcWeight1W4']."</td>";
+                        print "<td align=center>".$row['percentage1W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 2 && $row['setsW2'] < 2 && $row['setsW3'] < 2 && $row['setsW4'] < 2)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W2'].'</td>';
-                  if ($row['intensity1W2'] == 0 || $row['intensity1W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W1']."</td>";
+                        print "<td align=center>".$row['intensity2W1']."|".$row['calcWeight2W1']."</td>";
+                        print "<td align=center>".$row['percentage2W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W2']."</td>";
+                        print "<td align=center>".$row['intensity2W2']."|".$row['calcWeight2W2']."</td>";
+                        print "<td align=center>".$row['percentage2W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W3']."</td>";
+                        print "<td align=center>".$row['intensity2W3']."|".$row['calcWeight2W3']."</td>";
+                        print "<td align=center>".$row['percentage2W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W4']."</td>";
+                        print "<td align=center>".$row['intensity2W4']."|".$row['calcWeight2W4']."</td>";
+                        print "<td align=center>".$row['percentage2W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 3 && $row['setsW2'] < 3 && $row['setsW3'] < 3 && $row['setsW4'] < 3)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W3'].'</td>';
-                  if ($row['intensity1W3'] == 0 || $row['intensity1W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W1']."</td>";
+                        print "<td align=center>".$row['intensity3W1']."|".$row['calcWeight3W1']."</td>";
+                        print "<td align=center>".$row['percentage3W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W2']."</td>";
+                        print "<td align=center>".$row['intensity3W2']."|".$row['calcWeight3W2']."</td>";
+                        print "<td align=center>".$row['percentage3W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W3']."</td>";
+                        print "<td align=center>".$row['intensity3W3']."|".$row['calcWeight3W3']."</td>";
+                        print "<td align=center>".$row['percentage3W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W4']."</td>";
+                        print "<td align=center>".$row['intensity3W4']."|".$row['calcWeight3W4']."</td>";
+                        print "<td align=center>".$row['percentage3W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 4 && $row['setsW2'] < 4 && $row['setsW3'] < 4 && $row['setsW4'] < 4)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W4'].'</td>';
-                  if ($row['intensity1W4'] == 0 || $row['intensity1W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W1']."</td>";
+                        print "<td align=center>".$row['intensity4W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage4W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W2']."</td>";
+                        print "<td align=center>".$row['intensity4W2']."|".$row['calcWeight4W2']."</td>";
+                        print "<td align=center>".$row['percentage4W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W3']."</td>";
+                        print "<td align=center>".$row['intensity4W3']."|".$row['calcWeight4W3']."</td>";
+                        print "<td align=center>".$row['percentage4W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W4']."</td>";
+                        print "<td align=center>".$row['intensity4W4']."|".$row['calcWeight4W4']."</td>";
+                        print "<td align=center>".$row['percentage4W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 5 && $row['setsW2'] < 5 && $row['setsW3'] < 5 && $row['setsW4'] < 5)
+                  {
                   }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W1']."</td>";
+                        print "<td align=center>".$row['intensity5W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage5W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W2']."</td>";
+                        print "<td align=center>".$row['intensity5W2']."|".$row['calcWeight5W2']."</td>";
+                        print "<td align=center>".$row['percentage5W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W3']."</td>";
+                        print "<td align=center>".$row['intensity5W3']."|".$row['calcWeight5W3']."</td>";
+                        print "<td align=center>".$row['percentage5W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W4']."</td>";
+                        print "<td align=center>".$row['intensity5W4']."|".$row['calcWeight5W4']."</td>";
+                        print "<td align=center>".$row['percentage5W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 6 && $row['setsW2'] < 6 && $row['setsW3'] < 6 && $row['setsW4'] < 6)
+                  {
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 2) {
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W1'].'</td>';
-                  if ($row['intensity2W1'] == 0 || $row['intensity2W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W1'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W1']."</td>";
+                        print "<td align=center>".$row['intensity6W1']."|".$row['calcWeight6W1']."</td>";
+                        print "<td align=center>".$row['percentage6W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W2']."</td>";
+                        print "<td align=center>".$row['intensity6W2']."|".$row['calcWeight6W2']."</td>";
+                        print "<td align=center>".$row['percentage6W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W3']."</td>";
+                        print "<td align=center>".$row['intensity6W3']."|".$row['calcWeight6W3']."</td>";
+                        print "<td align=center>".$row['percentage6W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W4']."</td>";
+                        print "<td align=center>".$row['intensity6W4']."|".$row['calcWeight6W4']."</td>";
+                        print "<td align=center>".$row['percentage6W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 7 && $row['setsW2'] < 7 && $row['setsW3'] < 7 && $row['setsW4'] < 7)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W2'].'</td>';
-                  if ($row['intensity2W2'] == 0 || $row['intensity2W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W1']."</td>";
+                        print "<td align=center>".$row['intensity7W1']."|".$row['calcWeight7W1']."</td>";
+                        print "<td align=center>".$row['percentage7W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W2']."</td>";
+                        print "<td align=center>".$row['intensity7W2']."|".$row['calcWeight7W2']."</td>";
+                        print "<td align=center>".$row['percentage7W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W3']."</td>";
+                        print "<td align=center>".$row['intensity7W3']."|".$row['calcWeight7W3']."</td>";
+                        print "<td align=center>".$row['percentage7W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W4']."</td>";
+                        print "<td align=center>".$row['intensity7W4']."|".$row['calcWeight7W4']."</td>";
+                        print "<td align=center>".$row['percentage7W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 8 && $row['setsW2'] < 8 && $row['setsW3'] < 8 && $row['setsW4'] < 8)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W3'].'</td>';
-                  if ($row['intensity2W3'] == 0 || $row['intensity2W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W1']."</td>";
+                        print "<td align=center>".$row['intensity8W1']."|".$row['calcWeight8W1']."</td>";
+                        print "<td align=center>".$row['percentage8W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W2']."</td>";
+                        print "<td align=center>".$row['intensity8W2']."|".$row['calcWeight8W2']."</td>";
+                        print "<td align=center>".$row['percentage8W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W3']."</td>";
+                        print "<td align=center>".$row['intensity8W3']."|".$row['calcWeight8W3']."</td>";
+                        print "<td align=center>".$row['percentage8W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W4']."</td>";
+                        print "<td align=center>".$row['intensity8W4']."|".$row['calcWeight8W4']."</td>";
+                        print "<td align=center>".$row['percentage8W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 9 && $row['setsW2'] < 9 && $row['setsW3'] < 9 && $row['setsW4'] < 9)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W4'].'</td>';
-                  if ($row['intensity2W4'] == 0 || $row['intensity2W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W1']."</td>";
+                        print "<td align=center>".$row['intensity9W1']."|".$row['calcWeight9W1']."</td>";
+                        print "<td align=center>".$row['percentage9W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W2']."</td>";
+                        print "<td align=center>".$row['intensity9W2']."|".$row['calcWeight9W2']."</td>";
+                        print "<td align=center>".$row['percentage9W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W3']."</td>";
+                        print "<td align=center>".$row['intensity9W3']."|".$row['calcWeight9W3']."</td>";
+                        print "<td align=center>".$row['percentage9W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W4']."</td>";
+                        print "<td align=center>".$row['intensity9W4']."|".$row['calcWeight9W4']."</td>";
+                        print "<td align=center>".$row['percentage9W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 10 && $row['setsW2'] < 10 && $row['setsW3'] < 10 && $row['setsW4'] < 10)
+                  {
                   }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W1']."</td>";
+                        print "<td align=center>".$row['intensity10W1']."|".$row['calcWeight10W1']."</td>";
+                        print "<td align=center>".$row['percentage10W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W2']."</td>";
+                        print "<td align=center>".$row['intensity10W2']."|".$row['calcWeight10W2']."</td>";
+                        print "<td align=center>".$row['percentage10W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W3']."</td>";
+                        print "<td align=center>".$row['intensity10W3']."|".$row['calcWeight10W3']."</td>";
+                        print "<td align=center>".$row['percentage10W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W4']."</td>";
+                        print "<td align=center>".$row['intensity10W4']."|".$row['calcWeight10W4']."</td>";
+                        print "<td align=center>".$row['percentage10W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                  print "<th>Tempo</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['tempoW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW4']."</td>";
+                  print "</tr>";
+                     print "<tr>";
+                  print "<th>Rest</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['restW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW4']."</td>";
+                  print "</tr>";
+                  print "<tr>";
+                  print "<th>Comments</th>";
+                        print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                  print "</tr>";
+                     print "<tr>";
+                     print "<td colspan=18 bgcolor=#000000></td>";
+                     print "</tr>";
+                     print "</thead>";
+
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 3) {
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W1'].'</td>';
-                  if ($row['intensity3W1'] == 0 || $row['intensity3W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W1'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W2'].'</td>';
-                  if ($row['intensity3W2'] == 0 || $row['intensity3W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W2'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W3'].'</td>';
-                  if ($row['intensity3W3'] == 0 || $row['intensity3W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W3'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W4'].'</td>';
-                  if ($row['intensity3W4'] == 0 || $row['intensity3W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W4'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 4) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W1'].'</td>';
-                  if ($row['intensity4W1'] == 0 || $row['intensity4W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W1'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W2'].'</td>';
-                  if ($row['intensity4W2'] == 0 || $row['intensity4W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W2'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W3'].'</td>';
-                  if ($row['intensity4W3'] == 0 || $row['intensity4W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W3'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W4'].'</td>';
-                  if ($row['intensity4W4'] == 0 || $row['intensity4W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 5) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W1'].'</td>';
-                  if ($row['intensity5W1'] == 0 || $row['intensity5W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W1'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W2'].'</td>';
-                  if ($row['intensity5W2'] == 0 || $row['intensity5W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W2'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W3'].'</td>';
-                  if ($row['intensity5W3'] == 0 || $row['intensity5W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W3'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W4'].'</td>';
-                  if ($row['intensity5W4'] == 0 || $row['intensity5W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 6) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W1'].'</td>';
-                  if ($row['intensity6W1'] == 0 || $row['intensity6W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W1'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W2'].'</td>';
-                  if ($row['intensity6W2'] == 0 || $row['intensity6W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W2'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W3'].'</td>';
-                  if ($row['intensity6W3'] == 0 || $row['intensity6W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W3'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W4'].'</td>';
-                  if ($row['intensity6W4'] == 0 || $row['intensity6W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 7) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W1'].'</td>';
-                  if ($row['intensity7W1'] == 0 || $row['intensity7W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W1'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W2'].'</td>';
-                  if ($row['intensity7W2'] == 0 || $row['intensity7W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W2'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W3'].'</td>';
-                  if ($row['intensity7W3'] == 0 || $row['intensity7W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W3'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W4'].'</td>';
-                  if ($row['intensity7W4'] == 0 || $row['intensity7W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 8) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W1'].'</td>';
-                  if ($row['intensity8W1'] == 0 || $row['intensity8W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W1'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W2'].'</td>';
-                  if ($row['intensity8W2'] == 0 || $row['intensity8W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W2'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W3'].'</td>';
-                  if ($row['intensity8W3'] == 0 || $row['intensity8W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W3'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W4'].'</td>';
-                  if ($row['intensity8W4'] == 0 || $row['intensity8W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 9) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W1'].'</td>';
-                  if ($row['intensity9W1'] == 0 || $row['intensity9W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W1'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W2'].'</td>';
-                  if ($row['intensity9W2'] == 0 || $row['intensity9W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W2'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W3'].'</td>';
-                  if ($row['intensity9W3'] == 0 || $row['intensity9W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W3'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W4'].'</td>';
-                  if ($row['intensity9W4'] == 0 || $row['intensity9W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 10) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W1'].'</td>';
-                  if ($row['intensity10W1'] == 0 || $row['intensity10W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W1'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W2'].'</td>';
-                  if ($row['intensity10W2'] == 0 || $row['intensity10W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W2'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W3'].'</td>';
-                  if ($row['intensity10W3'] == 0 || $row['intensity10W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W3'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W4'].'</td>';
-                  if ($row['intensity10W4'] == 0 || $row['intensity10W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Tempo</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Rest</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['restW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<td colspan=14 bgcolor=#000000>';
-                  print '</td>';
-                  print '</tr>';
-                  print '</thead>';
-                  }
-                  print '</tbody>';
-                  print '</table>';
-                  print '</div>';
-                  print '</div>';
+                  print "</tbody>";
+                  print "</table>";
+                  print "</div>";
+                  print "</div>";
                   echo '<p class="pageBreak"></p>';
                   print "<hr id='removeHr'>";
+                  print "<br>";
 
-                  $sql = 'SELECT * FROM `'.$currentWorkoutSix."` where athlete='$name' ORDER BY exerciseOrder";
+
+                  $sql = "SELECT * FROM `" . $currentWorkoutSix . "` where athlete='$name' ORDER BY exerciseOrder";
 
                   $result = mysqli_query($connection, $sql);
 
-                  print '<h4><b><u> DAY SIX </u></b></h4>';
+                  print "<h4><b><u> DAY SIX </u></b></h4>";
+
+                  print "<h3> $tempSix </h3>";
 
                   #Creates the table Header
                   print "<div class='table-responsive'>
                                        <div class=\"col-md-10\">
-                                       	<table class='table table-striped table-bordered table-condensed'>
-                                       		<thead>
-                                       		</thead>";
-                  print '<tbody>';
+                                         <table class='table table-striped table-bordered table-condensed'>
+                                           <thead>
+                                           </thead>";
+                  print "<tbody>";
+
 
                   #Prints out the exercises
-                  while ($row = mysqli_fetch_array($result)) {
-                  $numOfSets = $row['sets'];
-                  $tempSix = strtoupper($tempSix);
+                  while($row = mysqli_fetch_array($result))
+                  {
 
-                  print '<thead>';
-                  print '<tr>';
-                  print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempSix</b></u></font></center></h4></th>";
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 1</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 2</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 3</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 4</b></td>';
+                     $tempOne = strtoupper($tempOne);
 
-                  print '</tr>';
-                  print '</thead>';
+                  print "<thead>";
+                     print "<tr>";
+                        print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 4</b></td>";
 
-                  print '<thead>';
-                  print '<tr>';
-                  print '<th>Exercise Order</th>';
-                  print '<td align=center>'.$row['exerciseOrder'].'</td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Exercise Name</th>';
-                  $tempExercise = strstr($row['exerciseName'], '-', true);
-                  print '<td align=center>'.$tempExercise.'</td>';
-                  if ($numOfSets <= $sets1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W1'].'</td>';
-                  if ($row['intensity1W1'] == 0 || $row['intensity1W1'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W1'].'</td>';
+                     print "</tr>";
+                     print "</thead>";
+
+                     print "<thead>";
+                     print "<tr>";
+                        print "<th>Exercise Order</th>";
+                        print "<td align=center>".$row['exerciseOrder']."</td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                     print "</tr>";
+                     print "<tr>";
+                        print "<th>Exercise Name</th>";
+                        $temp = strstr($row["exerciseName"], '-', true);
+                        print "<td align=center>".$temp."</td>";
+                        if ($row['setsW1'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W1']."</td>";
+                        print "<td align=center>".$row['intensity1W1']." | ".$row['calcWeight1W1']."</td>";
+                        print "<td align=center>".$row['percentage1W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W2']."</td>";
+                        print "<td align=center>".$row['intensity1W2']."|".$row['calcWeight1W2']."</td>";
+                        print "<td align=center>".$row['percentage1W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W3']."</td>";
+                        print "<td align=center>".$row['intensity1W3']."|".$row['calcWeight1W3']."</td>";
+                        print "<td align=center>".$row['percentage1W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W4']."</td>";
+                        print "<td align=center>".$row['intensity1W4']."|".$row['calcWeight1W4']."</td>";
+                        print "<td align=center>".$row['percentage1W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 2 && $row['setsW2'] < 2 && $row['setsW3'] < 2 && $row['setsW4'] < 2)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W2'].'</td>';
-                  if ($row['intensity1W2'] == 0 || $row['intensity1W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W1']."</td>";
+                        print "<td align=center>".$row['intensity2W1']."|".$row['calcWeight2W1']."</td>";
+                        print "<td align=center>".$row['percentage2W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W2']."</td>";
+                        print "<td align=center>".$row['intensity2W2']."|".$row['calcWeight2W2']."</td>";
+                        print "<td align=center>".$row['percentage2W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W3']."</td>";
+                        print "<td align=center>".$row['intensity2W3']."|".$row['calcWeight2W3']."</td>";
+                        print "<td align=center>".$row['percentage2W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W4']."</td>";
+                        print "<td align=center>".$row['intensity2W4']."|".$row['calcWeight2W4']."</td>";
+                        print "<td align=center>".$row['percentage2W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 3 && $row['setsW2'] < 3 && $row['setsW3'] < 3 && $row['setsW4'] < 3)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W3'].'</td>';
-                  if ($row['intensity1W3'] == 0 || $row['intensity1W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W1']."</td>";
+                        print "<td align=center>".$row['intensity3W1']."|".$row['calcWeight3W1']."</td>";
+                        print "<td align=center>".$row['percentage3W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W2']."</td>";
+                        print "<td align=center>".$row['intensity3W2']."|".$row['calcWeight3W2']."</td>";
+                        print "<td align=center>".$row['percentage3W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W3']."</td>";
+                        print "<td align=center>".$row['intensity3W3']."|".$row['calcWeight3W3']."</td>";
+                        print "<td align=center>".$row['percentage3W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W4']."</td>";
+                        print "<td align=center>".$row['intensity3W4']."|".$row['calcWeight3W4']."</td>";
+                        print "<td align=center>".$row['percentage3W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 4 && $row['setsW2'] < 4 && $row['setsW3'] < 4 && $row['setsW4'] < 4)
+                  {
                   }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W4'].'</td>';
-                  if ($row['intensity1W4'] == 0 || $row['intensity1W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W1']."</td>";
+                        print "<td align=center>".$row['intensity4W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage4W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W2']."</td>";
+                        print "<td align=center>".$row['intensity4W2']."|".$row['calcWeight4W2']."</td>";
+                        print "<td align=center>".$row['percentage4W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W3']."</td>";
+                        print "<td align=center>".$row['intensity4W3']."|".$row['calcWeight4W3']."</td>";
+                        print "<td align=center>".$row['percentage4W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W4']."</td>";
+                        print "<td align=center>".$row['intensity4W4']."|".$row['calcWeight4W4']."</td>";
+                        print "<td align=center>".$row['percentage4W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 5 && $row['setsW2'] < 5 && $row['setsW3'] < 5 && $row['setsW4'] < 5)
+                  {
                   }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W1']."</td>";
+                        print "<td align=center>".$row['intensity5W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage5W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W2']."</td>";
+                        print "<td align=center>".$row['intensity5W2']."|".$row['calcWeight5W2']."</td>";
+                        print "<td align=center>".$row['percentage5W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W3']."</td>";
+                        print "<td align=center>".$row['intensity5W3']."|".$row['calcWeight5W3']."</td>";
+                        print "<td align=center>".$row['percentage5W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W4']."</td>";
+                        print "<td align=center>".$row['intensity5W4']."|".$row['calcWeight5W4']."</td>";
+                        print "<td align=center>".$row['percentage5W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 6 && $row['setsW2'] < 6 && $row['setsW3'] < 6 && $row['setsW4'] < 6)
+                  {
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 2) {
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W1'].'</td>';
-                  if ($row['intensity2W1'] == 0 || $row['intensity2W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W1'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W1']."</td>";
+                        print "<td align=center>".$row['intensity6W1']."|".$row['calcWeight6W1']."</td>";
+                        print "<td align=center>".$row['percentage6W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W2']."</td>";
+                        print "<td align=center>".$row['intensity6W2']."|".$row['calcWeight6W2']."</td>";
+                        print "<td align=center>".$row['percentage6W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W3']."</td>";
+                        print "<td align=center>".$row['intensity6W3']."|".$row['calcWeight6W3']."</td>";
+                        print "<td align=center>".$row['percentage6W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W4']."</td>";
+                        print "<td align=center>".$row['intensity6W4']."|".$row['calcWeight6W4']."</td>";
+                        print "<td align=center>".$row['percentage6W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 7 && $row['setsW2'] < 7 && $row['setsW3'] < 7 && $row['setsW4'] < 7)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W2'].'</td>';
-                  if ($row['intensity2W2'] == 0 || $row['intensity2W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W2'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W1']."</td>";
+                        print "<td align=center>".$row['intensity7W1']."|".$row['calcWeight7W1']."</td>";
+                        print "<td align=center>".$row['percentage7W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W2']."</td>";
+                        print "<td align=center>".$row['intensity7W2']."|".$row['calcWeight7W2']."</td>";
+                        print "<td align=center>".$row['percentage7W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W3']."</td>";
+                        print "<td align=center>".$row['intensity7W3']."|".$row['calcWeight7W3']."</td>";
+                        print "<td align=center>".$row['percentage7W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W4']."</td>";
+                        print "<td align=center>".$row['intensity7W4']."|".$row['calcWeight7W4']."</td>";
+                        print "<td align=center>".$row['percentage7W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 8 && $row['setsW2'] < 8 && $row['setsW3'] < 8 && $row['setsW4'] < 8)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W3'].'</td>';
-                  if ($row['intensity2W3'] == 0 || $row['intensity2W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W3'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W1']."</td>";
+                        print "<td align=center>".$row['intensity8W1']."|".$row['calcWeight8W1']."</td>";
+                        print "<td align=center>".$row['percentage8W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W2']."</td>";
+                        print "<td align=center>".$row['intensity8W2']."|".$row['calcWeight8W2']."</td>";
+                        print "<td align=center>".$row['percentage8W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W3']."</td>";
+                        print "<td align=center>".$row['intensity8W3']."|".$row['calcWeight8W3']."</td>";
+                        print "<td align=center>".$row['percentage8W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W4']."</td>";
+                        print "<td align=center>".$row['intensity8W4']."|".$row['calcWeight8W4']."</td>";
+                        print "<td align=center>".$row['percentage8W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 9 && $row['setsW2'] < 9 && $row['setsW3'] < 9 && $row['setsW4'] < 9)
+                  {
                   }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W4'].'</td>';
-                  if ($row['intensity2W4'] == 0 || $row['intensity2W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W4'].'</td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W1']."</td>";
+                        print "<td align=center>".$row['intensity9W1']."|".$row['calcWeight9W1']."</td>";
+                        print "<td align=center>".$row['percentage9W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W2']."</td>";
+                        print "<td align=center>".$row['intensity9W2']."|".$row['calcWeight9W2']."</td>";
+                        print "<td align=center>".$row['percentage9W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W3']."</td>";
+                        print "<td align=center>".$row['intensity9W3']."|".$row['calcWeight9W3']."</td>";
+                        print "<td align=center>".$row['percentage9W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W4']."</td>";
+                        print "<td align=center>".$row['intensity9W4']."|".$row['calcWeight9W4']."</td>";
+                        print "<td align=center>".$row['percentage9W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 10 && $row['setsW2'] < 10 && $row['setsW3'] < 10 && $row['setsW4'] < 10)
+                  {
                   }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W1']."</td>";
+                        print "<td align=center>".$row['intensity10W1']."|".$row['calcWeight10W1']."</td>";
+                        print "<td align=center>".$row['percentage10W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W2']."</td>";
+                        print "<td align=center>".$row['intensity10W2']."|".$row['calcWeight10W2']."</td>";
+                        print "<td align=center>".$row['percentage10W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W3']."</td>";
+                        print "<td align=center>".$row['intensity10W3']."|".$row['calcWeight10W3']."</td>";
+                        print "<td align=center>".$row['percentage10W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W4']."</td>";
+                        print "<td align=center>".$row['intensity10W4']."|".$row['calcWeight10W4']."</td>";
+                        print "<td align=center>".$row['percentage10W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                  print "<th>Tempo</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['tempoW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW4']."</td>";
+                  print "</tr>";
+                     print "<tr>";
+                  print "<th>Rest</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['restW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW4']."</td>";
+                  print "</tr>";
+                  print "<tr>";
+                  print "<th>Comments</th>";
+                        print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                  print "</tr>";
+                     print "<tr>";
+                     print "<td colspan=18 bgcolor=#000000></td>";
+                     print "</tr>";
+                     print "</thead>";
+
                   }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 3) {
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W1'].'</td>';
-                  if ($row['intensity3W1'] == 0 || $row['intensity3W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W1'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W2'].'</td>';
-                  if ($row['intensity3W2'] == 0 || $row['intensity3W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W2'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W3'].'</td>';
-                  if ($row['intensity3W3'] == 0 || $row['intensity3W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W3'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W4'].'</td>';
-                  if ($row['intensity3W4'] == 0 || $row['intensity3W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W4'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 4) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W1'].'</td>';
-                  if ($row['intensity4W1'] == 0 || $row['intensity4W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W1'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W2'].'</td>';
-                  if ($row['intensity4W2'] == 0 || $row['intensity4W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W2'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W3'].'</td>';
-                  if ($row['intensity4W3'] == 0 || $row['intensity4W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W3'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W4'].'</td>';
-                  if ($row['intensity4W4'] == 0 || $row['intensity4W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 5) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W1'].'</td>';
-                  if ($row['intensity5W1'] == 0 || $row['intensity5W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W1'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W2'].'</td>';
-                  if ($row['intensity5W2'] == 0 || $row['intensity5W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W2'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W3'].'</td>';
-                  if ($row['intensity5W3'] == 0 || $row['intensity5W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W3'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W4'].'</td>';
-                  if ($row['intensity5W4'] == 0 || $row['intensity5W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 6) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W1'].'</td>';
-                  if ($row['intensity6W1'] == 0 || $row['intensity6W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W1'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W2'].'</td>';
-                  if ($row['intensity6W2'] == 0 || $row['intensity6W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W2'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W3'].'</td>';
-                  if ($row['intensity6W3'] == 0 || $row['intensity6W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W3'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W4'].'</td>';
-                  if ($row['intensity6W4'] == 0 || $row['intensity6W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 7) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W1'].'</td>';
-                  if ($row['intensity7W1'] == 0 || $row['intensity7W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W1'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W2'].'</td>';
-                  if ($row['intensity7W2'] == 0 || $row['intensity7W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W2'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W3'].'</td>';
-                  if ($row['intensity7W3'] == 0 || $row['intensity7W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W3'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W4'].'</td>';
-                  if ($row['intensity7W4'] == 0 || $row['intensity7W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 8) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W1'].'</td>';
-                  if ($row['intensity8W1'] == 0 || $row['intensity8W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W1'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W2'].'</td>';
-                  if ($row['intensity8W2'] == 0 || $row['intensity8W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W2'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W3'].'</td>';
-                  if ($row['intensity8W3'] == 0 || $row['intensity8W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W3'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W4'].'</td>';
-                  if ($row['intensity8W4'] == 0 || $row['intensity8W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 9) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W1'].'</td>';
-                  if ($row['intensity9W1'] == 0 || $row['intensity9W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W1'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W2'].'</td>';
-                  if ($row['intensity9W2'] == 0 || $row['intensity9W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W2'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W3'].'</td>';
-                  if ($row['intensity9W3'] == 0 || $row['intensity9W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W3'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W4'].'</td>';
-                  if ($row['intensity9W4'] == 0 || $row['intensity9W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 10) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W1'].'</td>';
-                  if ($row['intensity10W1'] == 0 || $row['intensity10W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W1'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W2'].'</td>';
-                  if ($row['intensity10W2'] == 0 || $row['intensity10W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W2'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W3'].'</td>';
-                  if ($row['intensity10W3'] == 0 || $row['intensity10W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W3'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W4'].'</td>';
-                  if ($row['intensity10W4'] == 0 || $row['intensity10W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Tempo</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Rest</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['restW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<td colspan=14 bgcolor=#000000>';
-                  print '</td>';
-                  print '</tr>';
-                  print '</thead>';
-                  }
-                  print '</tbody>';
-                  print '</table>';
-                  print '</div>';
-                  print '</div>';
+                  print "</tbody>";
+                  print "</table>";
+                  print "</div>";
+                  print "</div>";
                   echo '<p class="pageBreak"></p>';
                   print "<hr id='removeHr'>";
+                  print "<br>";
 
-                  $sql = 'SELECT * FROM `'.$currentWorkoutSeven."` where athlete='$name' ORDER BY exerciseOrder";
+
+                  $sql = "SELECT * FROM `" . $currentWorkoutSeven . "` where athlete='$name' ORDER BY exerciseOrder";
 
                   $result = mysqli_query($connection, $sql);
 
-                  print '<h4><b><u> DAY SEVEN </u></b></h4>';
+                  print "<h4><b><u> DAY SEVEN </u></b></h4>";
+
+                  print "<h3> $tempSeven </h3>";
 
                   #Creates the table Header
                   print "<div class='table-responsive'>
                                        <div class=\"col-md-10\">
-                                       	<table class='table table-striped table-bordered table-condensed'>
-                                       		<thead>
-                                       		</thead>";
-                  print '<tbody>';
+                                         <table class='table table-striped table-bordered table-condensed'>
+                                           <thead>
+                                           </thead>";
+                  print "<tbody>";
+
 
                   #Prints out the exercises
-                  while ($row = mysqli_fetch_array($result)) {
-                  $numOfSets = $row['sets'];
-                  $tempSeven = strtoupper($tempSeven);
+                  while($row = mysqli_fetch_array($result))
+                  {
 
-                  print '<thead>';
-                  print '<tr>';
-                  print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempSeven</b></u></font></center></h4></th>";
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 1</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 2</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#FFFF66><b>WEEK 3</b></td>';
-                  print '<td colspan=3 align=center bgcolor=#E0E0D1><b>WEEK 4</b></td>';
+                     $tempOne = strtoupper($tempOne);
 
-                  print '</tr>';
-                  print '</thead>';
+                  print "<thead>";
+                     print "<tr>";
+                        print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
+                        print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
+                        print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 4</b></td>";
 
-                  print '<thead>';
-                  print '<tr>';
-                  print '<th>Exercise Order</th>';
-                  print '<td align=center>'.$row['exerciseOrder'].'</td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '<td align=center><b>Set</b></td>';
-                  print '<td align=center><b>Reps</b></td>';
-                  print '<td align=center><b>Weight</b></td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Exercise Name</th>';
-                  $tempExercise = strstr($row['exerciseName'], '-', true);
-                  print '<td align=center>'.$tempExercise.'</td>';
-                  if ($numOfSets <= $sets1) {
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W1'].'</td>';
-                  if ($row['intensity1W1'] == 0 || $row['intensity1W1'] === 0) {
-                     print '<td align=center>'.$row['calcWeight1W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W1'].'</td>';
-                  }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W2'].'</td>';
-                  if ($row['intensity1W2'] == 0 || $row['intensity1W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W2'].'</td>';
-                  }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W3'].'</td>';
-                  if ($row['intensity1W3'] == 0 || $row['intensity1W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W3'].'</td>';
-                  }
-                  print '<td align=center><b>1</b></td>';
-                  print '<td align=center>'.$row['reps1W4'].'</td>';
-                  if ($row['intensity1W4'] == 0 || $row['intensity1W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage1W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity1W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 2) {
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W1'].'</td>';
-                  if ($row['intensity2W1'] == 0 || $row['intensity2W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W1'].'</td>';
-                  }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W2'].'</td>';
-                  if ($row['intensity2W2'] == 0 || $row['intensity2W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W2'].'</td>';
-                  }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W3'].'</td>';
-                  if ($row['intensity2W3'] == 0 || $row['intensity2W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W3'].'</td>';
-                  }
-                  print '<td align=center><b>2</b></td>';
-                  print '<td align=center>'.$row['reps2W4'].'</td>';
-                  if ($row['intensity2W4'] == 0 || $row['intensity2W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage2W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity2W4'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th></th>';
-                  print '<td align=center></td>';
-                  if ($numOfSets <= 3) {
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W1'].'</td>';
-                  if ($row['intensity3W1'] == 0 || $row['intensity3W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W1'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W2'].'</td>';
-                  if ($row['intensity3W2'] == 0 || $row['intensity3W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W2'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W3'].'</td>';
-                  if ($row['intensity3W3'] == 0 || $row['intensity3W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W3'].'</td>';
-                  }
-                  print '<td align=center><b>3</b></td>';
-                  print '<td align=center>'.$row['reps3W4'].'</td>';
-                  if ($row['intensity3W4'] == 0 || $row['intensity3W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage3W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity3W4'].'</td>';
-                  }
-                  } else {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 4) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W1'].'</td>';
-                  if ($row['intensity4W1'] == 0 || $row['intensity4W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W1'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W2'].'</td>';
-                  if ($row['intensity4W2'] == 0 || $row['intensity4W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W2'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W3'].'</td>';
-                  if ($row['intensity4W3'] == 0 || $row['intensity4W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W3'].'</td>';
-                  }
-                  print '<td align=center><b>4</b></td>';
-                  print '<td align=center>'.$row['reps4W4'].'</td>';
-                  if ($row['intensity4W4'] == 0 || $row['intensity4W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage4W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity4W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 5) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W1'].'</td>';
-                  if ($row['intensity5W1'] == 0 || $row['intensity5W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W1'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W2'].'</td>';
-                  if ($row['intensity5W2'] == 0 || $row['intensity5W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W2'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W3'].'</td>';
-                  if ($row['intensity5W3'] == 0 || $row['intensity5W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W3'].'</td>';
-                  }
-                  print '<td align=center><b>5</b></td>';
-                  print '<td align=center>'.$row['reps5W4'].'</td>';
-                  if ($row['intensity5W4'] == 0 || $row['intensity5W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage5W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity5W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 6) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W1'].'</td>';
-                  if ($row['intensity6W1'] == 0 || $row['intensity6W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W1'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W2'].'</td>';
-                  if ($row['intensity6W2'] == 0 || $row['intensity6W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W2'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W3'].'</td>';
-                  if ($row['intensity6W3'] == 0 || $row['intensity6W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W3'].'</td>';
-                  }
-                  print '<td align=center><b>6</b></td>';
-                  print '<td align=center>'.$row['reps6W4'].'</td>';
-                  if ($row['intensity6W4'] == 0 || $row['intensity6W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage6W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity6W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 7) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W1'].'</td>';
-                  if ($row['intensity7W1'] == 0 || $row['intensity7W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W1'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W2'].'</td>';
-                  if ($row['intensity7W2'] == 0 || $row['intensity7W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W2'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W3'].'</td>';
-                  if ($row['intensity7W3'] == 0 || $row['intensity7W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W3'].'</td>';
-                  }
-                  print '<td align=center><b>7</b></td>';
-                  print '<td align=center>'.$row['reps7W4'].'</td>';
-                  if ($row['intensity7W4'] == 0 || $row['intensity7W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage7W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity7W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 8) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W1'].'</td>';
-                  if ($row['intensity8W1'] == 0 || $row['intensity8W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W1'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W2'].'</td>';
-                  if ($row['intensity8W2'] == 0 || $row['intensity8W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W2'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W3'].'</td>';
-                  if ($row['intensity8W3'] == 0 || $row['intensity8W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W3'].'</td>';
-                  }
-                  print '<td align=center><b>8</b></td>';
-                  print '<td align=center>'.$row['reps8W4'].'</td>';
-                  if ($row['intensity8W4'] == 0 || $row['intensity8W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage8W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity8W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 9) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W1'].'</td>';
-                  if ($row['intensity9W1'] == 0 || $row['intensity9W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W1'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W2'].'</td>';
-                  if ($row['intensity9W2'] == 0 || $row['intensity9W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W2'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W3'].'</td>';
-                  if ($row['intensity9W3'] == 0 || $row['intensity9W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W3'].'</td>';
-                  }
-                  print '<td align=center><b>9</b></td>';
-                  print '<td align=center>'.$row['reps9W4'].'</td>';
-                  if ($row['intensity9W4'] == 0 || $row['intensity9W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage9W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity9W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  if ($numOfSets <= 10) {
-                  print '<td align=center></td>';
-                  print '<td align=center></td>';
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W1'].'</td>';
-                  if ($row['intensity10W1'] == 0 || $row['intensity10W1'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W1'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W1'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W2'].'</td>';
-                  if ($row['intensity10W2'] == 0 || $row['intensity10W2'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W2'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W2'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W3'].'</td>';
-                  if ($row['intensity10W3'] == 0 || $row['intensity10W3'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W3'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W3'].'</td>';
-                  }
-                  print '<td align=center><b>10</b></td>';
-                  print '<td align=center>'.$row['reps10W4'].'</td>';
-                  if ($row['intensity10W4'] == 0 || $row['intensity10W4'] === 0) {
-                     print '<td align=center>'.$row['calculatedPercentage10W4'].'</td>';
-                  } else {
-                     print '<td align=center>'.$row['intensity10W4'].'</td>';
-                  }
-                  }
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Tempo</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['tempoW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<th>Rest</th>';
-                  print '<td align=center></td>';
-                  print '<td colspan=3 align=center>'.$row['restW1'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW2'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW3'].'</td>';
-                  print '<td colspan=3 align=center>'.$row['restW4'].'</td>';
-                  print '</tr>';
-                  print '<tr>';
-                  print '<td colspan=14 bgcolor=#000000>';
-                  print '</td>';
-                  print '</tr>';
-                  print '</thead>';
-                  }
-                  print '</tbody>';
-                  print '</table>';
-                  print '</div>';
-                  print '</div>';
+                     print "</tr>";
+                     print "</thead>";
 
+                     print "<thead>";
+                     print "<tr>";
+                        print "<th>Exercise Order</th>";
+                        print "<td align=center>".$row['exerciseOrder']."</td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                        print "<td align=center><b>Set</b></td>";
+                        print "<td align=center><b>Reps</b></td>";
+                        print "<td align=center><b>Weight</b></td>";
+                        print "<td align=center><b>%</b></td>";
+                     print "</tr>";
+                     print "<tr>";
+                        print "<th>Exercise Name</th>";
+                        $temp = strstr($row["exerciseName"], '-', true);
+                        print "<td align=center>".$temp."</td>";
+                        if ($row['setsW1'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W1']."</td>";
+                        print "<td align=center>".$row['intensity1W1']." | ".$row['calcWeight1W1']."</td>";
+                        print "<td align=center>".$row['percentage1W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W2']."</td>";
+                        print "<td align=center>".$row['intensity1W2']."|".$row['calcWeight1W2']."</td>";
+                        print "<td align=center>".$row['percentage1W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W3']."</td>";
+                        print "<td align=center>".$row['intensity1W3']."|".$row['calcWeight1W3']."</td>";
+                        print "<td align=center>".$row['percentage1W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 1)
+                        {
+                        print "<td align=center><b>1</b></td>";
+                        print "<td align=center>".$row['reps1W4']."</td>";
+                        print "<td align=center>".$row['intensity1W4']."|".$row['calcWeight1W4']."</td>";
+                        print "<td align=center>".$row['percentage1W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 2 && $row['setsW2'] < 2 && $row['setsW3'] < 2 && $row['setsW4'] < 2)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W1']."</td>";
+                        print "<td align=center>".$row['intensity2W1']."|".$row['calcWeight2W1']."</td>";
+                        print "<td align=center>".$row['percentage2W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W2']."</td>";
+                        print "<td align=center>".$row['intensity2W2']."|".$row['calcWeight2W2']."</td>";
+                        print "<td align=center>".$row['percentage2W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W3']."</td>";
+                        print "<td align=center>".$row['intensity2W3']."|".$row['calcWeight2W3']."</td>";
+                        print "<td align=center>".$row['percentage2W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 2)
+                        {
+                        print "<td align=center><b>2</b></td>";
+                        print "<td align=center>".$row['reps2W4']."</td>";
+                        print "<td align=center>".$row['intensity2W4']."|".$row['calcWeight2W4']."</td>";
+                        print "<td align=center>".$row['percentage2W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 3 && $row['setsW2'] < 3 && $row['setsW3'] < 3 && $row['setsW4'] < 3)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W1']."</td>";
+                        print "<td align=center>".$row['intensity3W1']."|".$row['calcWeight3W1']."</td>";
+                        print "<td align=center>".$row['percentage3W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W2']."</td>";
+                        print "<td align=center>".$row['intensity3W2']."|".$row['calcWeight3W2']."</td>";
+                        print "<td align=center>".$row['percentage3W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W3']."</td>";
+                        print "<td align=center>".$row['intensity3W3']."|".$row['calcWeight3W3']."</td>";
+                        print "<td align=center>".$row['percentage3W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 3)
+                        {
+                        print "<td align=center><b>3</b></td>";
+                        print "<td align=center>".$row['reps3W4']."</td>";
+                        print "<td align=center>".$row['intensity3W4']."|".$row['calcWeight3W4']."</td>";
+                        print "<td align=center>".$row['percentage3W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 4 && $row['setsW2'] < 4 && $row['setsW3'] < 4 && $row['setsW4'] < 4)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W1']."</td>";
+                        print "<td align=center>".$row['intensity4W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage4W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W2']."</td>";
+                        print "<td align=center>".$row['intensity4W2']."|".$row['calcWeight4W2']."</td>";
+                        print "<td align=center>".$row['percentage4W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W3']."</td>";
+                        print "<td align=center>".$row['intensity4W3']."|".$row['calcWeight4W3']."</td>";
+                        print "<td align=center>".$row['percentage4W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 4)
+                        {
+                        print "<td align=center><b>4</b></td>";
+                        print "<td align=center>".$row['reps4W4']."</td>";
+                        print "<td align=center>".$row['intensity4W4']."|".$row['calcWeight4W4']."</td>";
+                        print "<td align=center>".$row['percentage4W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 5 && $row['setsW2'] < 5 && $row['setsW3'] < 5 && $row['setsW4'] < 5)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W1']."</td>";
+                        print "<td align=center>".$row['intensity5W1']."|".$row['calcWeight4W1']."</td>";
+                        print "<td align=center>".$row['percentage5W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W2']."</td>";
+                        print "<td align=center>".$row['intensity5W2']."|".$row['calcWeight5W2']."</td>";
+                        print "<td align=center>".$row['percentage5W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W3']."</td>";
+                        print "<td align=center>".$row['intensity5W3']."|".$row['calcWeight5W3']."</td>";
+                        print "<td align=center>".$row['percentage5W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 5)
+                        {
+                        print "<td align=center><b>5</b></td>";
+                        print "<td align=center>".$row['reps5W4']."</td>";
+                        print "<td align=center>".$row['intensity5W4']."|".$row['calcWeight5W4']."</td>";
+                        print "<td align=center>".$row['percentage5W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 6 && $row['setsW2'] < 6 && $row['setsW3'] < 6 && $row['setsW4'] < 6)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W1']."</td>";
+                        print "<td align=center>".$row['intensity6W1']."|".$row['calcWeight6W1']."</td>";
+                        print "<td align=center>".$row['percentage6W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W2']."</td>";
+                        print "<td align=center>".$row['intensity6W2']."|".$row['calcWeight6W2']."</td>";
+                        print "<td align=center>".$row['percentage6W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W3']."</td>";
+                        print "<td align=center>".$row['intensity6W3']."|".$row['calcWeight6W3']."</td>";
+                        print "<td align=center>".$row['percentage6W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 6)
+                        {
+                        print "<td align=center><b>6</b></td>";
+                        print "<td align=center>".$row['reps6W4']."</td>";
+                        print "<td align=center>".$row['intensity6W4']."|".$row['calcWeight6W4']."</td>";
+                        print "<td align=center>".$row['percentage6W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 7 && $row['setsW2'] < 7 && $row['setsW3'] < 7 && $row['setsW4'] < 7)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W1']."</td>";
+                        print "<td align=center>".$row['intensity7W1']."|".$row['calcWeight7W1']."</td>";
+                        print "<td align=center>".$row['percentage7W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W2']."</td>";
+                        print "<td align=center>".$row['intensity7W2']."|".$row['calcWeight7W2']."</td>";
+                        print "<td align=center>".$row['percentage7W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W3']."</td>";
+                        print "<td align=center>".$row['intensity7W3']."|".$row['calcWeight7W3']."</td>";
+                        print "<td align=center>".$row['percentage7W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 7)
+                        {
+                        print "<td align=center><b>7</b></td>";
+                        print "<td align=center>".$row['reps7W4']."</td>";
+                        print "<td align=center>".$row['intensity7W4']."|".$row['calcWeight7W4']."</td>";
+                        print "<td align=center>".$row['percentage7W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 8 && $row['setsW2'] < 8 && $row['setsW3'] < 8 && $row['setsW4'] < 8)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W1']."</td>";
+                        print "<td align=center>".$row['intensity8W1']."|".$row['calcWeight8W1']."</td>";
+                        print "<td align=center>".$row['percentage8W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W2']."</td>";
+                        print "<td align=center>".$row['intensity8W2']."|".$row['calcWeight8W2']."</td>";
+                        print "<td align=center>".$row['percentage8W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W3']."</td>";
+                        print "<td align=center>".$row['intensity8W3']."|".$row['calcWeight8W3']."</td>";
+                        print "<td align=center>".$row['percentage8W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 8)
+                        {
+                        print "<td align=center><b>8</b></td>";
+                        print "<td align=center>".$row['reps8W4']."</td>";
+                        print "<td align=center>".$row['intensity8W4']."|".$row['calcWeight8W4']."</td>";
+                        print "<td align=center>".$row['percentage8W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 9 && $row['setsW2'] < 9 && $row['setsW3'] < 9 && $row['setsW4'] < 9)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W1']."</td>";
+                        print "<td align=center>".$row['intensity9W1']."|".$row['calcWeight9W1']."</td>";
+                        print "<td align=center>".$row['percentage9W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W2']."</td>";
+                        print "<td align=center>".$row['intensity9W2']."|".$row['calcWeight9W2']."</td>";
+                        print "<td align=center>".$row['percentage9W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W3']."</td>";
+                        print "<td align=center>".$row['intensity9W3']."|".$row['calcWeight9W3']."</td>";
+                        print "<td align=center>".$row['percentage9W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 9)
+                        {
+                        print "<td align=center><b>9</b></td>";
+                        print "<td align=center>".$row['reps9W4']."</td>";
+                        print "<td align=center>".$row['intensity9W4']."|".$row['calcWeight9W4']."</td>";
+                        print "<td align=center>".$row['percentage9W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                        if ($row['setsW1'] < 10 && $row['setsW2'] < 10 && $row['setsW3'] < 10 && $row['setsW4'] < 10)
+                  {
+                  }
+                  else
+                  {
+                  print "<th></th>";
+                  print "<td align=center></td>";
+                        if ($row['setsW1'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W1']."</td>";
+                        print "<td align=center>".$row['intensity10W1']."|".$row['calcWeight10W1']."</td>";
+                        print "<td align=center>".$row['percentage10W1']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW2'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W2']."</td>";
+                        print "<td align=center>".$row['intensity10W2']."|".$row['calcWeight10W2']."</td>";
+                        print "<td align=center>".$row['percentage10W2']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW3'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W3']."</td>";
+                        print "<td align=center>".$row['intensity10W3']."|".$row['calcWeight10W3']."</td>";
+                        print "<td align=center>".$row['percentage10W3']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        if ($row['setsW4'] >= 10)
+                        {
+                        print "<td align=center><b>10</b></td>";
+                        print "<td align=center>".$row['reps10W4']."</td>";
+                        print "<td align=center>".$row['intensity10W4']."|".$row['calcWeight10W4']."</td>";
+                        print "<td align=center>".$row['percentage10W4']."</td>";
+                        }
+                        else
+                        {
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                           print "<td align=center></td>";
+                        }
+                        }
+                     print "</tr>";
+                     print "<tr>";
+                  print "<th>Tempo</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['tempoW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['tempoW4']."</td>";
+                  print "</tr>";
+                     print "<tr>";
+                  print "<th>Rest</th>";
+                  print "<td align=center></td>";
+                        print "<td colspan=4 align=center>".$row['restW1']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW2']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW3']."</td>";
+                  print "<td colspan=4 align=center>".$row['restW4']."</td>";
+                  print "</tr>";
+                  print "<tr>";
+                  print "<th>Comments</th>";
+                        print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                  print "</tr>";
+                     print "<tr>";
+                     print "<td colspan=18 bgcolor=#000000></td>";
+                     print "</tr>";
+                     print "</thead>";
+
+                  }
+                  print "</tbody>";
+                  print "</table>";
+                  print "</div>";
+                  print "</div>";
                   ?>
               </div>
             </div>

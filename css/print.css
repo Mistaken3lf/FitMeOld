@@ -27,6 +27,22 @@
   #removeHr {
     display: none;
   }
+  
+  #removeBr {
+    display: none;
+  }
+  
+  .nav nav-tabs {
+    display: none;
+  }
+  
+  #myTab {
+    display: none;
+  }
+  
+  .footer {
+    display: none;
+  }
 }
 @page {
   size: auto;

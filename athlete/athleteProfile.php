@@ -15,6 +15,7 @@
     <!-- Latest compiled and minified CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/stylesheet.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="../img/logo/FitMe-favicon-96x96.png">
   </head>
   <body>
     <header>
@@ -57,8 +58,8 @@
     </header>
     <section>
       <div class="container-fluid">
-        <img class="center-block img-responsive" src="../img/headers/fitMeProfile.png" width="500" height="300">
-        <hr>
+        <img class="center-block img-responsive" src="../img/headers/fitMeProfile2.png" width="500" height="300">
+        <hr class="colored">
         <div class="row">
           <div class="col-md-5">
             <div class="panel panel-primary">
@@ -151,7 +152,7 @@
                     <input type="text" class="form-control" id="biography" style="background-color:#FFFFFF"
                       name="biography" value="<?= $biography ?>" placeholder="Tell Us About Yourself." readonly>
                   </div>
-                  <button style="display:inline-block;" type="submit" class="btn btn-primary">Save Profile</button>
+                  <!--<button style="display:inline-block;" type="submit" class="btn btn-primary">Save Profile</button>-->
                 </form>
               </div>
             </div>

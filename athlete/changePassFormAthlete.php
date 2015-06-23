@@ -15,6 +15,7 @@
     <!-- Latest compiled and minified CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/stylesheet.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="../img/logo/FitMe-favicon-96x96.png">
   </head>
   <body>
     <header>
@@ -58,7 +59,7 @@
     <section>
       <div class="container-fluid">
         <img class="center-block img-responsive" src="../img/headers/fitMeChangePassword2.png" width="500" height="300">
-        <hr>
+        <hr class="colored">
         <div class="row">
           <div class="col-md-5">
             <div class="panel panel-primary">
@@ -93,7 +94,7 @@
                     <input required class="form-control" type="password" name="newPassword2" id="newPassword2"><br>
                   </div>
                   <br>
-                  <button type="submit" name="submit" class="btn btn-primary" value="Send">Send</button>
+                  <button type="submit" name="submit" class="btn btn-primary" value="Change Password"><span class="glyphicon glyphicon-ok"></span>&nbsp&nbsp Change Password</button>
                 </form>
               </div>
             </div>

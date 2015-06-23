@@ -69,7 +69,7 @@
     <section>
       <div class="container-fluid">
         <img class="center-block img-responsive" src="../img/headers/fitMeChangePassword2.png" width="550" height="350">
-        <hr color="#2196f3">
+        <hr class="colored">
         <div class="row">
           <div class="col-md-5">
             <div class="panel panel-primary">

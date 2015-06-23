@@ -94,7 +94,7 @@
       <!--Create workout tabs-->
       <div class="container-fluid">
         <img class="center-block img-responsive" src="../img/headers/fitMeWorkoutManagement2.png" width="550" height="350">
-        <hr color="#2196f3">
+        <hr class="colored">
         <ul class="nav nav-tabs" id="myTab">
           <li class="active"><a href="#createWorkout" data-toggle="tab">Create Workout</a></li>
           <li><a href="#addExercises" data-toggle="tab">Add Exercises</a></li>

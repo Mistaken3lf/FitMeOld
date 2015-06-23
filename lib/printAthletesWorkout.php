@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Lindenwood Strength Training</title>
+    <title>FitMe</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="PRAGMA" content="NO-CACHE">
@@ -39,15 +39,28 @@
     </header>
     <section>
       <div class="container-fluid">
-        <img id="printHeader" class="center-block img-responsive" src="../img/headers/fitMeTrainingCycle2.png" width="550" height="350">
-        <hr id="removeHr" color="#2196f3">
+        <img id="printHeader" class="center-block img-responsive" src="../img/headers/fitMeUserDetails2.png" width="550" height="350">
+        <hr id="removeHr" class="colored">
         <br id="removeBr">
-        <br>
         <ul class="nav nav-tabs" id="myTab">
           <li class="active"><a href="#usersWorkout" data-toggle="tab">Current Workout</a></li>
           <li><a href="#usersProfile" data-toggle="tab">User Profile</a></li>
         </ul>
-        <br>
+        <br id="removeBr">
+        <?php
+          include '../lib/connect.php';
+
+          #Get the username currently logged in
+           $curUser = $_GET["myAthlete"];
+           $username = strstr($curUser, '@', true);
+
+           $name = strstr($curUser, '@');
+           $name = str_replace("@", "", $name);
+           $name = str_replace(",", " ", $name);
+
+           print "<h4> $name </h4>";
+        ?>
+        <br id="removeBr">
         <div class="tab-content">
           <div class="tab-pane active" id="usersWorkout">
             <div class="row">
@@ -59,16 +72,6 @@
                   <div class="panel-body">
                     <?php
                       include("connect.php");
-
-                      #Get the username currently logged in
-                      $curUser = $_GET["myAthlete"];
-                      $username = strstr($curUser, '@', true);
-
-                      $name = strstr($curUser, '@');
-                      $name = str_replace("@", "", $name);
-                      $name = str_replace(",", " ", $name);
-
-                      print "<h4> $name </h4>";
 
                       $currentWorkoutOne = "";
                       $currentWorkoutTwo = "";
@@ -109,9 +112,9 @@
 
                       $result = mysqli_query($connection, $sql);
 
-                      print "<h4><b><u> DAY ONE </u></b></h4>";
+                      print "<h5><b><u> DAY ONE </u></b></h5>";
 
-                      print "<h3> $tempOne </h3>";
+                      print "<h4> $tempOne </h4>";
 
                       #Creates the table Header
                       print "<div class='table-responsive'>

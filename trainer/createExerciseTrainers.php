@@ -72,7 +72,7 @@
     <section>
       <div class="container-fluid">
         <img class="center-block img-responsive" src="../img/headers/fitMeExerciseManagement2.png" width="550" height="350">
-        <!--<hr color="#2196f3">-->
+        <hr class="colored">
         <!--Create a tabbed interface to create an exercise-->
         <ul class="nav nav-tabs" id="myTab">
           <li class="active"><a href="#createExercise" data-toggle="tab">Create Exercise</a></li>

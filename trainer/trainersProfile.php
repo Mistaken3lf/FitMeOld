@@ -69,7 +69,7 @@
     <section>
       <div class="container-fluid">
         <img class="center-block img-responsive" src="../img/headers/fitMeProfile2.png" width="550" height="350">
-        <hr>
+        <hr class="colored">
         <div class="row">
           <div class="col-md-5">
             <div class="panel panel-primary">

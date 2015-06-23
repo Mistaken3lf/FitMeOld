@@ -96,7 +96,7 @@
     <section>
       <div class="container-fluid">
       <img class="center-block img-responsive" src="../img/headers/fitMeAssessmentManagement2.png" width="550" height="350">
-      <hr color="#2196f3">
+      <hr class="colored">
       <ul class="nav nav-tabs" id="myTab">
         <li class="active"><a href="#createAssessment" data-toggle="tab">Create Assessment</a></li>
         <li><a href="#currentAssessments" data-toggle="tab">Current Assessments</a></li>

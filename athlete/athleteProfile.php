@@ -57,11 +57,11 @@
     </header>
     <section>
       <div class="container-fluid">
-        <img class="center-block img-responsive" src=".../img/headers/fitMeProfile.png" width="500" height="300">
+        <img class="center-block img-responsive" src="../img/headers/fitMeProfile.png" width="500" height="300">
         <hr>
         <div class="row">
           <div class="col-md-5">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">Profile Page</h3>
               </div>

@@ -5364,7 +5364,7 @@
                         			$biography    = $row['biography'];
                         }
                         ?>
-                    <form role="form" method="POST" id="profileForm" name="profileForm" action="updateAthletesProfile.php?myAthlete=tyler@tyler,knipfer">
+                    <form role="form" method="POST" id="profileForm" name="profileForm">
                       <div class="errorDiv">
                         <?php
                           if (isset($_SESSION["profileErrors"]) && isset($_SESSION["profileAttempt"])) {
@@ -5380,58 +5380,57 @@
                       <div class="form-group">
                         <label for="username">Username:</label>
                         <input type="text" class="form-control" id="username" style="background-color:#FFFFFF"
-                          name="username" value="<?= $username ?>">
+                          name="username" readonly value="<?= $username ?>">
                       </div>
                       <div class="form-group">
                         <label for="firstName">First Name:</label>
                         <input type="text" class="form-control" id="firstName" style="background-color:#FFFFFF"
-                          name="firstName" value="<?= $firstName ?>">
+                          name="firstName" readonly value="<?= $firstName ?>">
                       </div>
                       <div class="form-group">
                         <label for="lastName">Last Name:</label>
                         <input type="text" class="form-control" id="lastName" style="background-color:#FFFFFF"
-                          name="lastName" value="<?= $lastName ?>">
+                          name="lastName" readonly value="<?= $lastName ?>">
                       </div>
                       <div class="form-group">
                         <label for="DOB">Date of Birth:</label>
                         <input type="text" class="form-control" id="DOB" style="background-color:#FFFFFF"
-                          name="DOB" value="<?= $DOB ?>" placeholder="YYYY/MM/DD">
+                          name="DOB" readonly value="<?= $DOB ?>" placeholder="YYYY/MM/DD">
                       </div>
                       <div class="form-group">
                         <label for="officeNumber" >Office Number:</label>
-                        <input type="tel"  id="officeNumber" class="form-control" name="officeNumber" style="background-color:#FFFFFF" value="<?= $officeNumber ?>" placeholder="EX. 999-999-9999" readonly>
+                        <input type="tel" readonly id="officeNumber" class="form-control" name="officeNumber" style="background-color:#FFFFFF" value="<?= $officeNumber ?>" placeholder="EX. 999-999-9999" readonly>
                       </div>
                       <div class="form-group">
                         <label for="cellPhone">Cell Phone:</label>
                         <input type="tel" class="form-control" id="cellPhone" name="cellPhone" style="background-color:#FFFFFF"
-                          value="<?= $cellPhone ?>" placeholder="EX. 999-999-9999">
+                          value="<?= $cellPhone ?>" readonly placeholder="EX. 999-999-9999">
                       </div>
                       <div class="form-group">
                         <label for="workPhone">Work Phone:</label>
                         <input type="tel" class="form-control" id="workPhone" style="background-color:#FFFFFF"
-                          name="workPhone" value="<?= $workPhone ?>" placeholder="EX. 999-999-9999">
+                          name="workPhone" readonly value="<?= $workPhone ?>" placeholder="EX. 999-999-9999">
                       </div>
                       <div class="form-group">
                         <label for="otherPhone">Other Phone:</label>
                         <input type="tel" class="form-control" id="otherPhone" style="background-color:#FFFFFF"
-                          name="otherPhone" value="<?= $otherPhone ?>" placeholder="EX. 999-999-9999">
+                          name="otherPhone" readonly value="<?= $otherPhone ?>" placeholder="EX. 999-999-9999">
                       </div>
                       <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" style="background-color:#FFFFFF"
-                          name="email" value="<?= $email ?>" placeholder="email@address.com">
+                          name="email" readonly value="<?= $email ?>" placeholder="email@address.com">
                       </div>
                       <div class="form-group">
                         <label for="otherEmail">Other Email:</label>
                         <input type="email" class="form-control" id="otherEmail" style="background-color:#FFFFFF"
-                          name="otherEmail" value="<?= $otherEmail ?>" placeholder="email@address.com">
+                          name="otherEmail" readonly value="<?= $otherEmail ?>" placeholder="email@address.com">
                       </div>
                       <div class="form-group">
                         <label for="biography">Biography:</label>
                         <input type="text" class="form-control" id="biography" style="background-color:#FFFFFF"
-                          name="biography" value="<?= $biography ?>" placeholder="Tell Us About Yourself.">
+                          name="biography" readonly value="<?= $biography ?>" placeholder="Tell Us About Yourself.">
                       </div>
-                      <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                   </div>
                 </div>

@@ -72,12 +72,13 @@
                   include '../lib/connect.php';
                   $curUser = $_SESSION['myUsername'];
 
-                  $sql = "SELECT firstName, lastName, DOB, officeNumber, cellPhone, workPhone, otherPhone, email, otherEmail, biography
+                  $sql = "SELECT username, firstName, lastName, DOB, officeNumber, cellPhone, workPhone, otherPhone, email, otherEmail, biography
                                             FROM users WHERE username = '$curUser'";
 
                   $result = mysqli_query($connection, $sql);
 
                   while ($row = mysqli_fetch_array($result)) {
+                      $username = $row["username"];
                       $firstName = $row['firstName'];
                       $lastName = $row['lastName'];
                       $DOB = $row['DOB'];
@@ -104,55 +105,60 @@
                       ?>
                   </div>
                   <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" style="background-color:#FFFFFF"
+                      name="username" readonly value="<?= $username ?>">
+                  </div>
+                  <div class="form-group">
                     <label for="firstName">First Name:</label>
-                    <input type="text" required class="form-control" id="firstName" style="background-color:#FFFFFF"
-                      name="firstName" value="<?= $firstName ?>" readonly>
+                    <input type="text" class="form-control" id="firstName" style="background-color:#FFFFFF"
+                      name="firstName" value="<?= $firstName ?>">
                   </div>
                   <div class="form-group">
                     <label for="lastName">Last Name:</label>
-                    <input type="text" required class="form-control" id="lastName" style="background-color:#FFFFFF"
-                      name="lastName" value="<?= $lastName ?>" readonly>
+                    <input type="text" class="form-control" id="lastName" style="background-color:#FFFFFF"
+                      name="lastName" value="<?= $lastName ?>">
                   </div>
                   <div class="form-group">
                     <label for="DOB">Date of Birth:</label>
-                    <input type="text" required class="form-control" id="DOB" style="background-color:#FFFFFF"
-                      name="DOB" value="<?= $DOB ?>" placeholder="YYYY/MM/DD" readonly>
+                    <input type="text" class="form-control" id="DOB" style="background-color:#FFFFFF"
+                      name="DOB" value="<?= $DOB ?>" placeholder="YYYY/MM/DD">
                   </div>
                   <div class="form-group">
                     <label for="officeNumber" >Office Number:</label>
-                    <input type="tel"  id="officeNumber" class="form-control" name="officeNumber" style="background-color:#FFFFFF" value="<?= $officeNumber ?>" placeholder="EX. 999-999-9999" readonly>
+                    <input type="tel"  id="officeNumber" class="form-control" name="officeNumber" style="background-color:#FFFFFF" value="<?= $officeNumber ?>" placeholder="EX. 999-999-9999">
                   </div>
                   <div class="form-group">
                     <label for="cellPhone">Cell Phone:</label>
                     <input type="tel" class="form-control" id="cellPhone" name="cellPhone" style="background-color:#FFFFFF"
-                      value="<?= $cellPhone ?>" placeholder="EX. 999-999-9999" readonly>
+                      value="<?= $cellPhone ?>" placeholder="EX. 999-999-9999">
                   </div>
                   <div class="form-group">
                     <label for="workPhone">Work Phone:</label>
                     <input type="tel" class="form-control" id="workPhone" style="background-color:#FFFFFF"
-                      name="workPhone" value="<?= $workPhone ?>" placeholder="EX. 999-999-9999" readonly>
+                      name="workPhone" value="<?= $workPhone ?>" placeholder="EX. 999-999-9999">
                   </div>
                   <div class="form-group">
                     <label for="otherPhone">Other Phone:</label>
                     <input type="tel" class="form-control" id="otherPhone" style="background-color:#FFFFFF"
-                      name="otherPhone" value="<?= $otherPhone ?>" placeholder="EX. 999-999-9999" readonly>
+                      name="otherPhone" value="<?= $otherPhone ?>" placeholder="EX. 999-999-9999">
                   </div>
                   <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" required class="form-control" id="email" style="background-color:#FFFFFF"
-                      name="email" value="<?= $email ?>" placeholder="email@address.com" readonly>
+                      name="email" value="<?= $email ?>" placeholder="email@address.com">
                   </div>
                   <div class="form-group">
                     <label for="otherEmail">Other Email:</label>
                     <input type="email" class="form-control" id="otherEmail" style="background-color:#FFFFFF"
-                      name="otherEmail" value="<?= $otherEmail ?>" placeholder="email@address.com" readonly>
+                      name="otherEmail" value="<?= $otherEmail ?>" placeholder="email@address.com">
                   </div>
                   <div class="form-group">
                     <label for="biography">Biography:</label>
                     <input type="text" class="form-control" id="biography" style="background-color:#FFFFFF"
-                      name="biography" value="<?= $biography ?>" placeholder="Tell Us About Yourself." readonly>
+                      name="biography" value="<?= $biography ?>" placeholder="Tell Us About Yourself.">
                   </div>
-                  <!--<button style="display:inline-block;" type="submit" class="btn btn-primary">Save Profile</button>-->
+                  <button type="submit" class="btn btn-primary">Save Profile</button>
                 </form>
               </div>
             </div>

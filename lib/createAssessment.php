@@ -205,19 +205,9 @@ else {
 
   $assessmentDate = mysqli_real_escape_string($connection, $date);
 
-  if(empty($_POST['Athlete']))
+  if(!empty($_POST["Athlete"]))
   {
-    echo "<script>
-    alert('Select which athlete to create assessment for');
-    window.location.href='../trainer/trainersAssessment.php';
-    </script>";
-    exit(0);
-  }
-
-  else
-  {
-    $nameArray = $_POST['Athlete'];
-  }
+  $nameArray = $_POST['Athlete'];
 
   $assessmentExercise = mysqli_real_escape_string($connection, $exercise);
   $assessmentType = mysqli_real_escape_string($connection, $assessmentType);
@@ -261,5 +251,7 @@ else {
                 </script>";
     }
 }
+}
+
 
 ?>

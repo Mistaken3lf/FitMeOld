@@ -60,7 +60,7 @@
           <div class="collapse navbar-collapse" id="navbarCollapsed">
             <ul class="nav navbar-nav">
               <li><a href="trainersLanding.php">Home</a></li>
-              <li class="active"><a href="trainersAthletes.php">Users</a></li>
+              <li class="active"><a href="trainersAthletes.php">Athletes</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Manage
                 <span class="caret"></span></a>
@@ -95,13 +95,13 @@
     <section>
       <div class="container-fluid">
         <!--<div class="page-header">-->
-        <img class="center-block img-responsive" src="../img/headers/fitMeUserManagement2.png" width="550" height="350">
+        <img class="center-block img-responsive" src="../img/headers/fitMeAthleteManagement2.png" width="550" height="350">
         <hr class="colored">
         <!--Create athlete tabs-->
         <ul class="nav nav-tabs" id="myTab">
-          <li class="active"><a href="#addUser" data-toggle="tab">Create User</a></li>
-          <li><a href="#removeUser" data-toggle="tab">Remove User</a></li>
-          <li><a href="#currentUsers" data-toggle="tab">Current Users</a></li>
+          <li class="active"><a href="#addUser" data-toggle="tab">Create Athlete</a></li>
+          <li><a href="#removeUser" data-toggle="tab">Remove Athlete</a></li>
+          <li><a href="#currentUsers" data-toggle="tab">Current Athletes</a></li>
           <li><a href="#assignWorkout" data-toggle="tab">Assign Workout</a></li>
         </ul>
         <br>

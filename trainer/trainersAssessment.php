@@ -308,7 +308,7 @@
     <script src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script src="http://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
     <script src="../js/assessmentDataTable.js"></script>
-    <script src="../js/validateAssessments.js"></script>
+    
     <script src="../js/tabReload.js"></script>
     <script>
     $("#removeAssessmentForm").submit(function(e) {
@@ -322,6 +322,14 @@
       return confirm("Are you sure you want to remove selected assessment(s)?");
   });
 
+  $("#createAssessmentForm").submit(function(e) {
+    if(!$('input[type=checkbox]:checked').length) {
+        alert("Please select an athlete to add assessment to.");
+
+        //stop the form from submitting
+        return false;
+    }
+});
     </script>
   </body>
 </html>

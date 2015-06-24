@@ -59,7 +59,7 @@
                   <li><a href="trainersProfile.php">My Profile</a></li>
                   <li><a href="changePassFormTrainer.php">Change Password</a></li>
                   <li><a href="userGuide.pdf" target="_blank">User Guide</a></li>
-                  <li><a href="../logout.php">Logout</a></li>
+                  <li><a href="../lib/logout.php">Logout</a></li>
                 </ul>
               </li>
             </ul>

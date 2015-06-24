@@ -4,6 +4,8 @@ include '../lib/connect.php';
 
 session_start();
 
+$firstName = "";
+$lastName = "";
 $birth = '';
 $office = '';
 $cell = '';
@@ -23,6 +25,79 @@ if (isset($_SESSION['profileErrors'])) {
 #Create an array of errors.
 $_SESSION['profileErrors'] = array();
 
+##################################Validate First Name###########################
+
+#Check that the first name is not empty.
+if (empty($_POST['firstName'])) {
+    #Add the error to the array and go back to the athletes page.
+  $_SESSION['profileErrors'][] = 'First Name is required';
+
+  if ($_SESSION['myPermission'] == 'Trainer') {
+      header('location: ../trainer/trainersProfile.php');
+  }
+
+  else {
+    header("location: ../athlete/athleteProfile.php");
+  }
+}
+
+#First name is not empty.
+else {
+    #Strip unecessary stuff from the first name.
+  $firstName = test_input($_POST['firstName']);
+
+  #Make sure it contains only letters.
+  if (!preg_match('/^[a-zA-Z0-9]+$/', $firstName)) {
+      #Contained something other than letters.
+    $_SESSION['profileErrors'][] = 'Only letters allowed in First Name';
+
+    if ($_SESSION['myPermission'] == 'Trainer') {
+        header('location: ../trainer/trainersProfile.php');
+    }
+
+    else {
+      header("location: ../athlete/athleteProfile.php");
+    }
+  }
+}
+
+##############################Validate Last Name###################################
+
+#Check that the last name is not empty.
+if (empty($_POST['lastName'])) {
+    #Add the error to the array and go back to the athletes page.
+  $_SESSION['profileErrors'][] = 'Last Name is required';
+
+  if ($_SESSION['myPermission'] == 'Trainer') {
+      header('location: ../trainer/trainersProfile.php');
+  }
+
+  else {
+    header("location: ../athlete/athleteProfile.php");
+  }
+}
+
+#Last name was not empty.
+else {
+    #Send the last name to test the input and strip characters from it.
+  $lastName = test_input($_POST['lastName']);
+
+  #Make sure it contains only letters.
+  if (!preg_match('/^[a-zA-Z ]*$/', $lastName)) {
+      #The last name had something other than letters in it.
+    $_SESSION['profileErrors'][] = 'Only letters allowed in Last Name';
+
+    if ($_SESSION['myPermission'] == 'Trainer') {
+        header('location: ../trainer/trainersProfile.php');
+    }
+
+    else {
+      header("location: ../athlete/athleteProfile.php");
+    }
+  }
+}
+
+
 #Check to see if the date of birth is entered.
 if (empty($_POST['DOB'])) {
 }
@@ -39,7 +114,7 @@ else {
       if ($_SESSION['myPermission'] == 'Trainer') {
           header('location: ../trainer/trainersProfile.php');
       } else {
-          header('location: ../athlete/athletesProfile.php');
+          header('location: ../athlete/athleteProfile.php');
       }
   }
 }
@@ -61,7 +136,7 @@ else {
     if ($_SESSION['myPermission'] == 'Trainer') {
         header('location: ../trainer/trainersProfile.php');
     } else {
-        header('location: ../athlete/athletesProfile.php');
+        header('location: ../athlete/athleteProfile.php');
     }
   }
 }
@@ -83,7 +158,7 @@ else {
     if ($_SESSION['myPermission'] == 'Trainer') {
         header('location: ../trainer/trainersProfile.php');
     } else {
-        header('location: ../athlete/athletesProfile.php');
+        header('location: ../athlete/athleteProfile.php');
     }
   }
 }
@@ -107,7 +182,7 @@ else {
     if ($_SESSION['myPermission'] == 'Trainer') {
         header('location: ../trainer/trainersProfile.php');
     } else {
-        header('location: ../athlete/athletesProfile.php');
+        header('location: ../athlete/athleteProfile.php');
     }
   }
 }
@@ -131,7 +206,7 @@ else {
     if ($_SESSION['myPermission'] == 'Trainer') {
         header('location: ../trainer/trainersProfile.php');
     } else {
-        header('location: ../athlete/athletesProfile.php');
+        header('location: ../athlete/athleteProfile.php');
     }
   }
 }
@@ -154,7 +229,7 @@ else {
     if ($_SESSION['myPermission'] == 'Trainer') {
         header('location: ../trainer/trainersProfile.php');
     } else {
-        header('location: ../athlete/athletesProfile.php');
+        header('location: ../athlete/athleteProfile.php');
     }
   }
 }
@@ -172,12 +247,12 @@ else {
   #Make sure it contains only letters.
   if (!preg_match('/^[a-zA-Z ]*$/', $bio)) {
       #Invalid bio.
-    $_SESSION['profileErrors'][] = 'Only letters allowed in Last Name';
+    $_SESSION['profileErrors'][] = 'Only letters allowed in biography';
 
     if ($_SESSION['myPermission'] == 'Trainer') {
         header('location: ../trainer/trainersProfile.php');
     } else {
-        header('location: ../athlete/athletesProfile.php');
+        header('location: ../athlete/athleteProfile.php');
     }
   }
 }
@@ -206,12 +281,16 @@ if (count($_SESSION['profileErrors']) > 0) {
   } else {
       header('location: ../athlete/athletesProfile.php');
   }
-} else {
+}
+
+else {
     #Unset the erros.
   unset($_SESSION['profileErrors']);
 
-  #Gather all profile information.
-  $DOB = mysqli_real_escape_string($connection, $birth);
+    #Gather all profile information.
+    $first = mysqli_real_escape_string($connection, $firstName);
+    $last = mysqli_real_escape_string($connection, $lastName);
+    $DOB = mysqli_real_escape_string($connection, $birth);
     $officeNumber = mysqli_real_escape_string($connection, $office);
     $cellPhone = mysqli_real_escape_string($connection, $cell);
     $workPhone = mysqli_real_escape_string($connection, $work);
@@ -221,7 +300,7 @@ if (count($_SESSION['profileErrors']) > 0) {
     $myUserName = $_SESSION['myUsername'];
 
     $sql = "UPDATE users
-            SET otherEmail = '$otherEmail', DOB = '$DOB', officeNumber = '$officeNumber',
+            SET firstName = '$first', lastName = '$last', otherEmail = '$otherEmail', DOB = '$DOB', officeNumber = '$officeNumber',
             cellPhone = '$cellPhone', workPhone = '$workPhone', otherPhone = '$otherPhone', biography = '$biography'
             WHERE username = '$myUserName';";
 

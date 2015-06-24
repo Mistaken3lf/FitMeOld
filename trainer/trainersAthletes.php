@@ -1,8 +1,8 @@
 <?php
   session_start();
 
-  if ($_SESSION["loggedIn"] == false) {
-    header("location: ../index.php");
+  if (($_SESSION['loggedIn'] == false) || ($_SESSION["myPermission"] != "Trainer")) {
+      header('location: ../index.php');
   }
   ?>
 <!DOCTYPE html>
@@ -314,10 +314,7 @@
           </div>
           <!--End of second tab-->
           <div class="tab-pane" id="currentUsers">
-            <!--PHP script to print out the current athletes-->
-            <h3>Current Users</h3>
-            <form method="GET" id="athletesForm" name="athletesForm">
-            <!-- Large modal -->
+                      <!-- Large modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".current-users-modal-lg">Current Users Demo</button>
                 <div class="modal fade current-users-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
@@ -357,6 +354,9 @@
                 </div>
                 <br>
                 <br>
+            <!--PHP script to print out the current athletes-->
+            <h3>Current Users</h3>
+            <form method="GET" id="athletesForm" name="athletesForm">
               <?php
                 #Print out current users athletes.
                 include("../lib/connect.php");

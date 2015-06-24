@@ -133,7 +133,7 @@
 
                       print "<thead>";
                          print "<tr>";
-                            print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                            print "<th colspan=2 bgcolor=#757575><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
                             print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";

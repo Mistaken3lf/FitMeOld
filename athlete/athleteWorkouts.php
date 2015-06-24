@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  if ($_SESSION['loggedIn'] == false) {
+  if (($_SESSION['loggedIn'] == false) || ($_SESSION["myPermission"] != "Athlete")) {
       header('location: ../index.php');
   }
   ?>
@@ -789,7 +789,7 @@
                       print '</tr>';
                       print '</thead>';
                   }
-                  
+
                   print "</tbody>";
                   print "</table>";
                   print "</div>";
@@ -1467,7 +1467,7 @@
                       print '</tr>';
                       print '</thead>';
                   }
-                  
+
                   print "</tbody>";
                   print "</table>";
                   print "</div>";
@@ -2146,7 +2146,7 @@
                       print '</tr>';
                       print '</thead>';
                   }
-                  
+
                   print "</tbody>";
                   print "</table>";
                   print "</div>";
@@ -2824,7 +2824,7 @@
                       print '</tr>';
                       print '</thead>';
                   }
-                  
+
                   print "</tbody>";
                   print "</table>";
                   print "</div>";
@@ -3502,7 +3502,7 @@
                       print '</tr>';
                       print '</thead>';
                   }
-                  
+
                   print "</tbody>";
                   print "</table>";
                   print "</div>";
@@ -4180,7 +4180,7 @@
                       print '</tr>';
                       print '</thead>';
                   }
-                  
+
                   print "</tbody>";
                   print "</table>";
                   print "</div>";

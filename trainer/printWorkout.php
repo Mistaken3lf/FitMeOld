@@ -1,3 +1,11 @@
+<?php
+  session_start();
+
+  if (($_SESSION['loggedIn'] == false) || ($_SESSION["myPermission"] != "Trainer")) {
+      header('location: ../index.php');
+  }
+  ?>
+
 <!DOCTYPE html>
 <html>
   <head>

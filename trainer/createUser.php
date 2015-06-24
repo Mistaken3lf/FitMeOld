@@ -1,8 +1,8 @@
 <?php
   session_start();
 
-  if ($_SESSION["loggedIn"] == false) {
-    header("location: ../index.php");
+  if (($_SESSION['loggedIn'] == false) || ($_SESSION["myPermission"] != "Trainer")) {
+      header('location: ../index.php');
   }
   ?>
 <!DOCTYPE html>

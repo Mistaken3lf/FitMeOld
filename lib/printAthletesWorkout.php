@@ -108,7 +108,7 @@
 
 
                       #Gets the entire workout to be printed in a table
-                      $sql = "SELECT * FROM `" . $currentWorkoutOne . "` where athlete='$name' ORDER BY exerciseOrder";
+                      $sql = "SELECT * FROM `" . $currentWorkoutOne . "` ORDER BY exerciseOrder";
 
                       $result = mysqli_query($connection, $sql);
 
@@ -852,7 +852,7 @@
                       print "<hr id='removeHr'>";
                       print "<br>";
 
-                      $sql = "SELECT * FROM `" . $currentWorkoutTwo . "` where athlete='$name' ORDER BY exerciseOrder";
+                      $sql = "SELECT * FROM `" . $currentWorkoutTwo . "` ORDER BY exerciseOrder";
 
                       $result = mysqli_query($connection, $sql);
 
@@ -1598,7 +1598,7 @@
 
 
 
-                      $sql = "SELECT * FROM `" . $currentWorkoutThree . "` where athlete='$name' ORDER BY exerciseOrder";
+                      $sql = "SELECT * FROM `" . $currentWorkoutThree . "` ORDER BY exerciseOrder";
 
                       $result = mysqli_query($connection, $sql);
 
@@ -2343,7 +2343,7 @@
                       print "<br>";
 
 
-                      $sql = "SELECT * FROM `" . $currentWorkoutFour . "` where athlete='$name' ORDER BY exerciseOrder";
+                      $sql = "SELECT * FROM `" . $currentWorkoutFour . "` ORDER BY exerciseOrder";
 
                       $result = mysqli_query($connection, $sql);
 
@@ -3088,7 +3088,7 @@
                       print "<br>";
 
 
-                      $sql = "SELECT * FROM `" . $currentWorkoutFive . "` where athlete='$name' ORDER BY exerciseOrder";
+                      $sql = "SELECT * FROM `" . $currentWorkoutFive . "` ORDER BY exerciseOrder";
 
                       $result = mysqli_query($connection, $sql);
 
@@ -3833,7 +3833,7 @@
                       print "<br>";
 
 
-                      $sql = "SELECT * FROM `" . $currentWorkoutSix . "` where athlete='$name' ORDER BY exerciseOrder";
+                      $sql = "SELECT * FROM `" . $currentWorkoutSix . "` ORDER BY exerciseOrder";
 
                       $result = mysqli_query($connection, $sql);
 
@@ -4578,7 +4578,7 @@
                       print "<br>";
 
 
-                      $sql = "SELECT * FROM `" . $currentWorkoutSeven . "` where athlete='$name' ORDER BY exerciseOrder";
+                      $sql = "SELECT * FROM `" . $currentWorkoutSeven . "` ORDER BY exerciseOrder";
 
                       $result = mysqli_query($connection, $sql);
 

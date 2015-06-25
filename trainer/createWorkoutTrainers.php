@@ -40,6 +40,29 @@
           }
       }
     </script>
+    <script>
+      function printWorkout(str) {
+          if (str == "") {
+              document.getElementById("output2").innerHTML = "";
+              return;
+          } else {
+              if (window.XMLHttpRequest) {
+                  // code for IE7+, Firefox, Chrome, Opera, Safari
+                  xmlhttp = new XMLHttpRequest();
+              } else {
+                  // code for IE6, IE5
+                  xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+              }
+              xmlhttp.onreadystatechange = function() {
+                  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                      document.getElementById("output2").innerHTML = xmlhttp.responseText;
+                  }
+              }
+              xmlhttp.open("GET","printWorkout.php?workout="+str,true);
+              xmlhttp.send();
+          }
+      }
+    </script>
   </head>
   <body>
     <header>
@@ -226,36 +249,6 @@
                                 while ($row = mysqli_fetch_array($result)) {
                                   $tempExercise = strstr($row["exercise_name"], '-', true);
                                   echo '<option value="' . $row["exercise_name"] . '">' . $tempExercise . "</option>";
-                                }
-                                ?>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="sport">Select Sport:</label>
-                            <select class="form-control" required name="sport" id="sport">
-                              <option value="Please Select A Sport" selected disabled>Please Select A Sport</option>
-                              <?php
-                                include("../lib/connect.php");
-                                $curUser = $_SESSION["myUsername"];
-                                $sql     = "select distinct athleteSport from Athlete where athletesCoachID='$curUser'";
-                                $result  = mysqli_query($connection, $sql);
-                                while ($row = mysqli_fetch_array($result)) {
-                                  echo '<option value="' . $row["athleteSport"] . '">' . $row['athleteSport'] . "</option>";
-                                }
-                                ?>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="athlete">Select Athlete:</label>
-                            <select class="form-control" name="athlete" id="athlete">
-                              <option value="" selected disabled>Please Select An Athlete</option>
-                              <?php
-                                include("../lib/connect.php");
-                                $curUser = $_SESSION["myUsername"];
-                                $sql     = "select athleteFirstName, athleteLastName from Athlete where athletesCoachID='$curUser'";
-                                $result  = mysqli_query($connection, $sql);
-                                while ($row = mysqli_fetch_array($result)) {
-                                  echo '<option value="' . $row['athleteFirstName'] . " " . $row['athleteLastName'] . '">' . $row['athleteFirstName'] . " " . $row['athleteLastName'] . "</option>";
                                 }
                                 ?>
                             </select>
@@ -1780,9 +1773,9 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
-                      <form role="form" method="POST"  id="previousWorkoutForm1" >
+                      <form role="form" id="previousWorkoutForm1" >
                         <label for="workoutName">Select Workout:</label>
-                        <select class="form-control" id="workouts" name="workouts">
+                        <select class="form-control" id="workouts" name="workouts" onchange="printWorkout(this.value)">
                           <option value="" selected disabled>Select A Workout</option>
                           <?php
                             include("../lib/connect.php");
@@ -1797,133 +1790,11 @@
                             ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                    <label for="mySport">Select Sport:</label>
-                    <select class="form-control" name="mySport" id="mySport">
-                    <option value="" selected disabled>Please Select A Sport</option>
-                    <?php
-                      include("../lib/connect.php");
-                      $curUser = $_SESSION["myUsername"];
-                      $sql     = "select distinct athleteSport from Athlete where athletesCoachID='$curUser'";
-                      $result  = mysqli_query($connection, $sql);
-                      while ($row = mysqli_fetch_array($result)) {
-                        echo '<option value="' . $row["athleteSport"] . '">' . $row['athleteSport'] . "</option>";
-                      }
-                      ?>
-                    </select>
-                    </div>
-                    <div class="form-group" >
-                    <label for="myAthlete">Select Athlete:</label>
-                    <select class="form-control" name="myAthlete" id="myAthlete">
-                    <option value="" selected disabled>Please Select An Athlete</option>
-                    <?php
-                      include("../lib/connect.php");
-                      $curUser = $_SESSION["myUsername"];
-                      $sql     = "select athleteFirstName, athleteLastName from Athlete where athletesCoachID='$curUser'";
-                      $result  = mysqli_query($connection, $sql);
-                      while ($row = mysqli_fetch_array($result)) {
-                        echo '<option value="' . $row['athleteFirstName'] . " " . $row['athleteLastName'] . '">' . $row['athleteFirstName'] . " " . $row['athleteLastName'] . "</option>";
-                      }
-                      ?>
-                    </select>
-                    </div>
-                    <button type="submit" name="submit" class="btn btn-primary" value="Show Workout"><span class="glyphicon glyphicon-eye-open"></span>&nbsp&nbsp Show Workout</button>
-                    <button type="submit" class="btn btn-primary" value="Print Workout" onclick="previousWorkoutForm1.action='friendlyWorkout.php'; return true;"><span class="glyphicon glyphicon-print"></span>&nbsp&nbsp Print Workout</button>
                   </div>
                 </div>
               </div>
               </form>
-              <form role="form" method="POST" id="previousWorkoutForm" action="../lib/RmvExerciseFrmWrkout.php">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="panel-body">
-                      <?php
-                        include("../lib/connect.php");
-
-                        session_start();
-
-                        $workout = $_POST["workouts"];
-                        $_SESSION["workoutNameForDeletion"] = $workout;
-                        $tempWorkout = $workout;
-                        $tempWorkout = strstr($tempWorkout, '-', true);
-
-                        #Get the current user.
-                        $curUser = $_SESSION["myUsername"];
-
-                        #Select from the assessment table.
-                        $sql = "select * from `" . $workout . "`";
-
-                        #Sport is the only thing selected.
-                        if (isset($_POST["workouts"]) and !isset($_POST["myAthlete"]) and !isset($_POST["mySport"])) {
-                          $sql .= " where whosWorkout='$curUser' order by date";
-                          $whatToPrint = $tempWorkout;
-
-                        }
-
-                        else if(isset($_POST["workouts"]) and isset($_POST["myAthlete"]) and !isset($_POST["mySport"])) {
-                          $athlete = $_POST["myAthlete"];
-                          $sql .= " where athlete='$athlete' and whosWorkout='$curUser'order by date";
-                          $whatToPrint = $tempWorkout;
-                        }
-
-                        else if(isset($_POST["workouts"]) and !isset($_POST["myAthlete"]) and isset($_POST["mySport"])) {
-                          $mySport = $_POST["mySport"];
-                          $sql .= " where sport='$mySport' and whosWorkout='$curUser' order by date";
-                          $whatToPrint = $tempWorkout;
-                        }
-
-                        else if(isset($_POST["workouts"]) and isset($_POST["myAthlete"]) and isset($_POST["mySport"])) {
-                          $athlete = $_POST["myAthlete"];
-                          $mySport = $_POST["mySport"];
-                          $sql .= " where athlete='$athlete' and sport='$mySport' and whosWorkout='$curUser' order by date";
-                          $whatToPrint = $tempWorkout;
-                        }
-
-
-                        #Else nothing was selected so clear out the query.
-                        else {
-                          $sql = "";
-                        }
-
-                        $result = mysqli_query($connection, $sql);
-
-                        #Print table heading.
-                        print "<h1> $whatToPrint </h1>";
-
-                        #Print the assessment table.
-                        print " <div class='table-responsive'>
-                                        <table class='table table-striped table-bordered'>
-                                        <thead>
-                                        <tr>
-                                        <th>Date</th>
-                                        <th>Name</th>
-                                        <th>Sport</th>
-                                        <th>Order</th>
-                                        <th>Exercise Name</th>
-                                        		  <th>Remove</th>
-                                        </tr>
-                                        </thead>";
-                        print "<tbody>";
-
-                        while ($row = mysqli_fetch_array($result)) {
-                          $tempExercise = strstr($row["exerciseName"], '-', true);
-                          print "<tr>";
-                          print "<td>" . $row['date'] . "</td>";
-                          print "<td>" . $row['athlete'] . "</td>";
-                          print "<td>" . $row['sport'] . "</td>";
-                          print "<td>" . $row['exerciseOrder'] . "</td>";
-                          print "<td>" . $tempExercise . "</td>";
-
-                          print '<td align=center><input type="checkbox" name="Index[]" id="Index" value="' . $row['id'] . '"/></td>';
-                          print "</tr>";
-                        }
-
-                        print "</tbody>";
-                        print "</table>";
-                        ?>
-                      <button type="submit" class="btn btn-primary" value="Remove Exercise(s)" onclick="return confirmDelete()"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise(s)</button>
-                    </div>
-              </form>
+              <div id="output2"></div>
               </div>
               </div>
             </div>

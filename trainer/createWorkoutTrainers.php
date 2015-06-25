@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css">
     <link rel="icon" type="image/png" sizes="96x96" href="../img/logo/FitMe-favicon-96x96.png">
     <script>
-      function printWorkout(str) {
+      function printUsedExercises(str) {
           if (str == "") {
               document.getElementById("output").innerHTML = "";
               return;
@@ -35,7 +35,7 @@
                       document.getElementById("output").innerHTML = xmlhttp.responseText;
                   }
               }
-              xmlhttp.open("GET","printWorkout.php?listOfWorkouts="+str,true);
+              xmlhttp.open("GET","printUsedExercises.php?listOfWorkouts="+str,true);
               xmlhttp.send();
           }
       }
@@ -141,7 +141,7 @@
           <div class="tab-pane" id="addExercises">
             <!--Add Exercise to workout tab-->
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-8">
                 <div class="panel panel-primary">
                   <div class="panel-heading">
                     <h3 class="panel-title">Add Exercises</h3>
@@ -1691,7 +1691,36 @@
                   </div>
                 </div>
               </div>
-            </form>
+
+              <div class="col-md-4">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Currently Used Orders</h3>
+                  </div>
+                  <div class="panel-body">
+                    <form>
+                    <div class="form-group">
+                      <label for="workoutName">Macro Name:</label>
+                      <select class="form-control" required id="workout" name="workout" onchange="printUsedExercises(this.value)">
+                        <option value="" selected disabled>Select Macro Name</option>
+                        <?php
+                          include("../lib/connect.php");
+                          $curUser = $_SESSION["myUsername"];
+                          $sql     = "select workoutName from CurrentWorkouts where whosWorkout='$curUser'";
+                          $result  = mysqli_query($connection, $sql);
+                          while ($row = mysqli_fetch_array($result)) {
+                          $tempName = $row["workoutName"];
+                          $tempName = strstr($tempName, '-', true);
+                          echo '<option value="' . $row["workoutName"] . '">' . $tempName . "</option>";
+                          }
+                          ?>
+                      </select>
+                    </div>
+                  </form>
+                    <div id="output"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <!--End of add exercise to workout tab-->

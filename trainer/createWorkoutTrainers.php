@@ -187,10 +187,6 @@
                       <div class="row">
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="date">Date:</label>
-                            <input type="date" required class="form-control" id="date" name="date" placeholder="Date">
-                          </div>
-                          <div class="form-group">
                             <label for="workoutName">Macro Name:</label>
                             <select class="form-control" required id="workoutName" name="workoutName">
                               <option value="" selected disabled>Select Macro Name</option>

@@ -16,7 +16,7 @@
           $curUser = $_SESSION["myUsername"];
 
           #Select from the assessment table.
-          $sql = "select * from `" . $workout . "`";
+          $sql = "select * from `" . $workout . "` order by id";
 
           $result = mysqli_query($connection, $sql);
 
@@ -28,10 +28,10 @@
                           <table class='table table-striped table-bordered'>
                           <thead>
                           <tr>
-                          <th>Date</th>
+                          <th>Exercise #</th>
                           <th>Order</th>
                           <th>Exercise Name</th>
-                                <th>Remove</th>
+                          <th>Remove</th>
                           </tr>
                           </thead>";
           print "<tbody>";
@@ -39,7 +39,7 @@
           while ($row = mysqli_fetch_array($result)) {
             $tempExercise = strstr($row["exerciseName"], '-', true);
             print "<tr>";
-            print "<td>" . $row['date'] . "</td>";
+            print "<td>" . $row['id'] . "</td>";
             print "<td>" . $row['exerciseOrder'] . "</td>";
             print "<td>" . $tempExercise . "</td>";
 

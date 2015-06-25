@@ -249,6 +249,10 @@
                                 ?>
                             </select>
                           </div>
+                          <div class="form-group">
+                            <label for="comments">Comments:</label>
+                            <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                          </div>
                         </div>
                       </div>
                       <ul class="nav nav-tabs" id="myTab">

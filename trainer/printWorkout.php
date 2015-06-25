@@ -25,7 +25,7 @@
 
           #Print the assessment table.
           print " <div class='table-responsive'>
-                          <table class='table table-striped table-bordered'>
+                          <table class='table table-striped table-bordered' id='currentWorkoutsTable'>
                           <thead>
                           <tr>
                           <th>Exercise #</th>

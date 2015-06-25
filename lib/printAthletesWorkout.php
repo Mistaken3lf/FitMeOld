@@ -836,10 +836,10 @@
                       print "</tr>";
                       print "<tr>";
                       print "<th>Comments</th>";
-                            print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                            print "<td colspan=17>".$row['comment']."</td>";
                       print "</tr>";
                          print "<tr>";
-                         print "<td colspan=18 bgcolor=#000000></td>";
+                         print "<td colspan=18 bgcolor=#757575></td>";
                          print "</tr>";
                          print "</thead>";
 
@@ -877,7 +877,7 @@
 
                       print "<thead>";
                          print "<tr>";
-                            print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                            print "<th colspan=2 bgcolor=#757575><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
                             print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
@@ -1580,10 +1580,10 @@
                       print "</tr>";
                       print "<tr>";
                       print "<th>Comments</th>";
-                            print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                      print "<td colspan=17>".$row['comment']."</td>";
                       print "</tr>";
                          print "<tr>";
-                         print "<td colspan=18 bgcolor=#000000></td>";
+                         print "<td colspan=18 bgcolor=#757575></td>";
                          print "</tr>";
                          print "</thead>";
 
@@ -1623,7 +1623,7 @@
 
                       print "<thead>";
                          print "<tr>";
-                            print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                            print "<th colspan=2 bgcolor=#757575><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
                             print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
@@ -2326,10 +2326,10 @@
                       print "</tr>";
                       print "<tr>";
                       print "<th>Comments</th>";
-                            print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                            print "<td colspan=17>".$row['comment']."</td>";
                       print "</tr>";
                          print "<tr>";
-                         print "<td colspan=18 bgcolor=#000000></td>";
+                         print "<td colspan=18 bgcolor=#757575></td>";
                          print "</tr>";
                          print "</thead>";
 
@@ -2368,7 +2368,7 @@
 
                       print "<thead>";
                          print "<tr>";
-                            print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                            print "<th colspan=2 bgcolor=#757575><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
                             print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
@@ -3071,10 +3071,10 @@
                       print "</tr>";
                       print "<tr>";
                       print "<th>Comments</th>";
-                            print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                            print "<td colspan=17>".$row['comment']."</td>";
                       print "</tr>";
                          print "<tr>";
-                         print "<td colspan=18 bgcolor=#000000></td>";
+                         print "<td colspan=18 bgcolor=#757575></td>";
                          print "</tr>";
                          print "</thead>";
 
@@ -3113,7 +3113,7 @@
 
                       print "<thead>";
                          print "<tr>";
-                            print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                            print "<th colspan=2 bgcolor=#757575><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
                             print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
@@ -3816,10 +3816,10 @@
                       print "</tr>";
                       print "<tr>";
                       print "<th>Comments</th>";
-                            print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                            print "<td colspan=17>".$row['comment']."</td>";
                       print "</tr>";
                          print "<tr>";
-                         print "<td colspan=18 bgcolor=#000000></td>";
+                         print "<td colspan=18 bgcolor=#757575></td>";
                          print "</tr>";
                          print "</thead>";
 
@@ -3858,7 +3858,7 @@
 
                       print "<thead>";
                          print "<tr>";
-                            print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                            print "<th colspan=2 bgcolor=#757575><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
                             print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
@@ -4561,10 +4561,10 @@
                       print "</tr>";
                       print "<tr>";
                       print "<th>Comments</th>";
-                            print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                            print "<td colspan=17>".$row['comment']."</td>";
                       print "</tr>";
                          print "<tr>";
-                         print "<td colspan=18 bgcolor=#000000></td>";
+                         print "<td colspan=18 bgcolor=#757575></td>";
                          print "</tr>";
                          print "</thead>";
 
@@ -4603,7 +4603,7 @@
 
                       print "<thead>";
                          print "<tr>";
-                            print "<th colspan=2 bgcolor=#000000><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
+                            print "<th colspan=2 bgcolor=#757575><center><font color=#FFFFFF><u><b>$tempOne</b></u></font></center></h4></th>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 1</b></font></td>";
                             print "<td colspan=4 align=center bgcolor=#FFFFFF><b>WEEK 2</b></td>";
                             print "<td colspan=4 align=center bgcolor=#2196f3><font color=#FFFFFF><b>WEEK 3</b></font></td>";
@@ -5306,10 +5306,10 @@
                       print "</tr>";
                       print "<tr>";
                       print "<th>Comments</th>";
-                            print "<td colspan=17>This is a test comment.  What do you think?</td>";
+                            print "<td colspan=17>".$row['comment']."</td>";
                       print "</tr>";
                          print "<tr>";
-                         print "<td colspan=18 bgcolor=#000000></td>";
+                         print "<td colspan=18 bgcolor=#757575></td>";
                          print "</tr>";
                          print "</thead>";
 

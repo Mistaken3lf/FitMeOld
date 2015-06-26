@@ -77,7 +77,6 @@
         <!--Create a tabbed interface to create an exercise-->
         <ul class="nav nav-tabs" id="myTab">
           <li class="active"><a href="#createExercise" data-toggle="tab">Create Exercise</a></li>
-          <li><a href="#removeExercise" data-toggle="tab">Remove Exercise</a></li>
           <li><a href="#currentExercises" data-toggle="tab">Current Exercises</a></li>
         </ul>
         <br>
@@ -170,66 +169,21 @@
             </div>
             <!--End of first tab-->
           </div>
-          <!--Remove Exercise tab-->
-          <div class="tab-pane" id="removeExercise">
-            <div class="row">
-              <div class="col-md-5">
-                <div class="panel panel-primary">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">Remove Exercise</h3>
-                  </div>
-                  <div class="panel-body">
-                    <form role="form" method="post" id="removeExerciseForm" action="../lib/removeExercise.php">
-                      <div class="errorDiv">
-                        <?php
-                          if (isset($_SESSION['exerciseDeleteErrors']) && isset($_SESSION['exerciseDeleteAttempt'])) {
-                              unset($_SESSION['exerciseDeleteAttempt']);
-                              print "Errors occured <br>\n";
 
-                              foreach ($_SESSION['exerciseDeleteErrors'] as $error) {
-                                  print $error."<br>\n";
-                              }
-                          }
-                          ?>
-                      </div>
-                      <div class="form-group">
-                        <label for="Exercise to delete">Select Exercise To Remove:</label>
-                        <select class="form-control" required name="removeExerciseName" id="removeExerciseName">
-                          <option value="" selected disabled>Please Select An Exercise</option>
-                          <?php
-                            include '../lib/connect.php';
-                            $curUser = $_SESSION['myUsername'];
-                            $sql = "select exercise_name from EXERCISES where whosExercise='$curUser'";
-                            $result = mysqli_query($connection, $sql);
-                            while ($row = mysqli_fetch_array($result)) {
-                                $tempExercise = strstr($row['exercise_name'], '-', true);
-                                echo '<option value="'.$row['exercise_name'].'">'.$tempExercise.'</option>';
-                            }
-                            ?>
-                        </select>
-                      </div>
-                      <br>
-                      <button type="submit" class="btn btn-primary" value="Remove Exericse" onclick="return confirmExerciseDelete()"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--End of second tab-->
           <!--Current exercises tab-->
           <div class="tab-pane" id="currentExercises">
             <h3>Current Exercises</h3>
             <div class="container-fluid">
               <div class="row">
                 <div clas="col-md-12">
+                 <form role="form" method="POST" id="removeExerciseForm" name="removeExerciseForm" action="../lib/deleteExercise.php">
                   <?php
                     #Print all the current exercises created for that user.
                     include '../lib/connect.php';
                     $curUser = $_SESSION['myUsername'];
 
                     $sql = "select exercise_name, category, plane,
-                                        movement, style from EXERCISES where whosExercise = '$curUser'";
+                                        movement, style, ExerciseIndex from EXERCISES where whosExercise = '$curUser'";
 
                     $result = mysqli_query($connection, $sql);
 
@@ -242,6 +196,7 @@
                                                         <th>Plane</th>
                                                         <th>Movement</th>
                                                         <th>Style</th>
+														<th>Remove</th>
                                                     </tr>
                                                 </thead>";
 
@@ -255,12 +210,16 @@
                         print '<td>'.$row['plane'].'</td>';
                         print '<td>'.$row['movement'].'</td>';
                         print '<td>'.$row['style'].'</td>';
+						echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['ExerciseIndex'] . '"></td>';
                         print '</tr>';
                     }
 
                     print '</tbody>';
                     print '</table>';
                     ?>
+                    <button type="submit" class="btn btn-primary" value="Remove Exericse"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise</button>
+                <br><br>
+              </form>
                 </div>
               </div>
             </div>
@@ -298,20 +257,10 @@
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <!--jquery, bootstrap javascript bootstrap validator our form validation, and the disable -->
-    <!-- script when trunk is selected-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-    <script src="../js/disable.js"></script>
-    <script type="text/javascript" src="../js/validateExercisePage.js"></script>
-    <script src="../js/tabReload.js"></script>
     <script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script src="http://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
-    <script src="../js/exerciseDataTable.js"></script>
-    <script>
-      function confirmExerciseDelete(){
-      return confirm("Are you sure you want to remove this Exercise?");
-      }
-    </script>
+    <script src="../js/exerciseFunctions.js"></script>
   </body>
 </html>

@@ -84,7 +84,7 @@
                     <h3 class="panel-title">Create New User</h3>
                   </div>
                   <div class="panel-body">
-                    <form role="form" method="POST" id="addUserForm" action="addUser.php">
+                    <form role="form" method="POST" id="addUserForm" action="../lib/addUser.php">
                       <div class="errorDiv">
                         <!--Print out errors from the add user form.-->
                         <?php

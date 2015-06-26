@@ -9,30 +9,6 @@
 <html lang="en">
   <head>
     <title>FitMe</title>
-    <script>
-      function showAvailableAthletes(str) {
-      if (str == "") {
-      		document.getElementById("showTable").innerHTML = "";
-      		return;
-      } else {
-      	if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-      	} else {
-                // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-      	}
-      	xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                    document.getElementById("showTable").innerHTML = xmlhttp.responseText;
-                }
-            }
-
-            xmlhttp.open("GET","showAssignWorkouts.php?q="+str,true);
-            xmlhttp.send();
-        }
-      }
-    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="PRAGMA" content="NO-CACHE">
@@ -276,7 +252,7 @@
                     <h3 class="panel-title">Remove Athlete</h3>
                   </div>
                   <div class="panel-body">
-                    <form role="form" method="POST" id="deleteAthleteForm" action="../lib/deleteAthlete.php">
+                    <form role="form" method="POST" id="removeAthleteForm" name="removeAthleteForm" action="../lib/deleteAthlet.php">
                       <div class="errorDiv">
                         <!--Print any errors from the delete athlete form.-->
                         <?php
@@ -356,14 +332,15 @@
                 <br>
             <!--PHP script to print out the current athletes-->
             <h3>Current Users</h3>
-            <form method="GET" id="athletesForm" name="athletesForm">
+            <form role="form" method="POST" id="removeAthleteForm" name="removeAthleteForm" action="../lib/removeAthlete.php">
+            <!--<form role="form" method="GET" id="athletesForm" name="athletesForm" action="../lib/removeAthlete.php>-->
               <?php
                 #Print out current users athletes.
                 include("../lib/connect.php");
 
                 $curUser = $_SESSION["myUsername"];
                 $sql     = "select athleteUsername, athleteFirstName, athleteLastName, athleteEmail, athleteSport,
-                              athleteHeight, athleteWeight from
+                              athleteHeight, athleteWeight,remIndex from
                               Athlete where athletesCoachID='$curUser' order by athleteUsername";
 
                 $result = mysqli_query($connection, $sql);
@@ -379,6 +356,7 @@
                                               <th>Height</th>
                                               <th>Weight</th>
                                               <th>Sport</th>
+											  <th>Remove</th>
                                           </tr>
                                       </thead>";
                 print "<tbody>";
@@ -392,12 +370,15 @@
                   print "<td>" . $row['athleteHeight'] . "</td>";
                   print "<td>" . $row['athleteWeight'] . "</td>";
                   print "<td>" . $row['athleteSport'] . "</td>";
+				  echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['remIndex'] . '"></td>';
                   print "</tr>";
                 }
 
                 print "</tbody>";
                 print "</table>";
                 ?>
+                   <button type="submit" class="btn btn-primary" value="Remove Athlete" onclick="return confirmAthleteDelete()"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Athlete(s)</button>
+                   <br><br>
             </form>
           </div>
         </div>
@@ -539,17 +520,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-    <script src="../js/validateAthletesPage.js"></script>
-    <script src="../js/tabReload.js"></script>
     <script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script src="http://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
-    <script>
-      function confirmAthleteDelete(){
-      	//window.document.title = "Remove Athlete";
-      return confirm("Are you sure you want to remove this Athlete?");
-      }
-    </script>
-    <script src="../js/athletesDataTable.js"></script>
+    <script src="../js/athleteFunctions.js"></script>
   </body>
 </html>

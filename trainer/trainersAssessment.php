@@ -9,30 +9,6 @@
 <html lang="en">
   <head>
     <title>FitMe</title>
-    <script>
-      function showAvailableAthletes(str) {
-      if (str == "") {
-      		document.getElementById("showTable").innerHTML = "";
-      		return;
-      } else {
-      	if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-      	} else {
-                // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-      	}
-      	xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                    document.getElementById("showTable").innerHTML = xmlhttp.responseText;
-                }
-            }
-
-            xmlhttp.open("GET","../lib/showCreateAssessment.php?q="+str,true);
-            xmlhttp.send();
-        }
-      }
-    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="PRAGMA" content="NO-CACHE">
@@ -111,30 +87,6 @@
                   <h3 class="panel-title">Create New Assessment</h3>
                 </div>
                 <div class="panel-body">
-                  <script type="text/javascript">
-                    var checkflag = "false";
-                    function check(field)
-                    {
-                        if (checkflag == "false")
-                        {
-                            for (i = 0; i < field.length; i++)
-                            {
-                                field[i].checked = true;
-                            }
-                            checkflag = "true";
-                            return "Uncheck All";
-                        }
-                        else
-                        {
-                            for (i = 0; i < field.length; i++)
-                            {
-                                field[i].checked = false;
-                            }
-                        checkflag = "false";
-                        return "Check All";
-                        }
-                    }
-                  </script>
                   <form role="form" method="POST" id="createAssessmentForm" name="createAssessmentForm" action="../lib/createAssessment.php">
                     <!--Print out all errors from the login form if there are any.-->
                     <div class="errorDiv">
@@ -266,7 +218,7 @@
                 print "</tbody>";
                 print "</table>";
                 ?>
-                <input type="submit" class="btn btn-primary" value="Remove Assessment(s)" id="deleteAssessment">
+                <button type="submit" class="btn btn-primary" value="Remove Assessment(s)" id="deleteAssessment"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Assessment</button>
                 <br><br>
               </form>
             </div>
@@ -307,29 +259,6 @@
     <script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script src="http://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
-    <script src="../js/assessmentDataTable.js"></script>
-
-    <script src="../js/tabReload.js"></script>
-    <script>
-    $("#removeAssessmentForm").submit(function(e) {
-      if(!$('input[type=checkbox]:checked').length) {
-          alert("Please select an assessment to remove.");
-
-          //stop the form from submitting
-          return false;
-      }
-
-      return confirm("Are you sure you want to remove selected assessment(s)?");
-  });
-
-  $("#createAssessmentForm").submit(function(e) {
-    if(!$('input[type=checkbox]:checked').length) {
-        alert("Please select an athlete to add assessment to.");
-
-        //stop the form from submitting
-        return false;
-    }
-});
-    </script>
+    <script src="../js/assessmentFunctions.js"></script>
   </body>
 </html>

@@ -1,7 +1,3 @@
-<!DOCTYPE html>
-<head></head>
-<body>
-<form role="form" method="POST" id="previousWorkoutForm" action="../lib/RmvExerciseFrmWrkout.php">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-body">
@@ -55,6 +51,3 @@
           ?>
         <button type="submit" class="btn btn-primary" id="remove" value="Remove Exercise(s)"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise(s)</button>
       </div>
-</form>
-</body>
-</html>

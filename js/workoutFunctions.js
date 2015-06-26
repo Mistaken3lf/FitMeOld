@@ -50,6 +50,15 @@ function confirmWrkOutRmv(){
 return confirm("Are you sure you want to remove the Workout?");
 }
 
+$("#previousWorkoutForm").submit(function(e) {
+  if(!$('input[type=checkbox]:checked').length) {
+      alert("Please select an athlete to assign a workout to.");
+
+      //stop the form from submitting
+      return false;
+  }
+});
+
 ////////////////////////////////////////////////////////////////////////////////
 
 

@@ -1748,7 +1748,9 @@
                 </div>
               </div>
               </form>
+              <form role="form" method="POST" id="previousWorkoutForm" action="../lib/RmvExerciseFrmWrkout.php">
               <div id="output2"></div>
+            </form>
               </div>
               </div>
             </div>

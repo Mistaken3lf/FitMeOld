@@ -77,7 +77,6 @@
         <!--Create athlete tabs-->
         <ul class="nav nav-tabs" id="myTab">
           <li class="active"><a href="#addUser" data-toggle="tab">Create Athlete</a></li>
-          <li><a href="#removeUser" data-toggle="tab">Remove Athlete</a></li>
           <li><a href="#currentUsers" data-toggle="tab">Current Athletes</a></li>
           <li><a href="#assignWorkout" data-toggle="tab">Assign Workout</a></li>
         </ul>
@@ -203,91 +202,7 @@
             </div>
             <!--End of first tab-->
           </div>
-          <div class="tab-pane" id="removeUser">
-            <!--Remove athlete tab-->
-            <div class="row">
-              <div class="col-md-5">
-              <!-- Large modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".remove-user-modal-lg">Remove User Demo</button>
-                <div class="modal fade remove-user-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel"><font color="#2196f3">Remove User Tab</font></h4>
-                        <hr class="colored">
-                      </div>
-                      <div class="modal-body">
-                        <img class="center-block img-responsive" src="../img/FitMe-CreateAthleteTab.jpg" width="800" height="1000">
-                        <ul class="modalList1">
-                          <h6>
-                            <li>Once you have clicked on the Athletes Page, you will see the four different tabs.</li>
-                            <li>The Create Athlete Tab will require the Administrator to put in the following information for the Athlete:</li>
-                            <ul class="modalList2">
-                              <li>Username (Can include upper and lower case letters, numbers, and special characters)</li>
-                              <li>Password (Can include upper and lower case letters, numbers, and special characters)</li>
-                              <li>Email Address</li>
-                              <li>First Name</li>
-                              <li>Last Name</li>
-                              <li>Select Sport (Select the sport that the athlete plays from the dropdown list)</li>
-                              <li>Height (Height must be entered in inches)</li>
-                              <li>Weight (Weight must be entered in pounds)</li>
-                            </ul>
-                            <li>After filling out all of the text fields, click the <b>Add Athlete</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
-                            <li>If for some reason you forget to enter information into a text field or put in the incorrect information, the text field will have a red glow around it along with an error indicating that something is wrong.</li>
-                          </h6>
-                        </ul>
-                      </div>
-                      <!--.modal-body-->
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <br>
-                <br>
-                <div class="panel panel-primary">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">Remove Athlete</h3>
-                  </div>
-                  <div class="panel-body">
-                    <form role="form" method="POST" id="removeAthleteForm" name="removeAthleteForm" action="../lib/deleteAthlet.php">
-                      <div class="errorDiv">
-                        <!--Print any errors from the delete athlete form.-->
-                        <?php
-                          if (isset($_SESSION["userDeleteErrors"]) && isset($_SESSION["userDeleteAttempt"])) {
-                            unset($_SESSION["userDeleteAttempt"]);
-                            print "Errors occured <br>\n";
 
-                            foreach ($_SESSION["userDeleteErrors"] as $error) {
-                              print $error . "<br>\n";
-                            }
-                          }
-                          ?>
-                      </div>
-                      <div class="form-group">
-                        <label for="Athlete's Name">Select Athlete To Remove:</label>
-                        <select class="form-control" required name="removeUserName" id="removeUserName">
-                          <option value="" selected disabled>Please Select An Athlete</option>
-                          <?php
-                            include("../lib/connect.php");
-                            $curUser = $_SESSION["myUsername"];
-                            $sql     = "select athleteUsername, athleteFirstName, athleteLastName from Athlete where athletesCoachID='$curUser'";
-                            $result  = mysqli_query($connection, $sql);
-                            while ($row = mysqli_fetch_array($result)) {
-                              echo '<option value="' . $row["athleteUsername"] . '">' . $row['athleteFirstName'] . " " . $row['athleteLastName'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                      </div>
-                      <button type="submit" class="btn btn-primary" value="Remove Athlete" onclick="return confirmAthleteDelete()"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Athlete</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <!--End of second tab-->
           <div class="tab-pane" id="currentUsers">
                       <!-- Large modal -->
@@ -377,7 +292,7 @@
                 print "</tbody>";
                 print "</table>";
                 ?>
-                   <button type="submit" class="btn btn-primary" value="Remove Athlete" onclick="return confirmAthleteDelete()"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Athlete(s)</button>
+                   <button type="submit" class="btn btn-primary" value="Remove Athlete"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Athlete(s)</button>
                    <br><br>
             </form>
           </div>

@@ -7,6 +7,17 @@ $("#assignWorkoutForm").submit(function(e) {
       return false;
   }
 });
+
+$("#removeAthleteForm").submit(function(e) {
+  if(!$('input[type=checkbox]:checked').length) {
+      alert("Please select an athlete to remove.");
+
+      //stop the form from submitting
+      return false;
+  }
+
+  return confirm("Are you sure you want to remove selected athlete(s)?");
+});
 //****************************************************************************
 
 //AJAX Script to show avaliabel athletes on assign workout

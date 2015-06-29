@@ -82,12 +82,13 @@
                   include("../lib/connect.php");
                   $curUser = $_SESSION["myUsername"];
 
-                  $sql = "SELECT firstName, lastName, DOB, officeNumber, cellPhone, workPhone, otherPhone, email, otherEmail, biography
+                  $sql = "SELECT username, firstName, lastName, DOB, officeNumber, cellPhone, workPhone, otherPhone, email, otherEmail, biography
                                             FROM users WHERE username = '$curUser'";
 
                   $result = mysqli_query($connection, $sql);
 
                   while ($row = mysqli_fetch_array($result)) {
+                    $username = $row["username"];
                     $firstName    = $row['firstName'];
                     $lastName     = $row['lastName'];
                     $DOB          = $row['DOB'];
@@ -114,14 +115,19 @@
                       ?>
                   </div>
                   <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" style="background-color:#FFFFFF"
+                      name="username" readonly value="<?= $username ?>">
+                  </div>
+                  <div class="form-group">
                     <label for="firstName">First Name:</label>
                     <input type="text" required class="form-control" id="firstName" style="background-color:#FFFFFF"
-                      name="firstName" value="<?= $firstName ?>" readonly>
+                      name="firstName" value="<?= $firstName ?>">
                   </div>
                   <div class="form-group">
                     <label for="lastName">Last Name:</label>
                     <input type="text" required class="form-control" id="lastName" style="background-color:#FFFFFF"
-                      name="lastName" value="<?= $lastName ?>" readonly>
+                      name="lastName" value="<?= $lastName ?>">
                   </div>
                   <div class="form-group">
                     <label for="DOB">Date of Birth:</label>

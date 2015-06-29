@@ -183,7 +183,7 @@ else {
   $sport = test_input($_POST['sport']);
 
   #Make sure it contains only letters.
-  if (!preg_match('/^[a-zA-Z- ]*$/', $sport)) {
+  if (!preg_match('/^[a-zA-Z0-9- ]*$/', $sport)) {
       #Invalid sport name so add the error to the array.
     $_SESSION['addAthleteErrors'][] = 'Only letters allowed in Sport';
 

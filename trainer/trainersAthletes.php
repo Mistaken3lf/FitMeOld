@@ -76,7 +76,7 @@
         <hr class="colored">
         <!--Create athlete tabs-->
         <ul class="nav nav-tabs" id="myTab">
-          <li class="active"><a href="#addUser" data-toggle="tab">Create Athlete</a></li>
+          <li class="active"><a href="#addUser" data-toggle="tab">Create Athlete/User</a></li>
           <li><a href="#currentUsers" data-toggle="tab">Current Athletes</a></li>
           <li><a href="#assignWorkout" data-toggle="tab">Assign Workout</a></li>
         </ul>
@@ -170,9 +170,9 @@
                         <input type="text" required class="form-control" id="lastName" name="lastName" placeholder="Last Name">
                       </div>
                       <div class="form-group">
-                        <label for="sport">Select Sport:</label>
+                        <label for="sport">Sport/Workout Type:</label>
                         <select class="form-control" required name="sport" id="sport">
-                          <option value="" selected disabled>Please Select A Sport</option>
+                          <option value="" selected disabled>Please Select A Sport/Workout Type</option>
                           <?php
                             include("../lib/connect.php");
                             $curUser = $_SESSION["myUsername"];
@@ -206,7 +206,7 @@
           <!--End of second tab-->
           <div class="tab-pane" id="currentUsers">
                       <!-- Large modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".current-users-modal-lg">Current Users Demo</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".current-users-modal-lg">Current Athletes Demo</button>
                 <div class="modal fade current-users-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -246,7 +246,7 @@
                 <br>
                 <br>
             <!--PHP script to print out the current athletes-->
-            <h3>Current Users</h3>
+            <h3>Current Athletes</h3>
             <form role="form" method="POST" id="removeAthleteForm" name="removeAthleteForm" action="../lib/removeAthlete.php">
             <!--<form role="form" method="GET" id="athletesForm" name="athletesForm" action="../lib/removeAthlete.php>-->
               <?php

@@ -294,16 +294,12 @@ else {
   $athletesTrainer = $_SESSION['myUsername'];
 
   #insert the athlete into the users table.
-  $sql = "insert into users (username, password, email, firstName, lastName, permissions) values ('$newUsername', '$newUserPassword', '$athleteEmail', '$athleteFirstName', '$athleteLastName', '$userPermissions')";
+  $sql = "insert into users (username, password, email, firstName, lastName, permissions, sport, coachID, height, weight) values ('$newUsername', '$newUserPassword', '$athleteEmail', '$athleteFirstName', '$athleteLastName', '$userPermissions', '$athleteSport', '$athletesTrainer', '$athleteHeight', '$athleteWeight')";
 
-  #Insert the athlete into the athletes table.
-  $insertAthleteInfo = "insert into Athlete (athleteUsername, athletePassword, athleteEmail, athleteSport, athleteFirstName, athleteLastName, athleteHeight, athleteWeight, athletesCoachID) values ('$newUsername', '$newUserPassword', '$athleteEmail', '$athleteSport', '$athleteFirstName', '$athleteLastName', '$athleteHeight', '$athleteWeight', '$athletesTrainer')";
-
-    $result1 = mysqli_query($connection, $sql);
-    $result2 = mysqli_query($connection, $insertAthleteInfo);
+  $result1 = mysqli_query($connection, $sql);
 
   #Insert into the athlete table query.
-  if (($result1 == true) and ($result2 == true)) {
+  if ($result1) {
       if ($_SESSION['myPermission'] == 'Trainer') {
           echo "<script>
             alert('Athlete Added');

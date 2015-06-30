@@ -82,7 +82,7 @@
                       $currentWorkoutSeven = "";
 
                       #Gets the appropriate workout for the user
-                      $sql = "SELECT currentWorkoutOne, currentWorkoutTwo, currentWorkoutThree, currentWorkoutFour, currentWorkoutFive, currentWorkoutSix, currentWorkoutSeven FROM Athlete WHERE athleteUsername = '$username'";
+                      $sql = "SELECT currentWorkoutOne, currentWorkoutTwo, currentWorkoutThree, currentWorkoutFour, currentWorkoutFive, currentWorkoutSix, currentWorkoutSeven FROM users WHERE username = '$username'";
 
                       $result = mysqli_query($connection, $sql);
 

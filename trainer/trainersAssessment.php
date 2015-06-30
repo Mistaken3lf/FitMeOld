@@ -146,10 +146,10 @@
                         echo '<select class="form-control" required name="sport" id="sport" onchange="showAvailableAthletes(this.value)">';
                         echo '<option value="" selected disabled>Please Select A Sport</option>';
 
-                        $sql     = "select distinct athleteSport from Athlete where athletesCoachID='$curUser'";
+                        $sql     = "select distinct sport from users where coachID='$curUser'";
                         $result  = mysqli_query($connection, $sql);
                         while ($row = mysqli_fetch_array($result)) {
-                          echo '<option value="' . $row["athleteSport"] . '">' . $row['athleteSport'] . "</option>";
+                          echo '<option value="' . $row["sport"] . '">' . $row['sport'] . "</option>";
                         }
                         echo '</select>';
                         echo '<br>';

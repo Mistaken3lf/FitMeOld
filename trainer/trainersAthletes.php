@@ -254,9 +254,9 @@
                 include("../lib/connect.php");
 
                 $curUser = $_SESSION["myUsername"];
-                $sql     = "select athleteUsername, athleteFirstName, athleteLastName, athleteEmail, athleteSport,
-                              athleteHeight, athleteWeight,remIndex from
-                              Athlete where athletesCoachID='$curUser' order by athleteUsername";
+                $sql     = "select username, firstName, lastName, email, sport,
+                              height, weight,remIndex from
+                              users where coachID='$curUser' order by username";
 
                 $result = mysqli_query($connection, $sql);
 
@@ -278,13 +278,13 @@
 
                 while ($row = mysqli_fetch_array($result)) {
                   print "<tr>";
-                  print '<td><u><a href="../lib/printAthletesWorkout.php?myAthlete=' . $row['athleteUsername'] . "@". $row['athleteFirstName'] . "," . $row['athleteLastName'] . '">' . $row['athleteUsername'] . '</a></u></td>';
-                  print "<td>" . $row['athleteFirstName'] . "</td>";
-                  print "<td>" . $row['athleteLastName'] . "</td>";
-                  print "<td>" . $row['athleteEmail'] . "</td>";
-                  print "<td>" . $row['athleteHeight'] . "</td>";
-                  print "<td>" . $row['athleteWeight'] . "</td>";
-                  print "<td>" . $row['athleteSport'] . "</td>";
+                  print '<td><u><a href="../lib/printAthletesWorkout.php?myAthlete=' . $row['username'] . "@". $row['firstName'] . "," . $row['lastName'] . '">' . $row['username'] . '</a></u></td>';
+                  print "<td>" . $row['firstName'] . "</td>";
+                  print "<td>" . $row['lastName'] . "</td>";
+                  print "<td>" . $row['email'] . "</td>";
+                  print "<td>" . $row['height'] . "</td>";
+                  print "<td>" . $row['weight'] . "</td>";
+                  print "<td>" . $row['sport'] . "</td>";
 				  echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['remIndex'] . '"></td>';
                   print "</tr>";
                 }
@@ -352,7 +352,7 @@
                     {
                         if (checkflag == "false")
                         {
-                            for (i = 0; i < field.length; i++)
+                            for (i = 0; i <= field.length; i++)
                             {
                                 field[i].checked = true;
                             }
@@ -361,7 +361,7 @@
                         }
                         else
                         {
-                            for (i = 0; i < field.length; i++)
+                            for (i = 0; i <= field.length; i++)
                             {
                                 field[i].checked = false;
                             }
@@ -382,10 +382,10 @@
                         echo '<select class="form-control" required name="sport" id="sport" onchange="showAvailableAthletes(this.value)">';
                         echo '<option value="" selected disabled>Select A Sport To Assign Workouts</option>';
 
-                        $sql = "select Distinct athleteSport from Athlete where athletesCoachID='$curUser'";
+                        $sql = "select Distinct sport from users where coachID='$curUser'";
                             $result = mysqli_query($connection, $sql);
                             while ($row = mysqli_fetch_array($result)) {
-                            echo '<option value="'.$row["athleteSport"].'">' . $row['athleteSport'] . '</option>';
+                            echo '<option value="'.$row["sport"].'">' . $row['sport'] . '</option>';
                             }
                         echo '</select>';
                         echo '<br>';

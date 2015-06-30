@@ -52,10 +52,10 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <?php
-                    echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
-                    $_SESSION["myFirstName"] . ' ' . $_SESSION["myLastName"];
-                    ?>
+                <?php
+                  echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
+                  $_SESSION["myFirstName"] . ' ' . $_SESSION["myLastName"];
+                  ?>
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="trainersProfile.php">My Profile</a></li>
@@ -171,53 +171,53 @@
           <div class="row">
             <div class="col-md-12">
               <form role="form" method="POST" id="removeAssessmentForm" name="removeAssessmentForm" action="../lib/deleteAssessment.php">
-              <?php
-                include("../lib/connect.php");
-                session_start();
+                <?php
+                  include("../lib/connect.php");
+                  session_start();
 
-                #Get the current user.
-                $curUser = $_SESSION["myUsername"];
+                  #Get the current user.
+                  $curUser = $_SESSION["myUsername"];
 
-                #Select from the assessment table.
-                $sql = "select * from assessmentRecord where whosAssessment = '$curUser'";
+                  #Select from the assessment table.
+                  $sql = "select * from assessmentRecord where whosAssessment = '$curUser'";
 
-                $result = mysqli_query($connection, $sql);
+                  $result = mysqli_query($connection, $sql);
 
-                #Print table heading.
-                print "<h1> My Assessments </h1>";
+                  #Print table heading.
+                  print "<h1> My Assessments </h1>";
 
-                #Print the assessment table.
-                print " <div class='table-responsive'>
-                                <table class='table table-striped table-bordered' id='currentAssessmentsTable'>
-                                <thead>
-                                <tr>
-                                <th>Date</th>
-                                <th>Sport</th>
-                                <th>Athlete Name</th>
-                                <th>Exercise</th>
-                                <th>Assessment Type</th>
-                                <th>Score</th>
-                                <th>Remove</th>
-                                </tr>
-                                </thead>";
-                print "<tbody>";
+                  #Print the assessment table.
+                  print " <div class='table-responsive'>
+                                  <table class='table table-striped table-bordered' id='currentAssessmentsTable'>
+                                  <thead>
+                                  <tr>
+                                  <th>Date</th>
+                                  <th>Sport</th>
+                                  <th>Athlete Name</th>
+                                  <th>Exercise</th>
+                                  <th>Assessment Type</th>
+                                  <th>Score</th>
+                                  <th>Remove</th>
+                                  </tr>
+                                  </thead>";
+                  print "<tbody>";
 
-                while ($row = mysqli_fetch_array($result)) {
-                  $temp = strstr($row["exercise"], '-', true);
-                  print "<tr>";
-                  print "<td>" . $row['date'] . "</td>";
-                  print "<td>" . $row['sport'] . "</td>";
-                  print "<td>" . $row['Fname'] . "</td>";
-                  print "<td>" . $temp . "</td>";
-                  print "<td>" . $row['assessmentType'] . "</td>";
-                  print "<td>" . $row['Score'] . "</td>";
-                  echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['AssessmentIndex'] . '"></td>';
-                  print "</tr>";
-                }
+                  while ($row = mysqli_fetch_array($result)) {
+                    $temp = strstr($row["exercise"], '-', true);
+                    print "<tr>";
+                    print "<td>" . $row['date'] . "</td>";
+                    print "<td>" . $row['sport'] . "</td>";
+                    print "<td>" . $row['Fname'] . "</td>";
+                    print "<td>" . $temp . "</td>";
+                    print "<td>" . $row['assessmentType'] . "</td>";
+                    print "<td>" . $row['Score'] . "</td>";
+                    echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['AssessmentIndex'] . '"></td>';
+                    print "</tr>";
+                  }
 
-                print "</tbody>";
-                print "</table>";
-                ?>
+                  print "</tbody>";
+                  print "</table>";
+                  ?>
                 <button type="submit" class="btn btn-primary" value="Remove Assessment(s)" id="deleteAssessment"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Assessment</button>
                 <br><br>
               </form>
@@ -230,7 +230,7 @@
     <?php
       require_once("../templates/printFooter.php");
       printFooter();
-     ?>
+      ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>

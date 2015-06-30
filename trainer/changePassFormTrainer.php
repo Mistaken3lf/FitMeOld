@@ -49,10 +49,10 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <?php
-                    echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
-                    $_SESSION["myFirstName"] . ' ' . $_SESSION["myLastName"];
-                    ?>
+                <?php
+                  echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
+                  $_SESSION["myFirstName"] . ' ' . $_SESSION["myLastName"];
+                  ?>
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="trainersProfile.php">My Profile</a></li>
@@ -118,7 +118,7 @@
     <?php
       require_once("../templates/printFooter.php");
       printFooter();
-     ?>
+      ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   </body>

@@ -202,53 +202,52 @@
             </div>
             <!--End of first tab-->
           </div>
-
           <!--End of second tab-->
           <div class="tab-pane" id="currentUsers">
-                      <!-- Large modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".current-users-modal-lg">Current Athletes Demo</button>
-                <div class="modal fade current-users-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel"><font color="#2196f3">Current Users Tab</font></h4>
-                        <hr class="colored">
-                      </div>
-                      <div class="modal-body">
-                        <img class="center-block img-responsive" src="../img/FitMe-CreateAthleteTab.jpg" width="800" height="1000">
-                        <ul class="modalList1">
-                          <h6>
-                            <li>Once you have clicked on the Athletes Page, you will see the four different tabs.</li>
-                            <li>The Create Athlete Tab will require the Administrator to put in the following information for the Athlete:</li>
-                            <ul class="modalList2">
-                              <li>Username (Can include upper and lower case letters, numbers, and special characters)</li>
-                              <li>Password (Can include upper and lower case letters, numbers, and special characters)</li>
-                              <li>Email Address</li>
-                              <li>First Name</li>
-                              <li>Last Name</li>
-                              <li>Select Sport (Select the sport that the athlete plays from the dropdown list)</li>
-                              <li>Height (Height must be entered in inches)</li>
-                              <li>Weight (Weight must be entered in pounds)</li>
-                            </ul>
-                            <li>After filling out all of the text fields, click the <b>Add Athlete</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
-                            <li>If for some reason you forget to enter information into a text field or put in the incorrect information, the text field will have a red glow around it along with an error indicating that something is wrong.</li>
-                          </h6>
+            <!-- Large modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".current-users-modal-lg">Current Athletes Demo</button>
+            <div class="modal fade current-users-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><font color="#2196f3">Current Users Tab</font></h4>
+                    <hr class="colored">
+                  </div>
+                  <div class="modal-body">
+                    <img class="center-block img-responsive" src="../img/FitMe-CreateAthleteTab.jpg" width="800" height="1000">
+                    <ul class="modalList1">
+                      <h6>
+                        <li>Once you have clicked on the Athletes Page, you will see the four different tabs.</li>
+                        <li>The Create Athlete Tab will require the Administrator to put in the following information for the Athlete:</li>
+                        <ul class="modalList2">
+                          <li>Username (Can include upper and lower case letters, numbers, and special characters)</li>
+                          <li>Password (Can include upper and lower case letters, numbers, and special characters)</li>
+                          <li>Email Address</li>
+                          <li>First Name</li>
+                          <li>Last Name</li>
+                          <li>Select Sport (Select the sport that the athlete plays from the dropdown list)</li>
+                          <li>Height (Height must be entered in inches)</li>
+                          <li>Weight (Weight must be entered in pounds)</li>
                         </ul>
-                      </div>
-                      <!--.modal-body-->
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
+                        <li>After filling out all of the text fields, click the <b>Add Athlete</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
+                        <li>If for some reason you forget to enter information into a text field or put in the incorrect information, the text field will have a red glow around it along with an error indicating that something is wrong.</li>
+                      </h6>
+                    </ul>
+                  </div>
+                  <!--.modal-body-->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
                 </div>
-                <br>
-                <br>
+              </div>
+            </div>
+            <br>
+            <br>
             <!--PHP script to print out the current athletes-->
             <h3>Current Athletes</h3>
             <form role="form" method="POST" id="removeAthleteForm" name="removeAthleteForm" action="../lib/removeAthlete.php">
-            <!--<form role="form" method="GET" id="athletesForm" name="athletesForm" action="../lib/removeAthlete.php>-->
+              <!--<form role="form" method="GET" id="athletesForm" name="athletesForm" action="../lib/removeAthlete.php>-->
               <?php
                 #Print out current users athletes.
                 include("../lib/connect.php");
@@ -271,7 +270,7 @@
                                               <th>Height</th>
                                               <th>Weight</th>
                                               <th>Sport</th>
-											  <th>Remove</th>
+                <th>Remove</th>
                                           </tr>
                                       </thead>";
                 print "<tbody>";
@@ -285,15 +284,15 @@
                   print "<td>" . $row['height'] . "</td>";
                   print "<td>" . $row['weight'] . "</td>";
                   print "<td>" . $row['sport'] . "</td>";
-				  echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['remIndex'] . '"></td>';
+                echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['remIndex'] . '"></td>';
                   print "</tr>";
                 }
 
                 print "</tbody>";
                 print "</table>";
                 ?>
-                   <button type="submit" class="btn btn-primary" value="Remove Athlete"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Athlete(s)</button>
-                   <br><br>
+              <button type="submit" class="btn btn-primary" value="Remove Athlete"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Athlete(s)</button>
+              <br><br>
             </form>
           </div>
         </div>
@@ -301,46 +300,46 @@
         <div class="tab-pane" id="assignWorkout">
           <div class="row">
             <div class="col-md-12">
-            <!-- Large modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".assign-workout-modal-lg">Assign Workout Demo</button>
-                <div class="modal fade assign-workout-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel"><font color="#2196f3">Assign Workout Tab</font></h4>
-                        <hr class="colored">
-                      </div>
-                      <div class="modal-body">
-                        <img class="center-block img-responsive" src="../img/FitMe-CreateAthleteTab.jpg" width="800" height="1000">
-                        <ul class="modalList1">
-                          <h6>
-                            <li>Once you have clicked on the Athletes Page, you will see the four different tabs.</li>
-                            <li>The Create Athlete Tab will require the Administrator to put in the following information for the Athlete:</li>
-                            <ul class="modalList2">
-                              <li>Username (Can include upper and lower case letters, numbers, and special characters)</li>
-                              <li>Password (Can include upper and lower case letters, numbers, and special characters)</li>
-                              <li>Email Address</li>
-                              <li>First Name</li>
-                              <li>Last Name</li>
-                              <li>Select Sport (Select the sport that the athlete plays from the dropdown list)</li>
-                              <li>Height (Height must be entered in inches)</li>
-                              <li>Weight (Weight must be entered in pounds)</li>
-                            </ul>
-                            <li>After filling out all of the text fields, click the <b>Add Athlete</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
-                            <li>If for some reason you forget to enter information into a text field or put in the incorrect information, the text field will have a red glow around it along with an error indicating that something is wrong.</li>
-                          </h6>
-                        </ul>
-                      </div>
-                      <!--.modal-body-->
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
+              <!-- Large modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".assign-workout-modal-lg">Assign Workout Demo</button>
+              <div class="modal fade assign-workout-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"><font color="#2196f3">Assign Workout Tab</font></h4>
+                      <hr class="colored">
+                    </div>
+                    <div class="modal-body">
+                      <img class="center-block img-responsive" src="../img/FitMe-CreateAthleteTab.jpg" width="800" height="1000">
+                      <ul class="modalList1">
+                        <h6>
+                          <li>Once you have clicked on the Athletes Page, you will see the four different tabs.</li>
+                          <li>The Create Athlete Tab will require the Administrator to put in the following information for the Athlete:</li>
+                          <ul class="modalList2">
+                            <li>Username (Can include upper and lower case letters, numbers, and special characters)</li>
+                            <li>Password (Can include upper and lower case letters, numbers, and special characters)</li>
+                            <li>Email Address</li>
+                            <li>First Name</li>
+                            <li>Last Name</li>
+                            <li>Select Sport (Select the sport that the athlete plays from the dropdown list)</li>
+                            <li>Height (Height must be entered in inches)</li>
+                            <li>Weight (Weight must be entered in pounds)</li>
+                          </ul>
+                          <li>After filling out all of the text fields, click the <b>Add Athlete</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
+                          <li>If for some reason you forget to enter information into a text field or put in the incorrect information, the text field will have a red glow around it along with an error indicating that something is wrong.</li>
+                        </h6>
+                      </ul>
+                    </div>
+                    <!--.modal-body-->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
-                <br>
-                <br>
+              </div>
+              <br>
+              <br>
               <div class="panel panel-primary">
                 <div class="panel-heading">
                   <h3 class="panel-title">Assign Workout</h3>
@@ -409,7 +408,7 @@
     <?php
       require_once("../templates/printFooter.php");
       printFooter();
-     ?>
+      ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>

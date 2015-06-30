@@ -56,7 +56,7 @@
                   $headers .= "Content-type: text/html; charset=iso-8859-1 \n";
                   $subject = "LU-Strength Temporary Password";
                   $msg     = "<h2>Hello $user!<br><br>
-                                        Your temporary password is $tempPass! Go ahead and change it once you log in!";
+                                                        Your temporary password is $tempPass! Go ahead and change it once you log in!";
                   if (mail($to, $subject, $msg, $headers)) {
                     echo "Check Your Email For A Temporary Password! <br><br>";
                     echo "<a href=\"index.php\">Login Page</a>";
@@ -81,7 +81,7 @@
     <?php
       require_once("../templates/printFooter.php");
       printFooter();
-     ?>
+      ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   </body>

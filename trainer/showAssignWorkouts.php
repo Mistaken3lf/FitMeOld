@@ -15,9 +15,9 @@ print '<option value="" selected disabled>Choose Workout</option>';
 print '<option value="Off-test">Off</option>';
 
 while ($row = mysqli_fetch_array($result)) {
-    $tempWorkout = $row['workoutName'];
-    $tempWorkout = strstr($tempWorkout, '-', true);
-    echo '<option value="' . $row['workoutName'] . '">' . $tempWorkout . '</option>';
+  $tempWorkout = $row['workoutName'];
+  $tempWorkout = strstr($tempWorkout, '-', true);
+  echo '<option value="' . $row['workoutName'] . '">' . $tempWorkout . '</option>';
 }
 
 print '</select>';
@@ -64,18 +64,18 @@ $sql = "select username, firstName, lastName, sport, currentWorkoutOne,
 $result = mysqli_query($connection, $sql);
 
 while ($row = mysqli_fetch_array($result)) {
-    $tempOne   = strstr($row['currentWorkoutOne'], '-', true);
-    $tempTwo   = strstr($row['currentWorkoutTwo'], '-', true);
-    $tempThree = strstr($row['currentWorkoutThree'], '-', true);
-    $tempFour  = strstr($row['currentWorkoutFour'], '-', true);
-    $tempFive  = strstr($row['currentWorkoutFive'], '-', true);
-    $tempSix   = strstr($row['currentWorkoutSix'], '-', true);
-    $tempSeven = strstr($row['currentWorkoutSeven'], '-', true);
-    print '<tr>';
-    print '<td>' . $row['firstName'] . '</td>';
-    print '<td>' . $row['lastName'] . '</td>';
-    print '<td>' . $row['sport'] . '</td>';
-    print '<td>Day 1: ' . $tempOne . ' <br>
+  $tempOne   = strstr($row['currentWorkoutOne'], '-', true);
+  $tempTwo   = strstr($row['currentWorkoutTwo'], '-', true);
+  $tempThree = strstr($row['currentWorkoutThree'], '-', true);
+  $tempFour  = strstr($row['currentWorkoutFour'], '-', true);
+  $tempFive  = strstr($row['currentWorkoutFive'], '-', true);
+  $tempSix   = strstr($row['currentWorkoutSix'], '-', true);
+  $tempSeven = strstr($row['currentWorkoutSeven'], '-', true);
+  print '<tr>';
+  print '<td>' . $row['firstName'] . '</td>';
+  print '<td>' . $row['lastName'] . '</td>';
+  print '<td>' . $row['sport'] . '</td>';
+  print '<td>Day 1: ' . $tempOne . ' <br>
       Day 2: ' . $tempTwo . ' <br>
       Day 3: ' . $tempThree . ' <br>
       Day 4: ' . $tempFour . ' <br>
@@ -84,8 +84,8 @@ while ($row = mysqli_fetch_array($result)) {
       Day 7: ' . $tempSeven . ' <br>
       </td>';
 
-    echo '<td align=center><input type="checkbox" name="Athlete[]" id="Athlete" value="' . $row['username'] . '"/></td>';
-    print '</tr>';
+  echo '<td align=center><input type="checkbox" name="Athlete[]" id="Athlete" value="' . $row['username'] . '"/></td>';
+  print '</tr>';
 }
 
 print '</tbody>';

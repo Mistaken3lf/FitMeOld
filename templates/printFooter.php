@@ -1,6 +1,6 @@
 <?php
 function printFooter() {
-print '
+  print '
 <footer class="footer">
   <div class="container">
     <div class="row">

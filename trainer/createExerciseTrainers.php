@@ -52,10 +52,10 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <?php
-                    echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
-                    $_SESSION["myFirstName"] . ' ' . $_SESSION["myLastName"];
-                    ?>
+                <?php
+                  echo '<style>p{display:inline;}</style><p color="white"><span class="glyphicon glyphicon-user"></span></p>&nbsp&nbsp '.
+                  $_SESSION["myFirstName"] . ' ' . $_SESSION["myLastName"];
+                  ?>
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="trainersProfile.php">My Profile</a></li>
@@ -169,57 +169,55 @@
             </div>
             <!--End of first tab-->
           </div>
-
           <!--Current exercises tab-->
           <div class="tab-pane" id="currentExercises">
             <h3>Current Exercises</h3>
             <div class="container-fluid">
               <div class="row">
                 <div clas="col-md-12">
-                 <form role="form" method="POST" id="removeExerciseForm" name="removeExerciseForm" action="../lib/deleteExercise.php">
-                  <?php
-                    #Print all the current exercises created for that user.
-                    include '../lib/connect.php';
-                    $curUser = $_SESSION['myUsername'];
+                  <form role="form" method="POST" id="removeExerciseForm" name="removeExerciseForm" action="../lib/deleteExercise.php">
+                    <?php
+                      #Print all the current exercises created for that user.
+                      include '../lib/connect.php';
+                      $curUser = $_SESSION['myUsername'];
 
-                    $sql = "select exercise_name, category, plane,
-                                        movement, style, ExerciseIndex from EXERCISES where whosExercise = '$curUser'";
+                      $sql = "select exercise_name, category, plane,
+                                                                movement, style, ExerciseIndex from EXERCISES where whosExercise = '$curUser'";
 
-                    $result = mysqli_query($connection, $sql);
+                      $result = mysqli_query($connection, $sql);
 
-                    print "<div class='table-responsive'>
-                                            <table class='table table-striped table-bordered' id='currentExercisesTable'>
-                                                <thead>
-                                                    <tr>
-                                                        <th>Exercise Name</th>
-                                                        <th>Category</th>
-                                                        <th>Plane</th>
-                                                        <th>Movement</th>
-                                                        <th>Style</th>
-														<th>Remove</th>
-                                                    </tr>
-                                                </thead>";
+                      print "<div class='table-responsive'>
+                              <table class='table table-striped table-bordered' id='currentExercisesTable'>
+                                <thead>
+                                  <tr>
+                                    <th>Exercise Name</th>
+                                    <th>Category</th>
+                                    <th>Plane</th>
+                                    <th>Movement</th>
+                                    <th>Style</th>
+                                    <th>Remove</th>
+                                  </tr>
+                                </thead>";
+                                print '<tbody>';
 
-                    print '<tbody>';
-
-                    while ($row = mysqli_fetch_array($result)) {
+                      while ($row = mysqli_fetch_array($result)) {
                         print '<tr>';
                         $tempExercise = strstr($row['exercise_name'], '-', true);
-                        print '<td>'.$tempExercise.'</td>';
-                        print '<td>'.$row['category'].'</td>';
-                        print '<td>'.$row['plane'].'</td>';
-                        print '<td>'.$row['movement'].'</td>';
-                        print '<td>'.$row['style'].'</td>';
-						echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['ExerciseIndex'] . '"></td>';
+                        print '<td>' . $tempExercise . '</td>';
+                        print '<td>' . $row['category'] . '</td>';
+                        print '<td>' . $row['plane'] . '</td>';
+                        print '<td>' . $row['movement'] . '</td>';
+                        print '<td>' . $row['style'] . '</td>';
+                        echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['ExerciseIndex'] . '"></td>';
                         print '</tr>';
-                    }
+                      }
 
-                    print '</tbody>';
-                    print '</table>';
-                    ?>
+                      print '</tbody>';
+                      print '</table>';
+                      ?>
                     <button type="submit" class="btn btn-primary" value="Remove Exericse"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise</button>
-                <br><br>
-              </form>
+                    <br><br>
+                  </form>
                 </div>
               </div>
             </div>
@@ -232,7 +230,7 @@
     <?php
       require_once("../templates/printFooter.php");
       printFooter();
-     ?>
+      ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>

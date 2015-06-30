@@ -97,7 +97,7 @@
                   <button type="submit" value="Log In" class="btn btn-primary">Log In</button>
                 </form>
                 <br>
-                <a href="../lib/forgotForm.php">Forgot Password?</a>
+                <a href="/both/forgotForm.php">Forgot Password?</a>
               </div>
             </div>
           </div>

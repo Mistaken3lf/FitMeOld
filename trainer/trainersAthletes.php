@@ -77,7 +77,7 @@
         <!--Create athlete tabs-->
         <ul class="nav nav-tabs" id="myTab">
           <li class="active"><a href="#addUser" data-toggle="tab">Create Athlete/User</a></li>
-          <li><a href="#currentUsers" data-toggle="tab">Current Athletes</a></li>
+          <li><a href="#currentUsers" data-toggle="tab">Manage Athletes</a></li>
           <li><a href="#assignWorkout" data-toggle="tab">Assign Workout</a></li>
         </ul>
         <br>
@@ -111,7 +111,7 @@
                               <li>Height (Height must be entered in inches)</li>
                               <li>Weight (Weight must be entered in pounds)</li>
                             </ul>
-                            <li>After filling out all of the text fields, click the <b>Add Athlete</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
+                            <li>After filling out all of the text fields, click the <b>CREATE ATHLETE</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
                             <li>If for some reason you forget to enter information into a text field or put in the incorrect information, the text field will have a red glow around it along with an error indicating that something is wrong.</li>
                           </h6>
                         </ul>
@@ -205,33 +205,32 @@
           <!--End of second tab-->
           <div class="tab-pane" id="currentUsers">
             <!-- Large modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".current-users-modal-lg">Current Athletes Demo</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".current-users-modal-lg">Manage Athletes Demo</button>
             <div class="modal fade current-users-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"><font color="#2196f3">Current Users Tab</font></h4>
+                    <h4 class="modal-title" id="myModalLabel"><font color="#2196f3">Manage Athletes Tab</font></h4>
                     <hr class="colored">
                   </div>
                   <div class="modal-body">
                     <img class="center-block img-responsive" src="../img/FitMe-CreateAthleteTab.jpg" width="800" height="1000">
                     <ul class="modalList1">
                       <h6>
-                        <li>Once you have clicked on the Athletes Page, you will see the four different tabs.</li>
-                        <li>The Create Athlete Tab will require the Administrator to put in the following information for the Athlete:</li>
+                        <li>The Manage Athletes Tab will show the Current Athletes for the Administrator that is currently signed in.</li>
+                        <li>This tab will give a Trainer the following information for each Athlete:</li>
                         <ul class="modalList2">
-                          <li>Username (Can include upper and lower case letters, numbers, and special characters)</li>
-                          <li>Password (Can include upper and lower case letters, numbers, and special characters)</li>
-                          <li>Email Address</li>
+                          <li>Username</li>
                           <li>First Name</li>
                           <li>Last Name</li>
-                          <li>Select Sport (Select the sport that the athlete plays from the dropdown list)</li>
-                          <li>Height (Height must be entered in inches)</li>
-                          <li>Weight (Weight must be entered in pounds)</li>
+                          <li>Email Address</li>
+                          <li>Height</li>
+                          <li>Weight</li>
+                          <li>Sport</li>
                         </ul>
-                        <li>After filling out all of the text fields, click the <b>Add Athlete</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
-                        <li>If for some reason you forget to enter information into a text field or put in the incorrect information, the text field will have a red glow around it along with an error indicating that something is wrong.</li>
+                        <li>Trainers will also be able to click on the Athlete’s Username to view their current workout(s) and profile.</li>
+                        <li>Trainers can also delete any Athlete that they choose.</li>
                       </h6>
                     </ul>
                   </div>
@@ -312,22 +311,24 @@
                     </div>
                     <div class="modal-body">
                       <img class="center-block img-responsive" src="../img/FitMe-CreateAthleteTab.jpg" width="800" height="1000">
+                      <h5> Screen Shot #1</h5>
                       <ul class="modalList1">
                         <h6>
-                          <li>Once you have clicked on the Athletes Page, you will see the four different tabs.</li>
-                          <li>The Create Athlete Tab will require the Administrator to put in the following information for the Athlete:</li>
-                          <ul class="modalList2">
-                            <li>Username (Can include upper and lower case letters, numbers, and special characters)</li>
-                            <li>Password (Can include upper and lower case letters, numbers, and special characters)</li>
-                            <li>Email Address</li>
-                            <li>First Name</li>
-                            <li>Last Name</li>
-                            <li>Select Sport (Select the sport that the athlete plays from the dropdown list)</li>
-                            <li>Height (Height must be entered in inches)</li>
-                            <li>Weight (Weight must be entered in pounds)</li>
-                          </ul>
-                          <li>After filling out all of the text fields, click the <b>Add Athlete</b> button and a message will be displayed saying that your Athlete has been successfully created.</li>
-                          <li>If for some reason you forget to enter information into a text field or put in the incorrect information, the text field will have a red glow around it along with an error indicating that something is wrong.</li>
+                          <li>The Assign Workout Tab makes it easy for Trainers to assign workouts to their Athletes.</li>
+                          <li>First, choose a Sport from the dropdown list which is shown in Screen Shot #1.</li>
+                          <li>The list of Sports will only consist of the Sports that the Trainer currently has athletes for.</li>
+                      </ul>
+                      <h5> Screen Shot #2</h5>
+                      <ul class="modalList1">
+                        <h6>
+                          <li>After choosing a Sport, a table will automatically appear below the dropdowns displaying all of the athletes for the Sport you chose.  This is shown in Screen Shot #2.</li>
+                          <li>Next, the Trainer can choose a workout that they have previously created along with a day that they want to assign the workout too.</li>
+                          <li>In the table, there is a column titled Select that has little checkboxes, one for each athlete.  The Trainer has the ability to checkbox each athlete individually or if the workout applies to the whole team, they can click the <b>CHECK ALL</b> button at the bottom of the column and all of the athletes will be checked.</li>
+                          <li>After filling out all required information from the steps above, click the <b>ASSIGN WORKOUT</b> button and a message will be displayed saying that your Workout has been successfully assigned.</li>
+                          <li>The Trainer can then go back to the Manage Athletes Tab, click on the Athlete’s Username, and view the current workout(s) for that Athlete.</li>
+                            <ul class="modalList2">
+                              <li>** NOTE: AFTER CLICKING ON THE ATHLETE’S USERNAME, YOU SHOULD BE ABLE TO SEE TABLES CONSISTING OF THE WORKOUT NAME, THE EXERCISES, SETS, REPS, WEIGHT, PERCENTAGE, REST, AND TEMPO THAT YOU HAVE ASSIGNED THAT PARTICULAR ATHLETE FOR DAYS 1 - 7.  IF FOR SOME REASON YOU ONLY SEE THE WORKOUT NAME LISTED FOR THAT DAY, THIS MEANS THAT YOU ASSIGNED THIS ATHLETE A WORKOUT THAT DOES NOT HAVE ANY EXERCISES ASSOCIATED WITH THEIR NAME.  YOU WILL HAVE TO GO BACK TO THE MANAGE WORKOUT(S) TAB, CHOOSE A WORKOUT, CHOOSE A SPORT (OPTIONAL), AND CLICK THE  SHOW WORKOUT  BUTTON.  THIS WILL SHOW YOU ALL OF THE EXERCISES FOR THAT WORKOUT ALONG WITH THE DETAILED INFORMATION FOR EACH EXERCISE ON EACH ATHLETE.  IF YOU DO NOT SEE AN EXERCISE FOR THAT ATHLETE, GO TO THE ADD EXERCISES TAB AND CREATE ONE. **</li>
+                            </ul>
                         </h6>
                       </ul>
                     </div>

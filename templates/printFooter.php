@@ -18,13 +18,15 @@ function printFooter() {
             <li style="color: white;"><a style="color: white;" href="contact.html">Contact Us</a></li>
           </ul>
         </h6>
-        <!--<h6>A Product by <img class="img-responsive" class="footer divelop" src="divelop-logo-blue 2.png" width="100" height="50">.</h6>-->
+        <!--<h6 style="color: white;">A Product of <img class="img-responsive" src="../img/Divelop-final-logo-navbar.png"> Website Solutions.</h6>-->
       </div>
     </div>
   </div>
   <div class="footer-copyright">
     <div class="container">
-      <!--©--> 2015 FitMe
+      © 2015 FitMe
+      <br>
+      A Product of &#60;div&#62;elop Website Solutions.
     </div>
   </div>
 </footer> ';

@@ -4,20 +4,7 @@
   $bg = array(
     './background/bg-01.jpg',
     './background/bg-02.jpg',
-    './background/bg-03.jpg',
-    './background/bg-04.jpg',
-    './background/bg-05.jpg',
-    './background/bg-06.jpg',
-    './background/bg-07.jpg',
-    './background/bg-08.jpg',
-    './background/bg-09.jpg',
-    './background/bg-10.jpg',
-    './background/bg-11.jpg',
-    './background/bg-12.jpg',
-    './background/bg-13.jpg',
-    './background/bg-14.jpg',
-    './background/bg-15.jpg',
-    './background/bg-16.jpg'
+    './background/bg-03.jpg'
   );
 
   //generate random number size of the array

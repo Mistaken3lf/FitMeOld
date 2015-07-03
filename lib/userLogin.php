@@ -23,7 +23,7 @@ $_SESSION['errors'] = array();
 if (empty($_POST['username'])) {
   #Add the error to the array and go back to the login.
   $_SESSION['errors'][] = 'username is required';
-  header('location: ../index.php');
+  header('location: ../login.php');
 }
 
 #Username is not empty.
@@ -36,7 +36,7 @@ else {
     #The username containers something other than letters so create
     #an error and send the user back to the login.
     $_SESSION['errors'][] = 'Only letters allowed in username';
-    header('location: ../index.php');
+    header('location: ../login.php');
   }
 }
 
@@ -44,7 +44,7 @@ else {
 if (empty($_POST['password'])) {
   #Add a password error to the array and redirect back to the login.
   $_SESSION['errors'][] = 'password is required';
-  header('location: ../index.php');
+  header('location: ../login.php');
 }
 
 #Password is not blank.
@@ -56,7 +56,7 @@ else {
   if (!preg_match('/^[a-zA-Z0-9]+$/', $password)) {
     #Password container something other than letters so send them back to the login.
     $_SESSION['errors'][] = 'Only letters allowed in password';
-    header('location: ../index.php');
+    header('location: ../login.php');
   }
 }
 
@@ -76,7 +76,7 @@ function test_input($input) {
 
 #If there were any errors go back to the login.
 if (count($_SESSION['errors']) > 0) {
-  header('location: ../index.php');
+  header('location: ../login.php');
 }
 
 #No errors, so let them login.
@@ -128,7 +128,7 @@ else {
   else {
     echo "<script>
         alert('You are not registered, please contact your trainer or administrator');
-        window.location.href='../index.php';
+        window.location.href='../login.php';
         </script>";
   }
 }

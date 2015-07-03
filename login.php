@@ -38,13 +38,13 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css">
-    <link rel="icon" type="image/png" sizes="96x96" href="../img/logo/FitMe-favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/logo/FitMe-favicon-96x96.png">
   </head>
   <body>
     <header>
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.php">FitMe</a>
+          <a class="navbar-brand" href="login.php">FitMe</a>
         </div>
       </nav>
     </header>

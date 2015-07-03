@@ -1,0 +1,26 @@
+body {
+  padding-top: 20px;
+  background-color: #eeeeee;
+  height: 100%;
+}
+
+.breadcrumb {
+	background-color: #eeeeee;
+}
+
+.masthead {
+	position: absolute;
+	top: 5px;;
+	background-image: url("../img/code.png");
+	height: 400px;
+	width: 100%;
+}
+
+.bodyContent {
+	margin-top: 450px;
+}
+
+.techImage {
+	width: 100%;
+	height: 350px;
+}

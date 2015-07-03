@@ -5,6 +5,7 @@
       header('location: ../index.php');
   }
   ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -57,7 +58,7 @@
                   <li><a href="trainersProfile.php">My Profile</a></li>
                   <li><a href="changePassFormTrainer.php">Change Password</a></li>
                   <li><a href="userGuide.pdf" target="_blank">User Guide</a></li>
-                  <li><a href="logout.php">Logout</a></li>
+                  <li><a href="../lib/logout.php">Logout</a></li>
                 </ul>
               </li>
             </ul>
@@ -67,79 +68,15 @@
     </header>
     <section>
       <div class="container-fluid">
-        <h1>Create User</h1>
+        <h1>Manage Users</h1>
         <hr>
         <ul class="nav nav-tabs" id="myTab">
-          <li id="addID" class="active"><a href="#addUser" data-toggle="tab">Create User</a></li>
-          <li id="removeID"><a href="#removeUser" data-toggle="tab">Remove User</a></li>
+          <li id="removeID" class="active"><a href="#removeUser" data-toggle="tab">Remove User</a></li>
           <li><a href="#currentUsers" data-toggle="tab">Current Users</a></li>
         </ul>
         <br>
         <div class="tab-content">
-          <div class="tab-pane active" id="addUser">
-            <div class="row">
-              <div class="col-md-5">
-                <div class="panel panel-primary">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">Create New User</h3>
-                  </div>
-                  <div class="panel-body">
-                    <form role="form" method="POST" id="addUserForm" action="../lib/addUser.php">
-                      <div class="errorDiv">
-                        <!--Print out errors from the add user form.-->
-                        <?php
-                          if (isset($_SESSION["userErrors"]) && isset($_SESSION["userAttempt"])) {
-                            unset($_SESSION["userAttempt"]);
-                            print "Errors occured <br>\n";
-
-                            foreach ($_SESSION["userErrors"] as $error) {
-                              print $error . "<br>\n";
-                            }
-                          }
-                          ?>
-                      </div>
-                      <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" required class="form-control" id="adminUser"
-                          name="adminUser" placeholder="Username">
-                      </div>
-                      <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" required class="form-control" id="adminPass"
-                          name="adminPass" placeholder="Password">
-                      </div>
-                      <div class="form-group">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" required class="form-control" id="firstName" name="firstName"
-                          placeholder="First Name">
-                      </div>
-                      <div class="form-group">
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" required class="form-control" id="lastName" name="lastName"
-                          placeholder="Last Name">
-                      </div>
-                      <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" required class="form-control" id="email"
-                          name="email" placeholder="email@address.com">
-                      </div>
-                      <div class="form-group">
-                        <label for="permissions">Select User Type:</label>
-                        <select class="form-control" required name="userPermissions" id="userPermissions">
-                          <option value="" selected disabled>Please Select User Type</option>
-                          <option value="Trainer">Trainer</option>
-                          <option value="Administrator">Administrator</option>
-                        </select>
-                      </div>
-                      <button type="submit" class="btn btn-primary" value="Create User"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create User</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--End of first tab-->
-          </div>
-          <div class="tab-pane" id="removeUser">
+          <div class="tab-pane active" id="removeUser">
             <div class="row">
               <div class="col-md-5">
                 <div class="panel panel-primary">
@@ -147,7 +84,7 @@
                     <h3 class="panel-title">Remove User</h3>
                   </div>
                   <div class="panel-body">
-                    <form role="form" method="post" id="removeUserForm" action="removeUser.php">
+                    <form role="form" method="post" id="removeUserForm" action="../lib/removeUser.php">
                       <div class="errorDiv">
                         <!--Print out errors from the remove user form.-->
                         <?php

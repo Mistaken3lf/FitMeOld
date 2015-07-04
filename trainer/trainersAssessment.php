@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../css/stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css">
     <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
-    <link rel="stylesheet" href="http://cdn.datatables.net/tabletools/2.2.4/css/dataTables.tableTools.css">
+    <link rel="stylesheet" href="http://cdn.datatables.net/tabletools/2.2.4/css/dataTables.tableTools.min.css">
     <link rel="icon" type="image/png" sizes="96x96" href="../img/logo/FitMe-favicon-96x96.png">
   </head>
   <body>
@@ -71,156 +71,151 @@
     </header>
     <section>
       <div class="container-fluid">
-      <img class="center-block img-responsive" src="../img/headers/fitMeAssessmentManagement2.png" width="550" height="350">
-      <hr class="colored">
-      <ul class="nav nav-tabs" id="myTab">
-        <li class="active"><a href="#createAssessment" data-toggle="tab">Create Assessment</a></li>
-        <li><a href="#currentAssessments" data-toggle="tab">Current Assessments</a></li>
-      </ul>
-      <br>
-      <div class="tab-content">
-        <div class="tab-pane active" id="createAssessment">
-          <div class="row">
-            <div class="col-md-8">
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Create New Assessment</h3>
-                </div>
-                <div class="panel-body">
-                  <form role="form" method="POST" id="createAssessmentForm" name="createAssessmentForm" action="../lib/createAssessment.php">
-                    <!--Print out all errors from the login form if there are any.-->
-                    <div class="errorDiv">
-                      <?php
-                        if (isset($_SESSION["createAssessmentErrors"]) && isset($_SESSION["createAssessmentAttempt"])) {
-                          unset($_SESSION["createAssessmentAttempt"]);
-                          print "Errors occured <br>\n";
+        <img class="center-block img-responsive" src="../img/headers/fitMeAssessmentManagement2.png" width="550" height="350">
+        <hr class="colored">
+        <div class="row">
+          <div class="col-md-12">
+            <form role="form" method="POST" id="removeAssessmentForm" name="removeAssessmentForm" action="../lib/deleteAssessment.php">
+              <?php
+                include("../lib/connect.php");
+                session_start();
 
-                          foreach ($_SESSION["createAssessmentErrors"] as $error) {
-                            print $error . "<br>\n";
-                          }
-                        }
-                        ?>
-                    </div>
-                    <div class="form-group">
-                      <label for="date">Date:</label>
-                      <input type="date" required class="form-control" id="date" name="date" placeholder="Date">
-                    </div>
-                    <div class="form-group">
-                      <label for="exercise">Select Exercise:</label>
-                      <select class="form-control" required name="exercise" id="exercise">
-                        <option value="Please Select An Exercise" selected disabled>Please Select An Exercise</option>
-                        <?php
-                          include("../lib/connect.php");
-                          $curUser = $_SESSION["myUsername"];
-                          $sql     = "select exercise_name from EXERCISES where whosExercise='$curUser'";
-                          $result  = mysqli_query($connection, $sql);
-                          while ($row = mysqli_fetch_array($result)) {
-                            $tempExercise = strstr($row["exercise_name"], '-', true);
-                            echo '<option value="' . $row["exercise_name"] . '">' . $tempExercise . "</option>";
-                          }
-                          ?>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="assessmentType">Select Assessment Type:</label>
-                      <select class="form-control" required name="assessmentType" id="assessmentType">
-                        <option value="Please Select An Assessment" selected disabled>Please Select An Assessment
-                        </option>
-                        <?php
-                          include("../lib/connect.php");
-                          $curUser = $_SESSION["myUsername"];
-                          $sql     = "select Assessment_name from assessmentType";
-                          $result  = mysqli_query($connection, $sql);
-                          while ($row = mysqli_fetch_array($result)) {
-                            echo '<option value="' . $row["Assessment_name"] . '">' . $row['Assessment_name'] . "</option>";
-                          }
-                          ?>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <?php
-                        include("../lib/connect.php");
-                        $curUser = $_SESSION["myUsername"];
+                #Get the current user.
+                $curUser = $_SESSION["myUsername"];
 
-                        echo '<label for="sport">Select Sport:</label>';
-                        echo '<select class="form-control" required name="sport" id="sport" onchange="showAvailableAthletes(this.value)">';
-                        echo '<option value="" selected disabled>Please Select A Sport</option>';
+                #Select from the assessment table.
+                $sql = "select * from assessmentRecord where whosAssessment = '$curUser'";
 
-                        $sql     = "select distinct sport from users where coachID='$curUser'";
-                        $result  = mysqli_query($connection, $sql);
-                        while ($row = mysqli_fetch_array($result)) {
-                          echo '<option value="' . $row["sport"] . '">' . $row['sport'] . "</option>";
-                        }
-                        echo '</select>';
-                        echo '<br>';
+                $result = mysqli_query($connection, $sql);
 
-                        print "<center><div id=\"showTable\"></div></center>";
-                        ?>
-                    </div>
-                    <button type="submit" class="btn btn-primary" value="Create Assessment"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Assessment</button>
-                    <input type="button" class="btn btn-primary" style="float:right;" value="Check All" onClick="this.value=check(this.form.Athlete)">
-                  </form>
-                </div>
-              </div>
-            </div>
+                #Print table heading.
+                print "<h3> Manage Assessments </h3>";
+
+                #Print the assessment table.
+                print " <div class='table-responsive'>
+                                <table class='table table-striped table-bordered' id='currentAssessmentsTable'>
+                                <thead>
+                                <tr>
+                                <th>Date</th>
+                                <th>Sport</th>
+                                <th>Athlete Name</th>
+                                <th>Exercise</th>
+                                <th>Assessment Type</th>
+                                <th>Score</th>
+                                <th>Remove</th>
+                                </tr>
+                                </thead>";
+                print "<tbody>";
+
+                while ($row = mysqli_fetch_array($result)) {
+                  $temp = strstr($row["exercise"], '-', true);
+                  print "<tr>";
+                  print "<td>" . $row['date'] . "</td>";
+                  print "<td>" . $row['sport'] . "</td>";
+                  print "<td>" . $row['Fname'] . "</td>";
+                  print "<td>" . $temp . "</td>";
+                  print "<td>" . $row['assessmentType'] . "</td>";
+                  print "<td>" . $row['Score'] . "</td>";
+                  echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['AssessmentIndex'] . '"></td>';
+                  print "</tr>";
+                }
+
+                print "</tbody>";
+                print "</table>";
+                ?>
+              <button type="submit" class="btn btn-primary" value="Remove Assessment(s)" id="deleteAssessment"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Assessment</button>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target=".current-assessments-modal-lg">Create Assessment</button>
+              <br><br>
+            </form>
           </div>
-          <!--End of first tab-->
         </div>
-        <!--End of second tab-->
-        <div class="tab-pane" id="currentAssessments">
-          <div class="row">
-            <div class="col-md-12">
-              <form role="form" method="POST" id="removeAssessmentForm" name="removeAssessmentForm" action="../lib/deleteAssessment.php">
-                <?php
-                  include("../lib/connect.php");
-                  session_start();
+      </div>
+      <div class="modal fade current-assessments-modal-lg" tabindex="-1" role="dialog" aria-labelledby="createAssessment" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="createAssessment"><font color="#2196f3">Create Assessment</font></h4>
+              <hr class="colored">
+            </div>
+            <div class="modal-body">
+              <form role="form" method="POST" id="createAssessmentForm" name="createAssessmentForm" action="../lib/createAssessment.php">
+                <!--Print out all errors from the login form if there are any.-->
+                <div class="errorDiv">
+                  <?php
+                    if (isset($_SESSION["createAssessmentErrors"]) && isset($_SESSION["createAssessmentAttempt"])) {
+                      unset($_SESSION["createAssessmentAttempt"]);
+                      print "Errors occured <br>\n";
 
-                  #Get the current user.
-                  $curUser = $_SESSION["myUsername"];
+                      foreach ($_SESSION["createAssessmentErrors"] as $error) {
+                        print $error . "<br>\n";
+                      }
+                    }
+                    ?>
+                </div>
+                <div class="form-group">
+                  <label for="date">Date:</label>
+                  <input type="date" required class="form-control" id="date" name="date" placeholder="Date">
+                </div>
+                <div class="form-group">
+                  <label for="exercise">Select Exercise:</label>
+                  <select class="form-control" required name="exercise" id="exercise">
+                    <option value="Please Select An Exercise" selected disabled>Please Select An Exercise</option>
+                    <?php
+                      include("../lib/connect.php");
+                      $curUser = $_SESSION["myUsername"];
+                      $sql     = "select exercise_name from EXERCISES where whosExercise='$curUser'";
+                      $result  = mysqli_query($connection, $sql);
+                      while ($row = mysqli_fetch_array($result)) {
+                        $tempExercise = strstr($row["exercise_name"], '-', true);
+                        echo '<option value="' . $row["exercise_name"] . '">' . $tempExercise . "</option>";
+                      }
+                      ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="assessmentType">Select Assessment Type:</label>
+                  <select class="form-control" required name="assessmentType" id="assessmentType">
+                    <option value="Please Select An Assessment" selected disabled>Please Select An Assessment
+                    </option>
+                    <?php
+                      include("../lib/connect.php");
+                      $curUser = $_SESSION["myUsername"];
+                      $sql     = "select Assessment_name from assessmentType";
+                      $result  = mysqli_query($connection, $sql);
+                      while ($row = mysqli_fetch_array($result)) {
+                        echo '<option value="' . $row["Assessment_name"] . '">' . $row['Assessment_name'] . "</option>";
+                      }
+                      ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <?php
+                    include("../lib/connect.php");
+                    $curUser = $_SESSION["myUsername"];
 
-                  #Select from the assessment table.
-                  $sql = "select * from assessmentRecord where whosAssessment = '$curUser'";
+                    echo '<label for="sport">Select Sport:</label>';
+                    echo '<select class="form-control" required name="sport" id="sport" onchange="showAvailableAthletes(this.value)">';
+                    echo '<option value="" selected disabled>Please Select A Sport</option>';
 
-                  $result = mysqli_query($connection, $sql);
+                    $sql     = "select distinct sport from users where coachID='$curUser'";
+                    $result  = mysqli_query($connection, $sql);
+                    while ($row = mysqli_fetch_array($result)) {
+                      echo '<option value="' . $row["sport"] . '">' . $row['sport'] . "</option>";
+                    }
+                    echo '</select>';
+                    echo '<br>';
 
-                  #Print table heading.
-                  print "<h1> My Assessments </h1>";
-
-                  #Print the assessment table.
-                  print " <div class='table-responsive'>
-                                  <table class='table table-striped table-bordered' id='currentAssessmentsTable'>
-                                  <thead>
-                                  <tr>
-                                  <th>Date</th>
-                                  <th>Sport</th>
-                                  <th>Athlete Name</th>
-                                  <th>Exercise</th>
-                                  <th>Assessment Type</th>
-                                  <th>Score</th>
-                                  <th>Remove</th>
-                                  </tr>
-                                  </thead>";
-                  print "<tbody>";
-
-                  while ($row = mysqli_fetch_array($result)) {
-                    $temp = strstr($row["exercise"], '-', true);
-                    print "<tr>";
-                    print "<td>" . $row['date'] . "</td>";
-                    print "<td>" . $row['sport'] . "</td>";
-                    print "<td>" . $row['Fname'] . "</td>";
-                    print "<td>" . $temp . "</td>";
-                    print "<td>" . $row['assessmentType'] . "</td>";
-                    print "<td>" . $row['Score'] . "</td>";
-                    echo '<td><input type="checkbox" name="Index[]" id="Index" value="' . $row['AssessmentIndex'] . '"></td>';
-                    print "</tr>";
-                  }
-
-                  print "</tbody>";
-                  print "</table>";
-                  ?>
-                <button type="submit" class="btn btn-primary" value="Remove Assessment(s)" id="deleteAssessment"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Assessment</button>
-                <br><br>
+                    print "<center><div id=\"showTable\"></div></center>";
+                    ?>
+                </div>
+                <button type="submit" class="btn btn-primary" value="Create Assessment"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Assessment</button>
+                <input type="button" class="btn btn-primary" style="float:right;" value="Check All" onClick="this.value=check(this.form.Athlete)">
               </form>
+            </div>
+            <!--.modal-body-->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

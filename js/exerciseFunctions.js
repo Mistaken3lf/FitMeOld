@@ -47,27 +47,10 @@ function handleSelect() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-$('#myTab a').click(function(e) {
-    e.preventDefault();
-    $(this).tab('show');
-});
-
-// store the currently selected tab in the hash value
-$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
-    var id = $(e.target).attr("href").substr(1);
-    window.location.hash = id;
-});
-
-// on load of the page: switch to the currently selected tab
-var hash = window.location.hash;
-$('#myTab a[href="' + hash + '"]').tab('show');
-
-////////////////////////////////////////////////////////////////////////////////
-
 $('#currentExercisesTable').dataTable({
     "dom": 'T<"clear">lfrtip',
     "tableTools": {
-        "sSwfPath": "../swf/copy_csv_xls_pdf.swf"
+        "sSwfPath": "//cdn.datatables.net/tabletools/2.2.4/swf/copy_csv_xls_pdf.swf"
     }
 });
 

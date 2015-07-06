@@ -327,6 +327,8 @@ else {
             SET firstName = '$first', lastName = '$last', email = '$mainMail', otherEmail = '$otherEmail', DOB = '$DOB', officeNumber = '$officeNumber',
             cellPhone = '$cellPhone', workPhone = '$workPhone', otherPhone = '$otherPhone', biography = '$biography'
             WHERE username = '$myUserName';";
+  $_SESSION["myFirstName"] = $first;
+  $_SESSION["myLastName"] = $last;
 
   #Check if the update is going to work.
   if (mysqli_query($connection, $sql)) {

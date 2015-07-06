@@ -141,7 +141,7 @@
                   </div>
                   <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" required class="form-control" id="email" style="background-color:#FFFFFF"
+                    <input type="email" class="form-control" id="email" style="background-color:#FFFFFF"
                       name="email" value="<?= $email ?>" placeholder="email@address.com">
                   </div>
                   <div class="form-group">

@@ -246,7 +246,7 @@ else {
   $email = test_input($_POST['email']);
 
   #Make sure its a valid email.
-  if (!filter_var($otherMail, FILTER_VALIDATE_EMAIL)) {
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     #Invalid email.
     $_SESSION['profileErrors'][] = 'Invalid email format';
 
@@ -302,7 +302,7 @@ if (count($_SESSION['profileErrors']) > 0) {
   if ($_SESSION['myPermission'] == 'Trainer') {
     header('location: ../trainer/trainersProfile.php');
   } else {
-    header('location: ../athlete/athletesProfile.php');
+    header('location: ../athlete/athleteProfile.php');
   }
 }
 

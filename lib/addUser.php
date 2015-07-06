@@ -187,12 +187,12 @@ else {
   if (mysqli_query($connection, $sql)) {
       echo "<script>
               alert('User Added');
-              window.location.href='../index.html';
+              window.location.href='../index.php';
               </script>";
   } else {
       echo "<script>
               alert('User Already Exists');
-              window.location.href='../index.html';
+              window.location.href='../index.php';
               </script>";
   }
 }

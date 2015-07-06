@@ -13,6 +13,7 @@ $work        = '';
 $otherNumber = '';
 $otherMail   = '';
 $bio         = '';
+$email = '';
 
 #Session variable to see if they are submitting the form.
 $_SESSION['profileAttempt'] = true;
@@ -235,6 +236,29 @@ else {
 }
 
 ############################################################################
+#Check if email is entered.
+if (empty($_POST['email'])) {
+}
+
+#Email is entered.
+else {
+  #Send the email to test the input and strip characters from it.
+  $email = test_input($_POST['email']);
+
+  #Make sure its a valid email.
+  if (!filter_var($otherMail, FILTER_VALIDATE_EMAIL)) {
+    #Invalid email.
+    $_SESSION['profileErrors'][] = 'Invalid email format';
+
+    if ($_SESSION['myPermission'] == 'Trainer') {
+      header('location: ../trainer/trainersProfile.php');
+    } else {
+      header('location: ../athlete/athleteProfile.php');
+    }
+  }
+}
+
+############################################################################
 #Check if a biography is entered.
 if (empty($_POST['biography'])) {
 }
@@ -296,10 +320,11 @@ else {
   $otherPhone   = mysqli_real_escape_string($connection, $otherNumber);
   $otherEmail   = mysqli_real_escape_string($connection, $otherMail);
   $biography    = mysqli_real_escape_string($connection, $bio);
+  $mainMail = mysqli_real_escape_string($connection, $email);
   $myUserName   = $_SESSION['myUsername'];
 
   $sql = "UPDATE users
-            SET firstName = '$first', lastName = '$last', otherEmail = '$otherEmail', DOB = '$DOB', officeNumber = '$officeNumber',
+            SET firstName = '$first', lastName = '$last', email = '$mainMail', otherEmail = '$otherEmail', DOB = '$DOB', officeNumber = '$officeNumber',
             cellPhone = '$cellPhone', workPhone = '$workPhone', otherPhone = '$otherPhone', biography = '$biography'
             WHERE username = '$myUserName';";
 

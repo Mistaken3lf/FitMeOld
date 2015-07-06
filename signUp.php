@@ -22,7 +22,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <b><a class="navbar-brand" href="index.html">FitMe</a></b>
+            <b><a class="navbar-brand" href="index.php">FitMe</a></b>
           </div>
         </div>
       </nav>

@@ -107,7 +107,7 @@
                         <label for="macro">Macro Name:</label>
                         <input type="text" required class="form-control" id="macro" name="macro" placeholder="Macro Name">
                       </div>
-                      <button type="submit" class="btn btn-primary" value="Create Workout"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Workout</button>
+                      <button type="submit" class="btn btn-success" value="Create Workout"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Workout</button>
                     </form>
                   </div>
                 </div>
@@ -1633,7 +1633,7 @@
                         </div>
                       </div>
                       <br>
-                      <button type="submit" class="btn btn-primary" value="Add Exercise"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Add Exercise</button>
+                      <button type="submit" class="btn btn-success" value="Add Exercise"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Add Exercise</button>
                     </form>
                   </div>
                 </div>
@@ -1709,7 +1709,7 @@
                           ?>
                       </select>
                       <br>
-                      <button type="submit" name="submit" class="btn btn-primary" value="Remove Workout" onclick="return confirmWrkOutRmv()"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Workout</button>
+                      <button type="submit" name="submit" class="btn btn-danger" value="Remove Workout" onclick="return confirmWrkOutRmv()"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Workout</button>
                     </form>
                   </div>
                 </div>

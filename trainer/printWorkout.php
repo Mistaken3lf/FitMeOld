@@ -49,7 +49,7 @@
         print "</tbody>";
         print "</table>";
         ?>
-      <button type="submit" class="btn btn-primary" id="remove" value="Remove Exercise(s)"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise(s)</button>
+      <button type="submit" class="btn btn-danger" id="remove" value="Remove Exercise(s)"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise(s)</button>
     </div>
   </div>
 </div>

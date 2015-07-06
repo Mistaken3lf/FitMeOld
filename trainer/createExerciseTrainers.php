@@ -120,8 +120,8 @@
                   print '</tbody>';
                   print '</table>';
                   ?>
-                <button type="submit" class="btn btn-primary" value="Remove Exericse"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise</button>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target=".create-exercises-modal-lg">Create Exercise</button>
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target=".create-exercises-modal-lg"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Exercise</button>
+                <button type="submit" class="btn btn-danger" value="Remove Exericse"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Exercise</button>
                 <br><br>
               </form>
             </div>
@@ -208,7 +208,7 @@
                 <br>
                 <div class="row">
                   <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary" value="Create Exercise"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Exercise</button>
+                    <button type="submit" class="btn btn-success" value="Create Exercise"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Exercise</button>
                   </div>
                 </div>
             </div>

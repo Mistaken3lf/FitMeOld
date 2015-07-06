@@ -123,8 +123,8 @@
                 print "</tbody>";
                 print "</table>";
                 ?>
-              <button type="submit" class="btn btn-primary" value="Remove Assessment(s)" id="deleteAssessment"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Assessment</button>
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target=".current-assessments-modal-lg">Create Assessment</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target=".current-assessments-modal-lg"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Assessment</button>
+              <button type="submit" class="btn btn-danger" value="Remove Assessment(s)" id="deleteAssessment"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Assessment</button>
               <br><br>
             </form>
           </div>
@@ -209,7 +209,7 @@
                     print "<center><div id=\"showTable\"></div></center>";
                     ?>
                 </div>
-                <button type="submit" class="btn btn-primary" value="Create Assessment"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Assessment</button>
+                <button type="submit" class="btn btn-success" value="Create Assessment"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Assessment</button>
                 <input type="button" class="btn btn-primary" style="float:right;" value="Check All" onClick="this.value=check(this.form.Athlete)">
               </form>
             </div>

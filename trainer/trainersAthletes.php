@@ -127,6 +127,7 @@
               <div class="modal-dialog modal-md">
                 <div class="modal-content">
                   <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="addAthleteModal"><font color="#2196f3">Create Athlete/User</font></h4>
                     <hr class="colored">
                   </div>
@@ -194,7 +195,7 @@
                         <input type="number" required class="form-control" id="athleteWeight"
                           name="athleteWeight" placeholder="Weight">
                       </div>
-                      <button type="submit" class="btn btn-primary" value="Create Athlete"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Athlete</button>
+                      <button type="submit" class="btn btn-success" value="Create Athlete"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Create Athlete</button>
                     </form>
                   </div>
                   <!--.modal-body-->
@@ -252,8 +253,8 @@
                 print "</tbody>";
                 print "</table>";
                 ?>
-              <button type="submit" class="btn btn-primary" value="Remove Athlete"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Athlete(s)</button>
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target=".add-users-modal-lg">Add Athlete</button>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target=".add-users-modal-lg"><span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp Add Athlete</button>
+              <button type="submit" class="btn btn-danger" value="Remove Athlete"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbsp Remove Athlete(s)</button>
               <br><br>
             </form>
           </div>
@@ -357,7 +358,7 @@
                         print "<center><div id=\"showTable\"></div></center>";
 
                         ?>
-                      <button type="submit" class="btn btn-primary" value="Assign Workout"><span class="glyphicon glyphicon-share-alt"></span>&nbsp&nbsp Assign Workout</button>
+                      <button type="submit" class="btn btn-success" value="Assign Workout"><span class="glyphicon glyphicon-share-alt"></span>&nbsp&nbsp Assign Workout</button>
                       <input type="button" class="btn btn-primary" style="float:right;" value="Check All" onClick="this.value=check(this.form.Athlete)">
                       <!--<button type="button" class="btn btn-primary" style="float:right;" value="Check All" onClick="this.value=check(this.form.Athlete)"><span class="glyphicon glyphicon-check"></span>Check</button>-->
                   </form>

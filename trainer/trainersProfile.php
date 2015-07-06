@@ -168,7 +168,7 @@
                     <input type="text" class="form-control" id="biography" style="background-color:#FFFFFF"
                       name="biography" value="<?= $biography ?>" placeholder="Tell Us About Yourself.">
                   </div>
-                  <button type="submit" class="btn btn-primary" value="Save Profie"><span class="glyphicon glyphicon-ok"></span>&nbsp&nbsp Save Profile</button>
+                  <button type="submit" class="btn btn-success" value="Save Profie"><span class="glyphicon glyphicon-ok"></span>&nbsp&nbsp Save Profile</button>
                 </form>
               </div>
             </div>

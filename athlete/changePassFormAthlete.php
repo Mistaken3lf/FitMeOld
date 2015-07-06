@@ -94,7 +94,7 @@
                     <input required class="form-control" type="password" name="newPassword2" id="newPassword2"><br>
                   </div>
                   <br>
-                  <button type="submit" name="submit" class="btn btn-primary" value="Change Password"><span class="glyphicon glyphicon-ok"></span>&nbsp&nbsp Change Password</button>
+                  <button type="submit" name="submit" class="btn btn-success" value="Change Password"><span class="glyphicon glyphicon-ok"></span>&nbsp&nbsp Change Password</button>
                 </form>
               </div>
             </div>

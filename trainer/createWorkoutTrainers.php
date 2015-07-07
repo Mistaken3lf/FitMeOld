@@ -232,9 +232,12 @@
                               </select>
                             </div>
                           </div>
+
                           <!-- Start of Set Form -->
                           <div class="row" id="firsttable" name= "firsttable" style="display:none;">
-                            <p><b>SET:&nbsp;<input type="number" style="width: 30px" disabled="disabled" value="1"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 1</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number"  class="form-control" id="reps1W1" name="reps1W1" placeholder="# Of Reps">
@@ -266,7 +269,9 @@
                             </div>
                           </div>
                           <div class="row" id="secondtable" name= "secondtable" style="display:none;">
-                            <p><b>SET:&nbsp;<input type="number" style="width: 30px" disabled="disabled" value="2"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 2</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number"  class="form-control" id="reps2W1" name="reps2W1" placeholder="# Of Reps">
@@ -298,7 +303,9 @@
                             </div>
                           </div>
                           <div class="row" id="thirdtable" name= "thirdtable" style="display:none;">
-                            <p><b>SET:&nbsp;<input type="number" style="width: 30px" disabled="disabled" value="3"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 3</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number"  class="form-control" id="reps3W1" name="reps3W1" placeholder="# Of Reps">
@@ -330,7 +337,9 @@
                             </div>
                           </div>
                           <div class="row" id="fourthtable" name= "fourthtable" style="display:none;">
-                            <p><b>SET:&nbsp;<input type="number" style="width: 30px" disabled="disabled" value="4"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 4</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number" class="form-control" id="reps4W1" name="reps4W1" placeholder="# Of Reps">
@@ -362,7 +371,9 @@
                             </div>
                           </div>
                           <div class="row" id="fifthtable" name= "fifthtable" style="display:none;">
-                            <p><b>SET:&nbsp;<input type="number" style="width: 30px" disabled="disabled" value="5"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 5</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number" class="form-control" id="reps5W1" name="reps5W1" placeholder="# Of Reps">
@@ -394,7 +405,9 @@
                             </div>
                           </div>
                           <div class="row" id="sixthtable" name= "sixthtable" style="display:none;">
-                            <p><b>SET:&nbsp;<input type="number" style="width: 30px" disabled="disabled" value="6"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 6</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number" class="form-control" id="reps6W1" name="reps6W1" placeholder="# Of Reps">
@@ -426,7 +439,9 @@
                             </div>
                           </div>
                           <div class="row" id="seventhtable" name= "seventhtable" style="display:none;">
-                            <p><b>SET:&nbsp;<input type="number" style="width: 30px" disabled="disabled" value="7"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 7</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number" class="form-control" id="reps7W1" name="reps7W1" placeholder="# Of Reps">
@@ -458,7 +473,9 @@
                             </div>
                           </div>
                           <div class="row" id="eighthtable" name= "eighthtable" style="display:none;">
-                            <p><b>SET:<input type="number" style="width: 30px" disabled="disabled" value="8"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 8</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number" class="form-control" id="reps8W1" name="reps8W1" placeholder="# Of Reps">
@@ -490,7 +507,9 @@
                             </div>
                           </div>
                           <div class="row" id="ninethtable" name= "ninethtable" style="display:none;">
-                            <p><b>SET:<input type="number" style="width: 30px" disabled="disabled" value="9"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 9</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number" class="form-control" id="reps9W1" name="reps9W1" placeholder="# Of Reps">
@@ -522,7 +541,9 @@
                             </div>
                           </div>
                           <div class="row" id="tenthtable" name= "tenthtable" style="display:none;">
-                            <p><b>SET:<input type="number" style="width: 40px" disabled="disabled" value="10"></b></p>
+                            <div class="col-md-1">
+                              <h6><b>SET: 10</b></h6>
+                            </div>
                             <div class="col-md-2">
                               <label for="reps">Reps:</label>
                               <input type="number" class="form-control" id="reps10W1" name="reps10W1" placeholder="# Of Reps">

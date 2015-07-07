@@ -688,7 +688,7 @@
                         print "<td colspan=18 bgcolor=#757575></td>";
                         print "</tr>";
                         print "</thead>";
-
+                        
                       }
                       print "</tbody>";
                       print "</table>";
@@ -1897,9 +1897,9 @@
 
                       $result = mysqli_query($connection, $sql);
 
-                      print "<h4><b><u> DAY FOUR </u></b></h4>";
+                      print "<h5><b><u> DAY FOUR </u></b></h5>";
 
-                      print "<h3> $tempFour </h3>";
+                      print "<h4> $tempFour </h4>";
 
                       #Creates the table Header
                       print "<div class='table-responsive'>
